@@ -12,5 +12,6 @@ public class ReviewDAO {
 
     public ReviewDAO() {
         //Database conn, pstmt, rs 받아오기
+        this.conn = Database.getInstance().getConnection();
     }
 }

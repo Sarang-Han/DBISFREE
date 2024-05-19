@@ -12,6 +12,7 @@ public class UserDAO{
 
     public UserDAO(){
         //Database conn, pstmt, rs 받아오기
+        this.conn = Database.getInstance().getConnection();
     }
 
     //회원가입 기능(DB2024_User 테이블에 투플 삽입)
