@@ -13,32 +13,151 @@ public clas DB2024TEAM07_MenuDAO{
 
     //메뉴 등록
     public int add(DB2024TEAM07_Menu menu) {
-        String Q = "INSERT INTO DB2024_Menu VALUES (?, ?, ?, ?)";
-        try {
-            pStmt = conn.prepareStatement(Q);
-            pStmt.setString(1, menu.getMenu_name());
-            pStmt.setInt(2, menu.getRes_id());
-            pStmt.setInt(3, menu.getPrice());
-            pStmt.setString(4, menu.getMenu_comment());
+        String Q = "INSERT INTO DB2024_Menu (menu_id, menu_name, res_id, price, menu_comment) VALUES (?, ?, ?, ?, ?)";
+        try (
+                conn =Database.getConnection() ;
+                pStmt = conn.prepareStatement(Q);
+            ){
+            try {
+                conn.setAutoCommit(false);
 
-            return pStmt.executeUpdate();
-        } catch (SQLException se) {
-            se.printStackTrace();
+                pStmt.setString(1, menu.getMenu_id());
+                pStmt.setString(2, menu.getMenu_name());
+                pStmt.setInt(3, menu.getRes_id());
+                pStmt.setInt(4, menu.getPrice());
+                pStmt.setString(5, menu.getMenu_comment());
+
+                rs = pStmt.executeUpdate();
+                conn.commit();
+                System.out.println("transaction 성공");
+
+                return rs;
+            } catch (SQLException e1) {
+                e1.printStackTrace();
+                try {
+                    if (conn != null) {
+                        conn.rollback();
+                        System.out.println("롤백 성공");
+                    }
+                } catch (SQLException e2) {
+                    e2.printStackTrace();
+                }
+            }
+            conn.setAutoCommit(true);
+        }catch(SQLException e){
+            e.printStackTrace();
         }
         return 0;
     }
 
-    //메뉴 조회
+    //메뉴 조회 - res_id로 조회해서 그 식당에 있는 메뉴 전부 조회.
+    public int search(int res_id) {
+        String Q = "SELECT * FROM DB2024TEAM07_Menu WHERE res_id=?"
+        try (
+                conn =Database.getConnection() ;
+                pStmt = conn.prepareStatement(Q);
+            ){
+            try {
+                conn.setAutoCommit(false);
 
+                pStmt.setInt(1, res_id);
+
+                rs = pStmt.executeUpdate();
+                conn.commit();
+                System.out.println("transaction 성공");
+
+                return rs;
+            } catch (SQLException e1) {
+                e1.printStackTrace();
+                try {
+                    if (conn != null) {
+                        conn.rollback();
+                        System.out.println("롤백 성공");
+                    }
+                } catch (SQLException e2) {
+                    e2.printStackTrace();
+                }
+            }
+            conn.setAutoCommit(true);
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+        return 0;
+    }
 
     //메뉴 수정
-    public int search(DB2024TEAM07_Menu menu){
+    public int update(DB2024TEAM07_Menu menu, int pRes_id, int pMenu_id){
+        String Q = "UPDATE DB2024TEAM07_Menu menu SET menu_id=?, menu_name=?, res_id=?, price=?, menu_comment=? WHERE res_id=? AND menu_id=?"
+        try (
+                conn =Database.getConnection() ;
+                pStmt = conn.prepareStatement(Q);
+            ){
+            try {
+                conn.setAutoCommit(false);
 
+                pStmt.setString(1, menu.getMenu_id());
+                pStmt.setString(2, menu.getMenu_name());
+                pStmt.setInt(3, menu.getRes_id());
+                pStmt.setInt(4, menu.getPrice());
+                pStmt.setString(5, menu.getMenu_comment());
+                pStmt.setString(6, pRes_id);
+                pStmt.setString(7, pMenu_id);
+
+                rs = pStmt.executeUpdate();
+                conn.commit();
+                System.out.println("transaction 성공");
+
+                return rs;
+            } catch (SQLException e1) {
+                e1.printStackTrace();
+                try {
+                    if (conn != null) {
+                        conn.rollback();
+                        System.out.println("롤백 성공");
+                    }
+                } catch (SQLException e2) {
+                    e2.printStackTrace();
+                }
+            }
+            conn.setAutoCommit(true);
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+        return 0;
     }
 
     //메뉴 삭제
-    public int search(DB2024TEAM07_Menu menu){
+    public int delete(int res_id, int menu_id){
+        try (
+                conn =Database.getConnection() ;
+        pStmt = conn.prepareStatement(Q);
+            ){
+            try {
+                conn.setAutoCommit(false);
 
+                pStmt.setInt(1, res_id);
+                pStmt.setString(2, menu_id);
+
+                rs = pStmt.executeUpdate();
+                conn.commit();
+                System.out.println("transaction 성공");
+
+                return rs;
+            } catch (SQLException e1) {
+                e1.printStackTrace();
+                try {
+                    if (conn != null) {
+                        conn.rollback();
+                        System.out.println("롤백 성공");
+                    }
+                } catch (SQLException e2) {
+                    e2.printStackTrace();
+                }
+            }
+            conn.setAutoCommit(true);
+        }catch(SQLException e){
+            e.printStackTrace();
+        }
+        return 0;
     }
-
 }
