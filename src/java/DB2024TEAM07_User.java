@@ -1,5 +1,6 @@
 
 public class User {
+    //user_id, user_pw, name, student_id, email, location
     private String user_id;
     private String user_pw;
     private String name;
