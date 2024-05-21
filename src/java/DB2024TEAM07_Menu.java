@@ -1,11 +1,13 @@
 public class Menu{
+    int menu_id;
     String menu_name;
     int res_id;
     int price;
     String menu_comment;
 
     //생성자
-    public Menu(String menu_name, int res_id, int price, String menu_comment) {
+    public Menu(int menu_id, String menu_name, int res_id, int price, String menu_comment) {
+        this.menu_id = menu_id;
         this.menu_name = menu_name;
         this.res_id = res_id;
         this.price = price;
@@ -13,6 +15,16 @@ public class Menu{
     }
 
     //getter,setter
+
+
+    public int getMenu_id() {
+        return menu_id;
+    }
+
+    public void setMenu_id(int menu_id) {
+        this.menu_id = menu_id;
+    }
+
     public String getMenu_name() {
         return menu_name;
     }
@@ -49,7 +61,8 @@ public class Menu{
     @java.lang.Override
     public java.lang.String toString() {
         return "Menu{" +
-                "menu_name='" + menu_name + '\'' +
+                "menu_id=" + menu_id +
+                ", menu_name='" + menu_name + '\'' +
                 ", res_id=" + res_id +
                 ", price=" + price +
                 ", menu_comment='" + menu_comment + '\'' +

@@ -50,14 +50,15 @@ CREATE TABLE DB2024_Restaurant(
 -- DB2024_Menu: DB2024_Restaurant 테이블의 식당에 대한 메뉴 테이블
 -- 레스토랑 -> 메뉴 -> 리뷰가 제3정규형으로 변환된 것
 CREATE TABLE DB2024_Menu(
-    -- 메뉴 이름, 식당 이름, 메뉴 가격, 메뉴 설명 속성
+    -- 메뉴 id, 메뉴 이름, 식당 이름, 메뉴 가격, 메뉴 설명 속성
+    menu_id INT,
 	menu_name VARCHAR(50), 
     res_id INT,
     price INT, 
     menu_comment VARCHAR(100),
     
     -- 특정 식당의 특정 메뉴라는 점이 각각의 투플을 구별한다
-    PRIMARY KEY(menu_name, res_id), 
+    PRIMARY KEY(menu_id, res_id),
     -- 참조하고 있던 식당이 사라지면 메뉴들도 전부 사라지는 정책 선택 
     FOREIGN KEY(res_id) REFERENCES DB2024_Restaurant(res_id) ON DELETE CASCADE
 );
