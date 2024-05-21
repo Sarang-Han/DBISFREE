@@ -67,19 +67,7 @@ public clas DB2024TEAM07_MenuDAO{
                 System.out.println("transaction 성공");
 
                 return rs;
-            } catch (SQLException e1) {
-                e1.printStackTrace();
-                try {
-                    if (conn != null) {
-                        conn.rollback();
-                        System.out.println("롤백 성공");
-                    }
-                } catch (SQLException e2) {
-                    e2.printStackTrace();
-                }
-            }
-            conn.setAutoCommit(true);
-        }catch(SQLException e){
+            } catch(SQLException e){
             e.printStackTrace();
         }
         return 0;
