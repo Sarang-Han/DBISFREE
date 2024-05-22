@@ -2,7 +2,6 @@
 //error라고 적힌 부분은 조치 필요(고민)-롤백/무시/등
 
 //구현됨: 회원가입, 로그인, 회원정보 수정, 회원정보 확인, 회원탈퇴
-import java.util.ArrayList;
 import java.sql.*;
 
 public class UserDAO{
@@ -15,7 +14,7 @@ public class UserDAO{
     }
 
     //회원가입 기능(DB2024_User 테이블에 투플 삽입)
-    public int sighUp(User user){
+    public int add(User user){
         String Q = "INSERT INTO DB2024_User VALUES (?, ?, ?, ?, ?, ?)";
         try{
             pStmt = conn.preparedStatement(Q);
@@ -102,21 +101,22 @@ public class UserDAO{
     }
 
     //탈퇴 기능(DB2024_User 테이블의 투플 삭제)
-    //유저가 비밀번호를 작성해야 탈퇴할 수 있는 구조로 구현되어야 함
+    //유저가 비밀번호를 작성해야 탈퇴할 수 있는 구조로 구현하면 좋을 것 같다.
+    // 윗단에서 signin을 진행한 다음(유저에게 pw를 받아오기) 그 값을 받아서
+    // 이 함수 안의 signInRes if문이 작성된 형태로, 조건부로 이 함수가 불리는 편이 더 깔끔할 것 같은데(일단은 내부적으로 구현해 두었습니다)
+    // 위쪽 작업하시는 분 이 주석 보시면 그런 방법도 고려해보세용
     public int delete(String user_id, String user_pw){
         String Q = "DELETE FROM DB2024_User WHERE user_id = ?";
         try{
-            pStmt = conn.prepareStatement(Q);
-            pStmt.setString(1, user_id);
-            rs = pStmt.executeQuery();
-            if(rs.next()){
-                if(rs.getString(1).equals(user_pw))
-                    return 1;   //id: 일치 / pw: 일치
-                else
-                    return 0;   //id: 일치 / pw: 불일치
+            signInRes = signIn(user_id, user_pw);
+            if (signInRes == 1){    //id ok pw ok
+                pStmt = conn.prepareStatement(Q);
+                pStmt.setString(1, user_id);
+                rs = pStmt.executeQuery();
+                return pStmt.executeUpdate();
             }
-            else
-                return -1;      //id: 불일치(결과 없음)
+            else                  //0: id o pw x, -1: id x, -2: error
+                return signInRes;
         }catch(SQLException se){
             se.printStackTrace();
         }
