@@ -78,6 +78,7 @@ CREATE TABLE DB2024_Review (
 	FOREIGN KEY (user_id) REFERENCES DB2024_User(user_id),
     -- 참조하고 있던 메뉴가 사라지면 리뷰들도 전부 사라지는 정책 선택?
     -- > 메뉴 삭제 전에 안내 메세지를 띄우는 것이 필요해 보인다
+    -- 건의할 내용: 메뉴가 사라지는 경우에는 NULL로 채우는 게 낫지 않을까?
 	FOREIGN KEY (menu_name) REFERENCES DB2024_Menu(menu_name) ON DELETE CASCADE 
 );
 
