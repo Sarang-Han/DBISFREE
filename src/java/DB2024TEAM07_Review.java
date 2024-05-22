@@ -1,4 +1,5 @@
 public class Review{
+    //review_id, user_id, menu_name, rating, review_content
     private String review_id;
     private String user_id;
     private String menu_name;
