@@ -1,12 +1,20 @@
 public class Review{
     //review_id, user_id, menu_name, rating, review_content
-    private String review_id;
+    private int review_id;
     private String user_id;
     private String menu_name;
     private int rating;
     private String review_content;
 
-    public String getReview_id() {
+    public Review(int review_id, String user_id, String menu_name, int rating, String review_content) {
+        this.review_id = review_id;
+        this.user_id = user_id;
+        this.menu_name = menu_name;
+        this.rating = rating;
+        this.review_content = review_content;
+    }
+
+    public int getReview_id() {
         return review_id;
     }
 

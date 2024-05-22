@@ -8,6 +8,15 @@ public class User {
     private String email;
     private String location;
 
+    public User(String user_id, String user_pw, String name, int student_id, String email, String location) {
+        this.user_id = user_id;
+        this.user_pw = user_pw;
+        this.name = name;
+        this.student_id = student_id;
+        this.email = email;
+        this.location = location;
+    }
+
     public String getUser_id() {
         return user_id;
     }
