@@ -21,7 +21,7 @@ public clas DB2024TEAM07_MenuDAO{
             try {
                 conn.setAutoCommit(false);
 
-                pStmt.setString(1, menu.getMenu_id());
+                pStmt.setInt(1, menu.getMenu_id());
                 pStmt.setString(2, menu.getMenu_name());
                 pStmt.setInt(3, menu.getRes_id());
                 pStmt.setInt(4, menu.getPrice());
@@ -83,7 +83,7 @@ public clas DB2024TEAM07_MenuDAO{
             try {
                 conn.setAutoCommit(false);
 
-                pStmt.setString(1, menu.getMenu_id());
+                pStmt.setInt(1, menu.getMenu_id());
                 pStmt.setString(2, menu.getMenu_name());
                 pStmt.setInt(3, menu.getRes_id());
                 pStmt.setInt(4, menu.getPrice());
@@ -124,7 +124,7 @@ public clas DB2024TEAM07_MenuDAO{
                 conn.setAutoCommit(false);
 
                 pStmt.setInt(1, res_id);
-                pStmt.setString(2, menu_id);
+                pStmt.setInt(2, menu_id);
 
                 rs = pStmt.executeUpdate();
                 conn.commit();
