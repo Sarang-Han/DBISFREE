@@ -1,7 +1,9 @@
 //Database 파일의 커넥션과의 연결 필요
 //error라고 적힌 부분은 조치 필요(고민)-롤백/무시/등
 
-//구현됨: 리뷰 작성, 리뷰 수정, 리뷰 리스트 반환, 리뷰 삭제
+//구현됨: 리뷰 작성, 리뷰 수정, 리뷰 삭제
+//구현됨??: 리뷰 리스트 반환(안 쓰일 시 삭제될 수도 있다)
+
 import java.util.ArrayList;
 import java.sql.*;
 
@@ -18,8 +20,8 @@ public class ReviewDAO {
     //리뷰작성 기능(DB2024_Review 테이블에 투플 삽입)
     //리뷰 작성은 로그인 한 회원만 할 수 있게 제한이 필요하다
     /*리뷰를 삭제하는 경우,
-    1. Rating 테이블의, 연관된 투플 삽입과(구현해야 함!!)
-    2. Restaurant 테이블의, 연관된 투플의 rating값 변경이 필요하다(구현해야 함!!)
+    1. Rating 테이블의, 연관된 투플 삽입과(RatingDAO.add())
+    2. Restaurant 테이블의, 연관된 투플의 rating값 변경이 필요하다(RatingDAO.getAVG()이용)
     현재 각각의 테이블 쓰기 기능이 함수로 구현되어 있으므로,
     윗단에서 해당 함수를 수행 시 꼭!! 트랜잭션 처리를 하는 것이 요구된다
     만약에 구현하다가 잘 모르겠으면 저한테 연락 주세용.-김민서-
@@ -78,12 +80,12 @@ public class ReviewDAO {
     }
         //2. ArrayList<Review>형식으로 반환
         //page는 가장 최신 값이 보이는 페이지가 1이라는 가정 하에 작성됨
-    public ArrayList<Review> getReview(int page-1){
+    public ArrayList<Review> getReview(int page){
         String Q = "SELECT * FROM DB2024_Review WHERE review_id < ? ORDER BY review_id DESC LIMIT 10";
         ArrayList<Review> list = new ArrayList<>();
         try{
             pStmt = conn.prepareStatement(Q);
-            pstmt.setInt(1, getNext() - (page*10));
+            pstmt.setInt(1, getNext() - (page-1)*10);
             rs = pstmt.executeQuery();
             while(rs.next()) {
                 Review review  = new Review(
@@ -106,7 +108,7 @@ public class ReviewDAO {
     //삭제 전에 삭제를 확인하는 것이 필수
     /*리뷰를 삭제하는 경우,
     1. Rating 테이블의, 연관된 투플 삭제와(sql단에서 자동으로 처리됨)
-    2. Restaurant 테이블의, 연관된 투플의 rating값 변경이 필요하다(구현해야 함!!)
+    2. Restaurant 테이블의, 연관된 투플의 rating값 변경이 필요하다(RatingDAO.getAVG()이용)
     현재 각각의 테이블 쓰기 기능이 함수로 구현되어 있으므로,
     윗단에서 해당 함수를 수행 시 꼭!! 트랜잭션 처리를 하는 것이 요구된다
     만약에 구현하다가 잘 모르겠으면 저한테 연락 주세용.-김민서-
