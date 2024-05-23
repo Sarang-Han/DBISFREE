@@ -78,9 +78,8 @@ public class ReviewDAO {
     }
         //2. ArrayList<Review>형식으로 반환
         //page는 가장 최신 값이 보이는 페이지가 1이라는 가정 하에 작성됨
-    //이 리스트가 작성된 순서의 역순으로 저장된다는 문제가 있는데 이 부분 수정?고민? 필요하다
-    public ArrayList<Review> getReview(int page){
-        String Q = "SELECT * FROM DB2024_Review WHERE review_id > ? ORDER BY review_id LIMIT 10";
+    public ArrayList<Review> getReview(int page-1){
+        String Q = "SELECT * FROM DB2024_Review WHERE review_id < ? ORDER BY review_id DESC LIMIT 10";
         ArrayList<Review> list = new ArrayList<>();
         try{
             pStmt = conn.prepareStatement(Q);
