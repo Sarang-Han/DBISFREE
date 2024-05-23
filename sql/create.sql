@@ -31,7 +31,6 @@ cuisine_type VARCHAR(50),
 );
 */
 
--- 조서정
 -- DB2024_Restaurant: 식당 정보에 관한 테이블
 CREATE TABLE DB2024_Restaurant(
 	res_name VARCHAR(200),
@@ -63,7 +62,6 @@ CREATE TABLE DB2024_Menu(
     FOREIGN KEY(res_id) REFERENCES DB2024_Restaurant(res_id) ON DELETE CASCADE
 );
 
--- 고은서
 -- DB2024_Review: DB2024_Menu 테이블의 메뉴에 대한 리뷰 테이블
 -- 레스토랑 -> 메뉴 -> 리뷰가 제3정규형으로 변환된 것
 CREATE TABLE DB2024_Review (
@@ -78,8 +76,8 @@ CREATE TABLE DB2024_Review (
 	FOREIGN KEY (user_id) REFERENCES DB2024_User(user_id),
     -- 참조하고 있던 메뉴가 사라지면 리뷰들도 전부 사라지는 정책 선택?
     -- > 메뉴 삭제 전에 안내 메세지를 띄우는 것이 필요해 보인다
-    -- 건의할 내용: 메뉴가 사라지는 경우에는 NULL로 채우는 게 낫지 않을까?
-	FOREIGN KEY (menu_name) REFERENCES DB2024_Menu(menu_name) ON DELETE CASCADE 
+    -- ## ########수정사항  메뉴가 사라지는 경우에는 NULL로 채우는 게 낫지 않을까 싶어서 그부분 수정했습니당
+	FOREIGN KEY (menu_name) REFERENCES DB2024_Menu(menu_name) ON DELETE SET NULL
 );
 
 -- DB2024_Rating: DB2024_Restaurant과 DB2024_Review간의 관계*를 mapping한 테이블
@@ -88,14 +86,18 @@ CREATE TABLE DB2024_Review (
 CREATE TABLE DB2024_Rating (
     review_id INT,
     res_id INT NOT NULL,
+    -- ## ########수정사항!review table의 rating 값을 참조하는 속성 추가 필요하지 않은지?? 싶어서 일단 추가해봤습니다
+     rating INT,
     
     -- 유일한 값을 가지는 리뷰 아이디가 각각의 투플을 구별한다
     PRIMARY KEY (review_id),
     -- 이 테이블의 투플은 이 테이블이 참조하는 '리뷰', 그 리뷰가 참조하는 '메뉴', 그 리뷰가 참조하는 메뉴가 참조하는 '식당'이 사라질 때 같이 삭제된다.
     -- 리뷰가 참조하는 '메뉴', 리뷰가 참조하는 메뉴가 참조하는 '식당'이 사라지는 경우 연쇄적으로 '리뷰' 또한 삭제되므로,
     -- 참조 중인 '리뷰'가 삭제되는 경우에만 이 테이블의 투플도 같이 삭제되도록 설정되었다.
+    -- ## ########수정사항: 메뉴가 사라지는 경우를 SET NULL로 변경했기 때문에 연쇄 삭제 현상 일어나지 않음, 식당이 사라지는 경우도 같이 삭제되도록 설정
     FOREIGN KEY(review_id) REFERENCES DB2024_Review(review_id) ON DELETE CASCADE,
-    FOREIGN KEY(res_id) REFERENCES DB2024_Restaurant(res_id)
+    FOREIGN KEY(rating) REFERENCES DB2024_Review(review_id),
+    FOREIGN KEY(res_id) REFERENCES DB2024_Restaurant(res_id) ON DELETE CASCADE
 );
 
 -- 릴레이션 확인 -----------------------------------------------------------------------
