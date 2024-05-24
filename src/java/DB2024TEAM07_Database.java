@@ -17,6 +17,10 @@ public class Database{
         }
     }
 
+    public Connection getConnection() {
+        return conn;
+    }
+
     //단일 instance를 생성하도록 도와줌
     public static Database getInstance() {
         if (instance == null) {
@@ -27,10 +31,6 @@ public class Database{
             }
         }
         return instance;
-    }
-
-    public Connection getConnection() {
-        return conn;
     }
 
 //    public void closeConnection() {
