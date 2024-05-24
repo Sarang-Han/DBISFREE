@@ -12,7 +12,7 @@ public class DB2024TEAM07_MenuDAO{
         this.conn = Database.getInstance().getConnection();
     }
 
-    //메뉴 등록
+    //메뉴 등록 (관리자 관점)
     public int add(DB2024TEAM07_Menu menu) {
         String Q = "INSERT INTO DB2024_Menu (menu_id, menu_name, res_id, price, menu_comment) VALUES (?, ?, ?, ?, ?)";
         try {
@@ -99,7 +99,7 @@ public class DB2024TEAM07_MenuDAO{
     }
 
     // 메뉴 조회 2 (관리자 관점 - res_id로 검색해도 괜찮은 주체)
-    public ResultSet searchByRes_id(int res_id) {
+    public ResultSet searchByManager(int res_id) {
         String Q = "SELECT * FROM DB2024_Menu WHERE res_id=?";
         try {
             pStmt = conn.prepareStatement(Q);
@@ -112,8 +112,6 @@ public class DB2024TEAM07_MenuDAO{
         }
         return null;
     }
-
-    //
 
     //메뉴 수정 (관리자 관점)
         public int update(DB2024TEAM07_Menu menu, int pRes_id, int pMenu_id) {

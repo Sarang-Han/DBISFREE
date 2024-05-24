@@ -12,7 +12,7 @@ public class DB2024TEAM07_RestaurantDAO {
         this.conn = Database.getInstance().getConnection();
     }
 
-    //식당 등록(관리자)
+    //식당 등록 (관리자 관점)
     public int add(DB2024TEAM07_Restaurant restaurant) {
         String Q = "INSERT INTO DB2024_Restaurant (res_name, res_id, phone_num, address, operating_hours, break_time, rating, cuisine_type, location) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
         try {
@@ -116,7 +116,7 @@ public class DB2024TEAM07_RestaurantDAO {
         return restaurants;
     }
 
-    //식당 수정
+    //식당 수정 (관리자 관점)
     public int update(DB2024TEAM07_Restaurant restaurant, int pRes_id) {
         String Q = "UPDATE DB2024_Restaurant SET res_name=?, phone_num=?, address=?, operating_hours=?, break_time=?, rating=?, cuisine_type=?, location=? WHERE res_id=?";
         try {
@@ -159,7 +159,7 @@ public class DB2024TEAM07_RestaurantDAO {
         return 0;
     }
 
-    //식당 삭제
+    //식당 삭제 (관리자 관점)
     public int delete(int res_id) {
         String Q = "DELETE FROM DB2024_Restaurant WHERE res_id=?";
         try {
