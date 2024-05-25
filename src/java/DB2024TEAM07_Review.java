@@ -6,6 +6,7 @@ public class DB2024TEAM07_Review{
     private int rating;
     private String review_content;
 
+    public DB2024TEAM07_Review(){}
     public DB2024TEAM07_Review(int review_id, String user_id, String menu_name, int rating, String review_content) {
         this.review_id = review_id;
         this.user_id = user_id;

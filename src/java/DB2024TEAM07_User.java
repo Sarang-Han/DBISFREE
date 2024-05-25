@@ -8,6 +8,7 @@ public class DB2024TEAM07_User {
     private String email;
     private String location;
 
+    public DB2024TEAM07_User(){}
     public DB2024TEAM07_User(String user_id, String user_pw, String name, int student_id, String email, String location) {
         this.user_id = user_id;
         this.user_pw = user_pw;
