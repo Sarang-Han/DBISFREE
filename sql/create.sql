@@ -66,9 +66,6 @@ CREATE TABLE DB2024_Review (
   
 	PRIMARY KEY (review_id),
 	FOREIGN KEY (user_id) REFERENCES DB2024_User(user_id),
-    -- 참조하고 있던 메뉴가 사라지면 리뷰들도 전부 사라지는 정책 선택?
-    -- > 메뉴 삭제 전에 안내 메세지를 띄우는 것이 필요해 보인다
-    -- ## ########수정사항  메뉴가 사라지는 경우에는 NULL로 채우는 게 낫지 않을까 싶어서 그부분 수정했습니당
 	FOREIGN KEY (menu_name) REFERENCES DB2024_Menu(menu_name) ON DELETE SET NULL
 );
 
@@ -144,13 +141,19 @@ cuisine_type VARCHAR(50),
 */
 -- restaurant dao의 구성 상 꼭 필요할 지 의문이 들기는 하다
 -- 메인 페이지에서 보여주는 용도로 사용해도 괜찮을듯(예: 배민)
-CREATE VIEW DB2024_Category AS SELECT res_name FROM DB2024_Restaurant GROUP BY cuisine_type;
+CREATE VIEW DB2024_Category AS SELECT (res_id, res_name) FROM DB2024_Restaurant GROUP BY cuisine_type;
 -- 보안용 유저정보 확인 뷰(다른 유저의 이름과 이메일만 확인 가능)
-CREATE VIEW DB2024_OtherUser AS SELECT (name, email) FROM DB2024_User;
-
+CREATE VIEW DB2024_OtherUser AS SELECT (user_id, name, email) FROM DB2024_User;
 
 
 -- 인덱스 생성 -----------------------------------------------------------------------
+-- DB2024_Rating.res_id: 특정 가게의 평점 평균을 구할 때 DB2024_Rating 테이블의 res_id가 자주 사용됨
+CREATE INDEX DB2024_ix_Rating
+    ON DB2024_Rating (res_id);
+--
+-- DB2024_Review.user_id: 특정 유저의 리뷰를 몰아볼 때 DB2024_Review 테이블의 user_id가 자주 사용됨
+CREATE INDEX DB2025_ix_Review
+    ON DB2024_Review (user_id);
 
 -- 테이블 삭제 (맨 윗줄 코드로 대체) -----------------------------------------------------------------------
 -- DROP DATABASE DB2024TEAM07;
