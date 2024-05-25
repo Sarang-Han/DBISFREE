@@ -7,13 +7,13 @@
 import java.util.ArrayList;
 import java.sql.*;
 
-public class RatingDAO{
+public class DB2024TEAM07_RatingDAO{
     private Connection conn;
     private PreparedStatement pStmt;
     private Statement stmt;
     private ResultSet rs;
 
-    public RatingDAO() {
+    public DB2024TEAM07_RatingDAO() {
         this.conn = Database.getInstance().getConnection();
     }
 

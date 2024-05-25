@@ -4,17 +4,17 @@
 //구현됨: 회원가입, 로그인, 회원정보 수정, 회원정보 확인, 회원탈퇴
 import java.sql.*;
 
-public class UserDAO{
+public class DB2024TEAM07_UserDAO{
     private Connection conn;
     private PreparedStatement pStmt;
     private Statement stmt;
     private ResultSet rs;
-    public UserDAO(){
+    public DB2024TEAM07_UserDAO(){
         this.conn = Database.getInstance().getConnection();
     }
 
     //회원가입 기능(DB2024_User 테이블에 투플 삽입)
-    public int add(User user){
+    public int add(DB2024TEAM07_User user){
         String Q = "INSERT INTO DB2024_User VALUES (?, ?, ?, ?, ?, ?)";
         try{
             pStmt = conn.preparedStatement(Q);
@@ -55,7 +55,7 @@ public class UserDAO{
     //회원정보 수정(DB2024_User 테이블 검색, 투플값 수정)
     //수정하고자 하는 유저의 기존 아이디 전달 필요(두 번째 인자)
     //수정할 내용을 담은 User 객체와, 수정하기 이전의 user id를 전달받아 수정하는 방식
-    public int update(User user, String pUser_id){
+    public int update(DB2024TEAM07_User user, String pUser_id){
         String Q = "UPDATE DB2024_User SET user_id=?, user_pw=?, name=?, student_id=?, email=?, location=? WHERE user_id=?";
         try{
             pStmt = conn.preparedStatement(Q);
@@ -75,10 +75,10 @@ public class UserDAO{
 
     //회원정보 확인 기능
     //로그인한 유저가 본인의 정보를 확인하는 용도
-    public User getUser(String user_id){
+    public DB2024TEAM07_User getUser(String user_id){
         String Q = "SELECT * FROM DB2024_User WHERE user_id = ?";
         try{
-            User user = new User();
+            DB2024TEAM07_User user = new DB2024TEAM07_User();
             pStmt = conn.prepareStatement(Q);
             pStmt.setString(1, user_id);
             rs = pStmt.executeQuery();

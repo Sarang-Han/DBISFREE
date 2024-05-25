@@ -7,13 +7,13 @@
 import java.util.ArrayList;
 import java.sql.*;
 
-public class ReviewDAO {
+public class DB2024TEAM07_ReviewDAO {
     private Connection conn;
     private PreparedStatement pStmt;
     private Statement stmt;
     private ResultSet rs;
 
-    public ReviewDAO() {
+    public DB2024TEAM07_ReviewDAO() {
         this.conn = Database.getInstance().getConnection();
     }
 
@@ -26,7 +26,7 @@ public class ReviewDAO {
     윗단에서 해당 함수를 수행 시 꼭!! 트랜잭션 처리를 하는 것이 요구된다
     만약에 구현하다가 잘 모르겠으면 저한테 연락 주세용.-김민서-
     */
-    public int add(Review review){
+    public int add(DB2024TEAM07_Review review){
         String Q = "INSERT INTO DB2024_Review VALUES (?, ?, ?, ?, ?)";
         try{
             pStmt = conn.preparedStatement(Q);
@@ -45,7 +45,7 @@ public class ReviewDAO {
     //리뷰수정 기능(DB2024_Review 테이블의 투플 수정)
     //리뷰 수정은 로그인 한 회원만 할 수 있게 제한이 필요하다
     //review_id는 절대로 바뀌지 않는 값이므로 유저 업데이트 함수와 달리 기존 아이디 전달이 불필요하다
-    public int update(Review review){
+    public int update(DB2024TEAM07_Review review){
         String Q = "UPDATE DB2024_Review SET menu_name=?, rating=?, review_content=? WHERE review_id=?";
         try{
             pStmt = conn.preparedStatement(Q);
@@ -80,22 +80,22 @@ public class ReviewDAO {
     }
         //2. ArrayList<Review>형식으로 반환
         //page는 가장 최신 값이 보이는 페이지가 1이라는 가정 하에 작성됨
-    public ArrayList<Review> getReview(int page){
+    public ArrayList<DB2024TEAM07_Review> getReview(int page){
         String Q = "SELECT * FROM DB2024_Review WHERE review_id < ? ORDER BY review_id DESC LIMIT 10";
-        ArrayList<Review> list = new ArrayList<>();
+        ArrayList<DB2024TEAM07_Review> list = new ArrayList<>();
         try{
             pStmt = conn.prepareStatement(Q);
             pstmt.setInt(1, getNext() - (page-1)*10);
             rs = pstmt.executeQuery();
             while(rs.next()) {
-                Review review  = new Review(
+                DB2024TEAM07_Review review  = new DB2024TEAM07_Review(
                         rs.getInt(1),
                         rs.getString(2),
                         rs.getString(3),
                         rs.getInt(4),
                         rs.getString(5)
                 );
-                list.add(Review);
+                list.add(ㄱeview);
             }
         }
         catch(SQLException se) {

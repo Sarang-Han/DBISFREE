@@ -1,4 +1,4 @@
-public class Review{
+public class DB2024TEAM07_Review{
     //review_id, user_id, menu_name, rating, review_content
     private int review_id;
     private String user_id;
@@ -6,7 +6,7 @@ public class Review{
     private int rating;
     private String review_content;
 
-    public Review(int review_id, String user_id, String menu_name, int rating, String review_content) {
+    public DB2024TEAM07_Review(int review_id, String user_id, String menu_name, int rating, String review_content) {
         this.review_id = review_id;
         this.user_id = user_id;
         this.menu_name = menu_name;

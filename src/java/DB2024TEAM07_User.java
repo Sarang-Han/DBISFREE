@@ -1,5 +1,5 @@
 
-public class User {
+public class DB2024TEAM07_User {
     //user_id, user_pw, name, student_id, email, location
     private String user_id;
     private String user_pw;
@@ -8,7 +8,7 @@ public class User {
     private String email;
     private String location;
 
-    public User(String user_id, String user_pw, String name, int student_id, String email, String location) {
+    public DB2024TEAM07_User(String user_id, String user_pw, String name, int student_id, String email, String location) {
         this.user_id = user_id;
         this.user_pw = user_pw;
         this.name = name;

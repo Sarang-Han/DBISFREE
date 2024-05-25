@@ -1,4 +1,4 @@
-public class Rating{
+public class DB2024TEAM07_Rating{
     private int review_id;
     private int res_id;
 

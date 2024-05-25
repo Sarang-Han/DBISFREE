@@ -1,4 +1,4 @@
-public class Menu{
+public class DB2024TEAM07_Menu{
     int menu_id;
     String menu_name;
     int res_id;
@@ -6,7 +6,7 @@ public class Menu{
     String menu_comment;
 
     //생성자
-    public Menu(int menu_id, String menu_name, int res_id, int price, String menu_comment) {
+    public DB2024TEAM07_Menu(int menu_id, String menu_name, int res_id, int price, String menu_comment) {
         this.menu_id = menu_id;
         this.menu_name = menu_name;
         this.res_id = res_id;

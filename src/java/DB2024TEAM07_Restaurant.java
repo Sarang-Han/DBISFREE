@@ -1,4 +1,4 @@
-public class Restaurant{
+public class DB2024TEAM07_Restaurant{
     String res_name;
     int res_id;
     String phone_num
@@ -10,7 +10,7 @@ public class Restaurant{
     String location;
 
     //생성자
-    public Restaurant(String res_name, int res_id, String phone_num, String address, String operating_hours, String break_time, float rating, String cuisine_type, String location) {
+    public DB2024TEAM07_Restaurant(String res_name, int res_id, String phone_num, String address, String operating_hours, String break_time, float rating, String cuisine_type, String location) {
         this.res_name = res_name;
         this.res_id = res_id;
         this.phone_num = phone_num;
