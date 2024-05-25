@@ -65,15 +65,15 @@ public class DB2024TEAM07_RestaurantDAO {
 
         if (res_name != null && !res_name.isEmpty()) {
             Q.append(" AND res_name LIKE ?");
-            params.add("%" + res_name + "%");
+            params.add("'%" + res_name + "%'");
         }
         if (cuisine_type != null && !cuisine_type.isEmpty()) {
             Q.append(" AND cuisine_type LIKE ?");
-            params.add("%" + cuisine_type + "%");
+            params.add("'%" + cuisine_type + "%'");
         }
         if (location != null && !location.isEmpty()) {
             Q.append(" AND location LIKE ?");
-            params.add("%" + location + "%");
+            params.add("'%" + location + "%'");
         }
         if (rating != null) {
             Q.append(" AND rating >= ?");
