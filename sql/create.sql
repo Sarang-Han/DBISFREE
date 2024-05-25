@@ -78,13 +78,13 @@ CREATE TABLE DB2024_Review (
 CREATE TABLE DB2024_Rating (
     review_id INT,
     res_id INT NOT NULL,
-    rating INT,
+    -- rating INT,
     
     -- 유일한 값을 가지는 리뷰 아이디가 각각의 투플을 구별한다
     PRIMARY KEY (review_id),
     -- 이 테이블의 투플은 이 테이블이 참조하는 '리뷰', '식당'이 사라질 때 같이 삭제된다.
     FOREIGN KEY(review_id) REFERENCES DB2024_Review(review_id) ON DELETE CASCADE,
-    FOREIGN KEY(rating) REFERENCES DB2024_Review(review_id),
+    -- FOREIGN KEY(rating) REFERENCES DB2024_Review(review_id),
     FOREIGN KEY(res_id) REFERENCES DB2024_Restaurant(res_id) ON DELETE CASCADE
 );
 
@@ -142,6 +142,13 @@ cuisine_type VARCHAR(50),
     PRIMARY KEY (cuisine_type)
 );
 */
+-- restaurant dao의 구성 상 꼭 필요할 지 의문이 들기는 하다
+-- 메인 페이지에서 보여주는 용도로 사용해도 괜찮을듯(예: 배민)
+CREATE VIEW DB2024_Category AS SELECT res_name FROM DB2024_Restaurant GROUP BY cuisine_type;
+-- 보안용 유저정보 확인 뷰(다른 유저의 이름과 이메일만 확인 가능)
+CREATE VIEW DB2024_OtherUser AS SELECT (name, email) FROM DB2024_User;
+
+
 
 -- 인덱스 생성 -----------------------------------------------------------------------
 
