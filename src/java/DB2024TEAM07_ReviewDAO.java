@@ -1,8 +1,16 @@
 //Database 파일의 커넥션과의 연결 필요
 //error라고 적힌 부분은 조치 필요(고민)-롤백/무시/등
 
-//구현됨: 리뷰 작성, 리뷰 수정, 리뷰 삭제
-//구현됨??: 리뷰 리스트 반환(안 쓰일 시 삭제될 수도 있다)
+/* 구현된 기능
+    리뷰 작성:  add(DB2024TEAM07_Review review)
+    리뷰 수정:  update(DB2024TEAM07_Review review)
+    새로 쓰일 리뷰의 리뷰 아이디 반환:    getNext(int page)
+    리뷰 리스트 반환:  getReview(int page, String user_id)
+    특정 유저의 리뷰 몰아보기: getUserReview(int page, String user_id) **getNext 손봐야 함
+    특정 가게의 리뷰 몰아보기: getResReview(int page, String res_id) **gerNext 손봐야 함
+    리뷰 삭제:  delete(int review_id)
+ */
+
 
 import java.util.ArrayList;
 import java.sql.*;
@@ -95,7 +103,62 @@ public class DB2024TEAM07_ReviewDAO {
                         rs.getInt(4),
                         rs.getString(5)
                 );
-                list.add(ㄱeview);
+                list.add(review);
+            }
+        }
+        catch(SQLException se) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+
+    //특정 유저의 리뷰 몰아보기 기능(DB2024_Review 테이블의 투플 반환)
+    //일단은 최신순, 10개 단위로 반환하는 형태 선택
+    //프로젝트 요구사항-조인 쿼리 사용됨
+    public ArrayList<DB2024TEAM07_Review> getUserReview(int page, String user_id){
+        String Q = "SELECT * FROM DB2024_Review INNER JOIN DB2024_OtherUser ON (user_id) WHERE review_id < ? ORDER BY review_id DESC LIMIT 10";
+        ArrayList<DB2024TEAM07_Review> list = new ArrayList<>();
+        try{
+            pStmt = conn.prepareStatement(Q);
+            pstmt.setInt(1, getNext() - (page-1)*10);
+            rs = pstmt.executeQuery();
+            while(rs.next()) {
+                DB2024TEAM07_Review review  = new DB2024TEAM07_Review(
+                        rs.getInt(1),
+                        rs.getString(2),
+                        rs.getString(3),
+                        rs.getInt(4),
+                        rs.getString(5)
+                );
+                list.add(review);
+            }
+        }
+        catch(SQLException se) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+
+    //특정 유저의 리뷰 몰아보기 기능(DB2024_Review 테이블의 투플 반환)
+    //일단은 최신순, 10개 단위로 반환하는 형태 선택
+    //프로젝트 요구사항-중첩된 쿼리 사용됨
+    public ArrayList<DB2024TEAM07_Review> getUserReview(int page, String res_id){
+        String Q = "SELECT * FROM DB2024_Review WHERE review_id IN (SELECT review_id FROM DB2024_Rating WHERE res_id = ?) AND review_id < ? ORDER BY review_id DESC LIMIT 10";
+        ArrayList<DB2024TEAM07_Review> list = new ArrayList<>();
+        try{
+            pStmt = conn.prepareStatement(Q);
+            pStmt.setInt(1, res_id)
+            pstmt.setInt(2, getNext() - (page-1)*10);
+            rs = pstmt.executeQuery();
+            while(rs.next()) {
+                DB2024TEAM07_Review review  = new DB2024TEAM07_Review(
+                        rs.getInt(1),
+                        rs.getString(2),
+                        rs.getString(3),
+                        rs.getInt(4),
+                        rs.getString(5)
+                );
+                list.add(review);
             }
         }
         catch(SQLException se) {

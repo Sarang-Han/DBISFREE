@@ -1,7 +1,14 @@
 //Database 파일의 커넥션과의 연결 필요
 //error라고 적힌 부분은 조치 필요(고민)-롤백/무시/등
 
-//구현됨: 회원가입, 로그인, 회원정보 수정, 회원정보 확인, 회원탈퇴
+/* 구현된 기능:
+    회원가입:   add(DB2024TEAM07_User user)
+    로그인:    sighIn(String user_id, String user_pw)
+    회원정보 수정:    update(DB2024TEAM07_User user, String pUser_id)
+    회원정보 확인:    getUser(String user_id),    getOtherUser(String user_id)
+    회원탈퇴:   delete(String user_id, String user_pw)
+ */
+
 import java.sql.*;
 
 public class DB2024TEAM07_UserDAO{
@@ -89,6 +96,30 @@ public class DB2024TEAM07_UserDAO{
                 user.setStudent_id(rs.getInt(4));
                 user.setEmail(rs.getString(5));
                 user.setLocation(rs.getString(6));
+                return user;
+            }
+            //else
+            //id: 불일치(결과 없음)
+            //아래 리턴문에서 null이 반환됨
+        }catch(SQLException se){
+            se.printStackTrace();
+        }
+        return null;  //error, id 없음
+    }
+
+    //회원정보 확인 기능(2)
+    //다른 유저의 정보를 확인하는 용도
+    public DB2024TEAM07_UserVO getOtherUser(String user_id){
+        String Q = "SELECT * FROM DB2024_OtherUser WHERE user_id = ?";
+        try{
+            DB2024TEAM07_UserVO user = new DB2024TEAM07_UserVO();
+            pStmt = conn.prepareStatement(Q);
+            pStmt.setString(1, user_id);
+            rs = pStmt.executeQuery();
+            if(rs.next()){    //id: 존재
+                user.setUser_id(rs.getString(1));
+                user.setName(rs.getString(2));
+                user.setEmail(rs.getString(3));
                 return user;
             }
             //else

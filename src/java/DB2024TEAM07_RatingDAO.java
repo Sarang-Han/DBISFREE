@@ -1,8 +1,10 @@
 //Database 파일의 커넥션과의 연결 필요
 //error라고 적힌 부분은 조치 필요(고민)-롤백/무시/등
 
-//구현됨: add, 레스토랑 평점 반환,
-//구현해야 됨: 특정 유저의 리뷰 몰아보기, 특정 가게의 리뷰 몰아보기
+/* 구현된 기능
+    가게에 대한 리뷰 등록:   add(int review_id, int res_id)
+    레스토랑 평균 평점 반환:  getAvg(int res_id)
+ */
 
 import java.util.ArrayList;
 import java.sql.*;
@@ -18,8 +20,8 @@ public class DB2024TEAM07_RatingDAO{
     }
 
     //새 리뷰 작성 시 무조건 호출되어야 함
-    //이걸 윗단에서 작성하고 트랜잭션 구현할지 아님 리뷰DAO에서 해결볼지는 고민해봐야 할 것 같아요
-    //개인적으로는 위에서 처리하는 게 ㄷㅓ  깔끔할 것 같다고 생각은 합니다
+    //이걸 서비스 트랜잭션 구현할지 아님 DAO에서 해결볼지는 고민해봐야 할 것 같아요
+    //개인적으로는 위에서 처리하는 게 더 깔끔할 것 같다고 생각은 합니다
     public int add(int review_id, int res_id){
         String Q = "INSERT INTO DB2024_Rating VALUES (?, ?)";
         try{
@@ -52,10 +54,4 @@ public class DB2024TEAM07_RatingDAO{
         }
         return -2;  //error
     }
-
-    //특정 가게의 리뷰 몰아보기
-
-    //특정 유저의 리뷰 몰아보기
-
-
 }
