@@ -75,13 +75,13 @@ CREATE TABLE DB2024_Review (
 CREATE TABLE DB2024_Rating (
     review_id INT,
     res_id INT NOT NULL,
-    -- rating INT,
+    rating INT,
     
     -- 유일한 값을 가지는 리뷰 아이디가 각각의 투플을 구별한다
     PRIMARY KEY (review_id),
     -- 이 테이블의 투플은 이 테이블이 참조하는 '리뷰', '식당'이 사라질 때 같이 삭제된다.
     FOREIGN KEY(review_id) REFERENCES DB2024_Review(review_id) ON DELETE CASCADE,
-    -- FOREIGN KEY(rating) REFERENCES DB2024_Review(review_id),
+    FOREIGN KEY(rating) REFERENCES DB2024_Review(review_id),
     FOREIGN KEY(res_id) REFERENCES DB2024_Restaurant(res_id) ON DELETE CASCADE
 );
 
