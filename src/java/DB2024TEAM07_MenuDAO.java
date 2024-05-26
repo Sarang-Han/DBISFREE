@@ -31,46 +31,43 @@ public class DB2024TEAM07_MenuDAO{
         return 0;
     }
 
-//    메뉴 조회 1 (사용자 관점)
-//    minPrice 와 maxPrice 사이의 가격에 해당하는 메뉴들 조회
-//    사용자 입장에서 어떤 식당에 있는 메뉴들을 검색할 땐 res_name으로 검색하지 res_id로 검색하지 않기 때문에 Menu 테이블과 Restaurant 테이블을 조인해서 res_name 받아옴.
-//    사용자에게 필요한 정보(res_name, menu_name, price, menu_comment 만 보여주기
+    //    메뉴 조회 1 (사용자 관점)
+    //    minPrice 와 maxPrice 사이의 가격에 해당하는 메뉴들 조회
+    //    사용자 입장에서 어떤 식당에 있는 메뉴들을 검색할 땐 res_name으로 검색하지 res_id로 검색하지 않기 때문에 Menu 테이블과 Restaurant 테이블을 조인해서 res_name 받아옴.
+    //    사용자에게 필요한 정보(res_name, menu_name, price, menu_comment 만 보여주기
     public ResultSet searchByUsers(String res_name, String menu_name, Integer minPrice, Integer maxPrice) {
-        StringBuilder Q = new StringBuilder( // * 조인 쿼리 사용
-                "SELECT r.res_name, m.menu_name, m.price, m.menu_comment FROM DB2024_Menu m " +
-                        "JOIN DB2024_Restaurant r ON m.res_id = r.res_id " +
-                        "WHERE 1=1"
+        StringBuilder Q = new StringBuilder( // DB2024_MenuView 뷰 활용.
+                "SELECT res_name, menu_name, price, menu_comment FROM DB2024_MenuView WHERE 1=1"
         );
 
         List<Object> params = new ArrayList<>();
 
         if (res_name != null && !res_name.isEmpty()) {
-            Q.append(" AND r.res_name LIKE ?");
+            Q.append(" AND res_name LIKE ?");
             params.add("%" + res_name + "%");
         }
 
         if (menu_name != null && !menu_name.isEmpty()) {
-            Q.append(" AND m.menu_name LIKE ?");
+            Q.append(" AND menu_name LIKE ?");
             params.add("%" + menu_name + "%");
         }
 
         if (minPrice != null) {
-            Q.append(" AND m.price >= ?");
+            Q.append(" AND price >= ?");
             params.add(minPrice);
         }
 
         if (maxPrice != null) {
-            Q.append(" AND m.price <= ?");
+            Q.append(" AND price <= ?");
             params.add(maxPrice);
         }
 
         try {
             pStmt = conn.prepareStatement(Q.toString());
 
-            for (int i = 0; i < parameters.size(); i++) {
+            for (int i = 0; i < params.size(); i++) {
                 pStmt.setObject(i + 1, params.get(i));
             }
-
             return pStmt.executeQuery();
         } catch (SQLException se) {
             se.printStackTrace();
@@ -91,8 +88,6 @@ public class DB2024TEAM07_MenuDAO{
         }
         return null;
     }
-
-
 
     //메뉴 수정 (관리자 관점)
         public int update(DB2024TEAM07_Menu menu, int pRes_id, int pMenu_id) {
