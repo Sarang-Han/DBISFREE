@@ -4,10 +4,12 @@
 /* 구현된 기능
     리뷰 작성:  add(DB2024TEAM07_Review review)
     리뷰 수정:  update(DB2024TEAM07_Review review)
-    새로 쓰일 리뷰의 리뷰 아이디 반환:    getNext(int page)
-    리뷰 리스트 반환:  getReview(int page, String user_id)
-    특정 유저의 리뷰 몰아보기: getUserReview(int page, String user_id) **getNext 손봐야 함
-    특정 가게의 리뷰 몰아보기: getResReview(int page, String res_id) **gerNext 손봐야 함
+    리뷰 개수 반환:    getCount()
+    리뷰 리스트 반환:  getReview(int page)
+    특정 유저의 리뷰 개수 반환:    getUserCount(String user_id)
+    특정 유저의 리뷰 몰아보기:     getUserReview(int page, String user_id)
+    특정 가게의 리뷰 개수 반환:    getResCount(int res_id)
+    특정 가게의 리뷰 몰아보기:     getResReview(int page, String res_id)
     리뷰 삭제:  delete(int review_id)
  */
 
@@ -25,7 +27,7 @@ public class DB2024TEAM07_ReviewDAO {
         this.conn = Database.getInstance().getConnection();
     }
 
-    //리뷰작성 기능(DB2024_Review 테이블에 투플 삽입)
+    //리뷰작성 기능(DB2024_Review 테이블에 투플 삽입)-----------------------------------------------------------------------
     //리뷰 작성은 로그인 한 회원만 할 수 있게 제한이 필요하다
     /*리뷰를 삭제하는 경우,
     1. Rating 테이블의, 연관된 투플 삽입과(RatingDAO.add())
@@ -50,7 +52,7 @@ public class DB2024TEAM07_ReviewDAO {
         return -2;  //error
     }
 
-    //리뷰수정 기능(DB2024_Review 테이블의 투플 수정)
+    //리뷰수정 기능(DB2024_Review 테이블의 투플 수정)-----------------------------------------------------------------------
     //리뷰 수정은 로그인 한 회원만 할 수 있게 제한이 필요하다
     //review_id는 절대로 바뀌지 않는 값이므로 유저 업데이트 함수와 달리 기존 아이디 전달이 불필요하다
     public int update(DB2024TEAM07_Review review){
@@ -68,34 +70,38 @@ public class DB2024TEAM07_ReviewDAO {
         return -2;  //error
     }
 
-    //리뷰값 반환(DB2024_Review 테이블의 투플 반환)
-    //일단은 최신순, 10개 단위로 반환하는 형태 선택
-        //1. 존재하는 것중 가장 큰 review_id를 반환하는 함수
-    public int getNext() {
-        String Q = "SELECT review_id FROM DB2024_Review ORDER BY review_id DESC";
+
+    //리뷰 개수 반환(DB2024_Review 테이블의 투플 반환)----------------------------------------------------------------------
+    // 이 함수 반환값을 통해 페이지 값 계산하기
+    public int getCount() {
+        String Q = "SELECT COUNT(*) FROM DB2024_Review";
         try{
             pStmt = conn.prepareStatement(Q);
             rs = pstmt.executeQuery();
             if(rs.next()) {
                 return rs.getInt(1);
             }
-            return 1;   //아무 리뷰도 없는 상태
+            return 0;   //아무 리뷰도 없는 상태
         }
         catch(SQLException se) {
             se.printStackTrace();
         }
         return -2;      //error
     }
-        //2. ArrayList<Review>형식으로 반환
-        //page는 가장 최신 값이 보이는 페이지가 1이라는 가정 하에 작성됨
+
+    //리뷰값 반환(DB2024_Review 테이블의 투플 반환)-----------------------------------------------------------------------
+    //일단은 최신순, 10개 단위로 반환하는 형태 선택
+    //ArrayList<Review>형식으로 반환
+    //page는 가장 최신 값이 보이는 페이지가 1이라는 가정 하에 작성됨
     public ArrayList<DB2024TEAM07_Review> getReview(int page){
-        String Q = "SELECT * FROM DB2024_Review WHERE review_id < ? ORDER BY review_id DESC LIMIT 10";
+        String Q = "SELECT * FROM DB2024_Review ORDER BY review_id DESC";
         ArrayList<DB2024TEAM07_Review> list = new ArrayList<>();
         try{
-            pStmt = conn.prepareStatement(Q);
-            pstmt.setInt(1, getNext() - (page-1)*10);
+            pStmt = conn.prepareStatement(Q, ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY);
             rs = pstmt.executeQuery();
-            while(rs.next()) {
+            rs.absolute((page-1)*10);
+            i=0;
+            while(rs.next() && i<10) {
                 DB2024TEAM07_Review review  = new DB2024TEAM07_Review(
                         rs.getInt(1),
                         rs.getString(2),
@@ -104,6 +110,7 @@ public class DB2024TEAM07_ReviewDAO {
                         rs.getString(5)
                 );
                 list.add(review);
+                i++;
             }
         }
         catch(SQLException se) {
@@ -112,25 +119,56 @@ public class DB2024TEAM07_ReviewDAO {
         return list;
     }
 
-    //특정 유저의 리뷰 몰아보기 기능(DB2024_Review 테이블의 투플 반환)
+
+    //특정 유저의 리뷰 개수 반환(DB2024_Rating 테이블의 투플 반환)----------------------------------------------------------------------
+    // 이 함수 반환값을 통해 페이지 값 계산하기
+    public int getUserCount(String user_id) {
+        String Q = "SELECT COUNT(*) FROM DB2024_Rating WHERE user_id = ?";
+        try{
+            pStmt = conn.prepareStatement(Q);
+            pstmt.setInt(1, user_id);
+            rs = pstmt.executeQuery();
+            if(rs.next()) {
+                return rs.getInt(1);
+            }
+            return 0;   //아무 리뷰도 없는 상태
+        }
+        catch(SQLException se) {
+            se.printStackTrace();
+        }
+        return -2;      //error
+    }
+
+    //특정 유저의 리뷰 몰아보기 기능(DB2024_Review 테이블의 투플 반환)-----------------------------------------------------------------------
     //일단은 최신순, 10개 단위로 반환하는 형태 선택
     //프로젝트 요구사항-조인 쿼리 사용됨
-    public ArrayList<DB2024TEAM07_Review> getUserReview(int page, String user_id){
-        String Q = "SELECT * FROM DB2024_Review INNER JOIN DB2024_OtherUser ON (user_id) WHERE review_id < ? ORDER BY review_id DESC LIMIT 10";
-        ArrayList<DB2024TEAM07_Review> list = new ArrayList<>();
+    public ArrayList<DB2024TEAM07_UserReview> getUserReview(int page, String user_id){
+        /*
+            SELECT *
+            FROM DB2024_Review INNER JOIN DB2024_OtherUser ON (user_id)
+            WHERE user_id = ?
+            ORDER BY review_id DESC;
+         */
+        String Q = "SELECT * FROM DB2024_Review INNER JOIN DB2024_OtherUser ON (user_id) WHERE user_id=? ORDER BY review_id DESC";
+        ArrayList<DB2024TEAM07_UserReview> list = new ArrayList<>();
         try{
-            pStmt = conn.prepareStatement(Q);
-            pstmt.setInt(1, getNext() - (page-1)*10);
+            pStmt = conn.prepareStatement(Q, ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY);
+            pstmt.setInt(1, user_id);
             rs = pstmt.executeQuery();
-            while(rs.next()) {
-                DB2024TEAM07_Review review  = new DB2024TEAM07_Review(
+            rs.absolute((page-1)*10);
+            i=0;
+            while(rs.next() && i<10) { {
+                DB2024TEAM07_Usereview review  = new DB2024TEAM07_UserReview(
                         rs.getInt(1),
                         rs.getString(2),
                         rs.getString(3),
                         rs.getInt(4),
                         rs.getString(5)
+                        rs.getString(6),
+                        rs.getString(7)
                 );
                 list.add(review);
+                i++;
             }
         }
         catch(SQLException se) {
@@ -139,18 +177,45 @@ public class DB2024TEAM07_ReviewDAO {
         return list;
     }
 
-    //특정 유저의 리뷰 몰아보기 기능(DB2024_Review 테이블의 투플 반환)
+    //특정 가게의 리뷰 개수 반환(DB2024_Rating 테이블의 투플 반환)----------------------------------------------------------------------
+    // 이 함수 반환값을 통해 페이지 값 계산하기
+    public int getResCount(String res_id) {
+        String Q = "SELECT COUNT(*) FROM DB2024_Rating WHERE res_id = ?";
+        try{
+            pStmt = conn.prepareStatement(Q);
+            pstmt.setInt(1, res_id);
+            rs = pstmt.executeQuery();
+            if(rs.next()) {
+                return rs.getInt(1);
+            }
+            return 0;   //아무 리뷰도 없는 상태
+        }
+        catch(SQLException se) {
+            se.printStackTrace();
+        }
+        return -2;      //error
+    }
+
+    //특정 가게의 리뷰 몰아보기 기능(DB2024_Review 테이블의 투플 반환)-----------------------------------------------------------------------
     //일단은 최신순, 10개 단위로 반환하는 형태 선택
     //프로젝트 요구사항-중첩된 쿼리 사용됨
-    public ArrayList<DB2024TEAM07_Review> getUserReview(int page, String res_id){
-        String Q = "SELECT * FROM DB2024_Review WHERE review_id IN (SELECT review_id FROM DB2024_Rating WHERE res_id = ?) AND review_id < ? ORDER BY review_id DESC LIMIT 10";
+    public ArrayList<DB2024TEAM07_Review> getResReview(int page, String res_id){
+        /*  SELECT *
+            FROM DB2024_Review
+            WHERE review_id IN (SELECT review_id
+                                FROM DB2024_Rating
+                                WHERE res_id = ?)
+            ORDER BY review_id DESC;
+        */
+        String Q = "SELECT * FROM DB2024_Review WHERE review_id IN (SELECT review_id FROM DB2024_Rating WHERE res_id = ?) ORDER BY review_id DESC";
         ArrayList<DB2024TEAM07_Review> list = new ArrayList<>();
         try{
-            pStmt = conn.prepareStatement(Q);
-            pStmt.setInt(1, res_id)
-            pstmt.setInt(2, getNext() - (page-1)*10);
+            pStmt = conn.prepareStatement(Q, ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY);
+            pStmt.setInt(1, res_id);
             rs = pstmt.executeQuery();
-            while(rs.next()) {
+            rs.absolute((page-1)*10);
+            i=0;
+            while(rs.next() && i<10) {
                 DB2024TEAM07_Review review  = new DB2024TEAM07_Review(
                         rs.getInt(1),
                         rs.getString(2),
@@ -159,6 +224,7 @@ public class DB2024TEAM07_ReviewDAO {
                         rs.getString(5)
                 );
                 list.add(review);
+                i++;
             }
         }
         catch(SQLException se) {
@@ -167,7 +233,7 @@ public class DB2024TEAM07_ReviewDAO {
         return list;
     }
 
-    //리뷰 삭제 기능(DB2024_Review 테이블의 투플 삭제)
+    //리뷰 삭제 기능(DB2024_Review 테이블의 투플 삭제)-----------------------------------------------------------------------
     //삭제 전에 삭제를 확인하는 것이 필수
     /*리뷰를 삭제하는 경우,
     1. Rating 테이블의, 연관된 투플 삭제와(sql단에서 자동으로 처리됨)
