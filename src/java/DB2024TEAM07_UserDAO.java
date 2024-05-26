@@ -20,7 +20,7 @@ public class DB2024TEAM07_UserDAO{
         this.conn = Database.getInstance().getConnection();
     }
 
-    //회원가입 기능(DB2024_User 테이블에 투플 삽입)
+    //회원가입 기능(DB2024_User 테이블에 투플 삽입)-----------------------------------------------------------------------
     public int add(DB2024TEAM07_User user){
         String Q = "INSERT INTO DB2024_User VALUES (?, ?, ?, ?, ?, ?)";
         try{
@@ -38,7 +38,7 @@ public class DB2024TEAM07_UserDAO{
         return -2;  //error
     }
 
-    //로그인 기능(DB2024_User 테이블 검색)
+    //로그인 기능(DB2024_User 테이블 검색)-----------------------------------------------------------------------
     public int signIn(String user_id, String user_pw){
         String Q = "SELECT user_pw FROM DB2024_User WHERE user_id = ?";
         try{
@@ -59,7 +59,7 @@ public class DB2024TEAM07_UserDAO{
         return -2;  //error
     }
 
-    //회원정보 수정(DB2024_User 테이블 검색, 투플값 수정)
+    //회원정보 수정(DB2024_User 테이블 검색, 투플값 수정)-----------------------------------------------------------------------
     //수정하고자 하는 유저의 기존 아이디 전달 필요(두 번째 인자)
     //수정할 내용을 담은 User 객체와, 수정하기 이전의 user id를 전달받아 수정하는 방식
     public int update(DB2024TEAM07_User user, String pUser_id){
@@ -80,7 +80,7 @@ public class DB2024TEAM07_UserDAO{
         return -2;  //error
     }
 
-    //회원정보 확인 기능
+    //회원정보 확인 기능-----------------------------------------------------------------------
     //로그인한 유저가 본인의 정보를 확인하는 용도
     public DB2024TEAM07_User getUser(String user_id){
         String Q = "SELECT * FROM DB2024_User WHERE user_id = ?";
@@ -107,7 +107,7 @@ public class DB2024TEAM07_UserDAO{
         return null;  //error, id 없음
     }
 
-    //회원정보 확인 기능(2)
+    //회원정보 확인 기능(2)-----------------------------------------------------------------------
     //다른 유저의 정보를 확인하는 용도
     public DB2024TEAM07_UserVO getOtherUser(String user_id){
         String Q = "SELECT * FROM DB2024_OtherUser WHERE user_id = ?";
@@ -131,11 +131,14 @@ public class DB2024TEAM07_UserDAO{
         return null;  //error, id 없음
     }
 
-    //탈퇴 기능(DB2024_User 테이블의 투플 삭제)
-    //유저가 비밀번호를 작성해야 탈퇴할 수 있는 구조로 구현하면 좋을 것 같다.
-    // 윗단에서 signin을 진행한 다음(유저에게 pw를 받아오기) 그 값을 받아서
-    // 이 함수 안의 signInRes if문이 작성된 형태로, 조건부로 이 함수가 불리는 편이 더 깔끔할 것 같은데(일단은 내부적으로 구현해 두었습니다)
-    // 위쪽 작업하시는 분 이 주석 보시면 그런 방법도 고려해보세용
+    //탈퇴 기능(DB2024_User 테이블의 투플 삭제)-----------------------------------------------------------------------
+    //유저가 비밀번호를 작성해야 탈퇴할 수 있는 구조로 구현되면 좋다.
+    /*
+        윗단에서 signin을 진행한 다음(유저에게 pw를 받아오기) 그 리턴값을 받아서
+        이 함수 안의 signInRes if문이 작성된 형태로, 조건부로 이 함수가 불리는 편이 더 깔끔할 것 같긴 한데
+        일단은 제가 내부적으로 구현해 두었습니다
+        위쪽 작업하시는 분 이 주석 보시면 그런 방법도 고려해보세용 (현재 방식 그대로 갈 거면 이 주석은 지워주세요~~)
+     */
     public int delete(String user_id, String user_pw){
         String Q = "DELETE FROM DB2024_User WHERE user_id = ?";
         try{
