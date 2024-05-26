@@ -16,7 +16,6 @@ public class DB2024TEAM07_MenuDAO{
     public int add(DB2024TEAM07_Menu menu) {
         String Q = "INSERT INTO DB2024_Menu (menu_id, menu_name, res_id, price, menu_comment) VALUES (?, ?, ?, ?, ?)";
         try {
-            conn.setAutoCommit(false);
             pStmt = conn.prepareStatement(Q);
             pStmt.setInt(1, menu.getMenu_id());
             pStmt.setString(2, menu.getMenu_name());
@@ -24,28 +23,10 @@ public class DB2024TEAM07_MenuDAO{
             pStmt.setInt(4, menu.getPrice());
             pStmt.setString(5, menu.getMenu_comment());
 
-            int rs = pStmt.executeUpdate();
-            conn.commit();
-            System.out.println("transaction 성공");
+            return pStmt.executeUpdate();
 
-            return rs;
-        } catch (SQLException e) {
-            e.printStackTrace();
-            try {
-                if (conn != null) {
-                    conn.rollback();
-                    System.out.println("롤백 성공");
-                }
-            } catch (SQLException e2) {
-                e2.printStackTrace();
-            }
-        } finally {
-            try {
-                if (pStmt != null) pStmt.close();
-                if (conn != null) conn.setAutoCommit(true);
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+        } catch (SQLException se) {
+            se.printStackTrace();
         }
         return 0;
     }
@@ -55,7 +36,7 @@ public class DB2024TEAM07_MenuDAO{
 //    사용자 입장에서 어떤 식당에 있는 메뉴들을 검색할 땐 res_name으로 검색하지 res_id로 검색하지 않기 때문에 Menu 테이블과 Restaurant 테이블을 조인해서 res_name 받아옴.
 //    사용자에게 필요한 정보(res_name, menu_name, price, menu_comment 만 보여주기
     public ResultSet searchByUsers(String res_name, String menu_name, Integer minPrice, Integer maxPrice) {
-        StringBuilder Q = new StringBuilder(
+        StringBuilder Q = new StringBuilder( // * 조인 쿼리 사용
                 "SELECT r.res_name, m.menu_name, m.price, m.menu_comment FROM DB2024_Menu m " +
                         "JOIN DB2024_Restaurant r ON m.res_id = r.res_id " +
                         "WHERE 1=1"
@@ -90,10 +71,9 @@ public class DB2024TEAM07_MenuDAO{
                 pStmt.setObject(i + 1, params.get(i));
             }
 
-            rs = pStmt.executeQuery();
-            return rs;
-        } catch (SQLException e) {
-            e.printStackTrace();
+            return pStmt.executeQuery();
+        } catch (SQLException se) {
+            se.printStackTrace();
         }
         return null;
     }
@@ -105,19 +85,19 @@ public class DB2024TEAM07_MenuDAO{
             pStmt = conn.prepareStatement(Q);
             pStmt.setInt(1, res_id);
 
-            rs = pStmt.executeQuery();
-            return rs;
-        } catch (SQLException e) {
-            e.printStackTrace();
+            return pStmt.executeQuery();
+        } catch (SQLException se) {
+            se.printStackTrace();
         }
         return null;
     }
+
+
 
     //메뉴 수정 (관리자 관점)
         public int update(DB2024TEAM07_Menu menu, int pRes_id, int pMenu_id) {
             String Q = "UPDATE DB2024_Menu SET menu_id=?, menu_name=?, res_id=?, price=?, menu_comment=? WHERE res_id=? AND menu_id=?";
             try {
-                conn.setAutoCommit(false);
                 pStmt = conn.prepareStatement(Q);
                 pStmt.setInt(1, menu.getMenu_id());
                 pStmt.setString(2, menu.getMenu_name());
@@ -127,28 +107,9 @@ public class DB2024TEAM07_MenuDAO{
                 pStmt.setInt(6, pRes_id);
                 pStmt.setInt(7, pMenu_id);
 
-                int rs = pStmt.executeUpdate();
-                conn.commit();
-                System.out.println("transaction 성공");
-
-                return rs;
+                return pStmt.executeUpdate();
             } catch (SQLException e) {
                 e.printStackTrace();
-                try {
-                    if (conn != null) {
-                        conn.rollback();
-                        System.out.println("롤백 성공");
-                    }
-                } catch (SQLException e2) {
-                    e2.printStackTrace();
-                }
-            } finally {
-                try {
-                    if (pStmt != null) pStmt.close();
-                    if (conn != null) conn.setAutoCommit(true);
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
             }
             return 0;
         }
@@ -157,33 +118,13 @@ public class DB2024TEAM07_MenuDAO{
         public int delete(int res_id, int menu_id) {
             String Q = "DELETE FROM DB2024_Menu WHERE res_id=? AND menu_id=?";
             try {
-                conn.setAutoCommit(false);
                 pStmt = conn.prepareStatement(Q);
                 pStmt.setInt(1, res_id);
                 pStmt.setInt(2, menu_id);
 
-                int rs = pStmt.executeUpdate();
-                conn.commit();
-                System.out.println("transaction 성공");
-
-                return rs;
+                return pStmt.executeUpdate();
             } catch (SQLException e) {
                 e.printStackTrace();
-                try {
-                    if (conn != null) {
-                        conn.rollback();
-                        System.out.println("롤백 성공");
-                    }
-                } catch (SQLException e2) {
-                    e2.printStackTrace();
-                }
-            } finally {
-                try {
-                    if (pStmt != null) pStmt.close();
-                    if (conn != null) conn.setAutoCommit(true);
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
             }
             return 0;
         }
