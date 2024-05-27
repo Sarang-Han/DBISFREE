@@ -10,7 +10,7 @@ public class DB2024TEAM07_RestaurantDAO {
     private ResultSet rs;
 
     public DB2024TEAM07_RestaurantDAO() {
-        this.conn = Database.getInstance().getConnection();
+        this.conn = DB2024TEAM07_Database.getInstance().getConnection();
     }
 
     //식당 등록 (관리자 관점) ---- DB2024_Restaurant에 투플 삽입------
@@ -45,15 +45,15 @@ public class DB2024TEAM07_RestaurantDAO {
 
         if (res_name != null && !res_name.isEmpty()) {
             Q.append(" AND res_name LIKE ?");
-            params.add("'%" + res_name + "%'");
+            params.add("%" + res_name + "%");
         }
         if (cuisine_type != null && !cuisine_type.isEmpty()) {
             Q.append(" AND cuisine_type LIKE ?");
-            params.add("'%" + cuisine_type + "%'");
+            params.add("%" + cuisine_type + "%");
         }
         if (location != null && !location.isEmpty()) {
             Q.append(" AND location LIKE ?");
-            params.add("'%" + location + "%'");
+            params.add("%" + location + "%");
         }
         if (rating != null) {
             Q.append(" AND rating >= ?");
@@ -62,24 +62,25 @@ public class DB2024TEAM07_RestaurantDAO {
 
         List<DB2024TEAM07_Restaurant> restaurants = new ArrayList<>();
         try {
-            pStmt = conn.prepareStatement(Q.toString());
+            PreparedStatement pStmt = conn.prepareStatement(Q.toString());
 
             for (int i = 0; i < params.size(); i++) {
                 pStmt.setObject(i + 1, params.get(i));
             }
-            rs = pStmt.executeQuery();
+            ResultSet rs = pStmt.executeQuery();
 
             while (rs.next()) {
-                DB2024TEAM07_Restaurant restaurant = new DB2024TEAM07_Restaurant();
-                restaurant.setRes_name(rs.getString("res_name"));
-                restaurant.setRes_id(rs.getInt("res_id"));
-                restaurant.setPhone_num(rs.getString("phone_num"));
-                restaurant.setAddress(rs.getString("address"));
-                restaurant.setOperating_hours(rs.getString("operating_hours"));
-                restaurant.setBreak_time(rs.getString("break_time"));
-                restaurant.setRating(rs.getFloat("rating"));
-                restaurant.setCuisine_type(rs.getString("cuisine_type"));
-                restaurant.setLocation(rs.getString("location"));
+                DB2024TEAM07_Restaurant restaurant = new DB2024TEAM07_Restaurant(
+                        rs.getString("res_name"),
+                        rs.getInt("res_id"),
+                        rs.getString("phone_num"),
+                        rs.getString("address"),
+                        rs.getString("operating_hours"),
+                        rs.getString("break_time"),
+                        rs.getFloat("rating"),
+                        rs.getString("cuisine_type"),
+                        rs.getString("location")
+                );
                 restaurants.add(restaurant);
             }
         } catch (SQLException e) {
@@ -88,22 +89,21 @@ public class DB2024TEAM07_RestaurantDAO {
         return restaurants;
     }
 
-    public DB2024_CategoryVO searchByCategory(String cuisine_type){
+    public DB2024TEAM07_CategoryVO searchByCategory(String cuisine_type) {
         String Q = "SELECT * FROM DB2024_Category WHERE cuisine_type = ?";
-        try{
-            DB2024TEAM07_CategoryvVO category = new DB2024TEAM07_CategoryVO();
+        try {
             pStmt = conn.prepareStatement(Q);
-
             pStmt.setString(1, cuisine_type);
             rs = pStmt.executeQuery();
 
-            while (rs.next()){
-                category.setRes_name(rs.getString(1));
-                category.setCuisine_type(rs.getString(2));
-
+            if (rs.next()) {
+                DB2024TEAM07_CategoryVO category = new DB2024TEAM07_CategoryVO(
+                        rs.getString("cuisine_type"),
+                        rs.getString("res_name")
+                );
                 return category;
             }
-        }catch (SQLException se){
+        } catch (SQLException se) {
             se.printStackTrace();
         }
         return null;

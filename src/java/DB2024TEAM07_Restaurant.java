@@ -1,7 +1,7 @@
 public class DB2024TEAM07_Restaurant{
     String res_name;
     int res_id;
-    String phone_num
+    String phone_num;
     String address;
     String operating_hours;
     String break_time;
