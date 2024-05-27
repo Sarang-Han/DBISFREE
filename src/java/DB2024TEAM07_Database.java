@@ -1,15 +1,16 @@
 import java.sql.*;
-public class Database{
+
+public class DB2024TEAM07_Database{
 
     static final String JDBC_DRIVER = "com.mysql.cj.jdbc.Driver";
     static final String DB_URL = "jdbc:mysql://localhost:3306/DB2024Team07";
     static final String USER = "DB2024Team07";
     static final String PASS = "DB2024Team07";
 
-    private static Database instance;
+    private static DB2024TEAM07_Database instance;
     private Connection conn;
 
-    private Database() {
+    private DB2024TEAM07_Database() {
         try {
             conn = DriverManager.getConnection(DB_URL, USER, PASS);
         } catch (SQLException e) {
@@ -22,11 +23,11 @@ public class Database{
     }
 
     //단일 instance를 생성하도록 도와줌
-    public static Database getInstance() {
+    public static DB2024TEAM07_Database getInstance() {
         if (instance == null) {
-            synchronized (Database.class) {
+            synchronized (DB2024TEAM07_Database.class) {
                 if (instance == null) {
-                    instance = new Database();
+                    instance = new DB2024TEAM07_Database();
                 }
             }
         }
