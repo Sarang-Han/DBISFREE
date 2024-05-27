@@ -9,7 +9,7 @@ public class DB2024TEAM07_MenuDAO{
     private ResultSet rs;
 
     public DB2024TEAM07_MenuDAO(){
-        this.conn = Database.getInstance().getConnection();
+        this.conn = DB2024TEAM07_Database.getInstance().getConnection();
     }
 
     //메뉴 등록 (관리자 관점)

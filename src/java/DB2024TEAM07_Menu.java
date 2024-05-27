@@ -15,8 +15,6 @@ public class DB2024TEAM07_Menu{
     }
 
     //getter,setter
-
-
     public int getMenu_id() {
         return menu_id;
     }
