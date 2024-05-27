@@ -17,14 +17,14 @@ public class DB2024TEAM07_UserDAO{
     private Statement stmt;
     private ResultSet rs;
     public DB2024TEAM07_UserDAO(){
-        this.conn = Database.getInstance().getConnection();
+        this.conn = DB2024TEAM07_Database.getInstance().getConnection();
     }
 
     //회원가입 기능(DB2024_User 테이블에 투플 삽입)-----------------------------------------------------------------------
     public int add(DB2024TEAM07_User user){
         String Q = "INSERT INTO DB2024_User VALUES (?, ?, ?, ?, ?, ?)";
         try{
-            pStmt = conn.preparedStatement(Q);
+            pStmt = conn.prepareStatement(Q);
             pStmt.setString(1, user.getUser_id());
             pStmt.setString(2, user.getUser_pw());
             pStmt.setString(3, user.getName());
@@ -65,7 +65,7 @@ public class DB2024TEAM07_UserDAO{
     public int update(DB2024TEAM07_User user, String pUser_id){
         String Q = "UPDATE DB2024_User SET user_id=?, user_pw=?, name=?, student_id=?, email=?, location=? WHERE user_id=?";
         try{
-            pStmt = conn.preparedStatement(Q);
+            pStmt = conn.prepareStatement(Q);
             pStmt.setString(1, user.getUser_id());
             pStmt.setString(2, user.getUser_pw());
             pStmt.setString(3, user.getName());
@@ -117,9 +117,9 @@ public class DB2024TEAM07_UserDAO{
             pStmt.setString(1, user_id);
             rs = pStmt.executeQuery();
             if(rs.next()){    //id: 존재
-                user.setUser_id(rs.getString(1));
-                user.setName(rs.getString(2));
-                user.setEmail(rs.getString(3));
+                user.getUser_id(rs.getString(1));
+                user.getName(rs.getString(2));
+                user.getEmail(rs.getString(3));
                 return user;
             }
             //else
@@ -142,7 +142,7 @@ public class DB2024TEAM07_UserDAO{
     public int delete(String user_id, String user_pw){
         String Q = "DELETE FROM DB2024_User WHERE user_id = ?";
         try{
-            signInRes = signIn(user_id, user_pw);
+            int signInRes = signIn(user_id, user_pw);
             if (signInRes == 1){    //id ok pw ok
                 pStmt = conn.prepareStatement(Q);
                 pStmt.setString(1, user_id);

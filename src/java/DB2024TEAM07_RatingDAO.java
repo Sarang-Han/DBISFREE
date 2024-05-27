@@ -16,7 +16,7 @@ public class DB2024TEAM07_RatingDAO{
     private ResultSet rs;
 
     public DB2024TEAM07_RatingDAO() {
-        this.conn = Database.getInstance().getConnection();
+        this.conn = DB2024TEAM07_Database.getInstance().getConnection();
     }
 
     //가게에 대한 리뷰 등록 -----------------------------------------------------------------------
@@ -26,9 +26,9 @@ public class DB2024TEAM07_RatingDAO{
     public int add(int review_id, int res_id){
         String Q = "INSERT INTO DB2024_Rating VALUES (?, ?)";
         try{
-            pStmt = conn.preparedStatement(Q);
+            pStmt = conn.prepareStatement(Q);
             pStmt.setInt(1, review_id);
-            pStmt.setString(2, res_id);
+            pStmt.setInt(2, res_id);
             return pStmt.executeUpdate();
         }catch(SQLException se){
             se.printStackTrace();
@@ -42,7 +42,7 @@ public class DB2024TEAM07_RatingDAO{
     public float getAvg(int res_id){
         String Q = "SELECT AVG(rating) FROM DB2024_Rating WHERE res_id = ? GROUP BY res_id";
         try{
-            pStmt = conn.preparedStatement(Q);
+            pStmt = conn.prepareStatement(Q);
             pStmt.setInt(1, res_id);
             rs = pStmt.executeQuery();
             float ratingAvg = rs.next();

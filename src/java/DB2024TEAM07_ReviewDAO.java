@@ -24,7 +24,7 @@ public class DB2024TEAM07_ReviewDAO {
     private ResultSet rs;
 
     public DB2024TEAM07_ReviewDAO() {
-        this.conn = Database.getInstance().getConnection();
+        this.conn = DB2024TEAM07_Database.getInstance().getConnection();
     }
 
     //리뷰작성 기능(DB2024_Review 테이블에 투플 삽입)-----------------------------------------------------------------------
@@ -39,9 +39,9 @@ public class DB2024TEAM07_ReviewDAO {
     public int add(DB2024TEAM07_Review review){
         String Q = "INSERT INTO DB2024_Review VALUES (?, ?, ?, ?, ?)";
         try{
-            pStmt = conn.preparedStatement(Q);
+            pStmt = conn.prepareStatement(Q);
             pStmt.setInt(1, review.getReview_id());
-            pStmt.setString(2, review.getUser_id);
+            pStmt.setString(2, review.getUser_id());
             pStmt.setString(3, review.getMenu_name());
             pStmt.setInt(4, review.getRating());
             pStmt.setString(5, review.getReview_content());
@@ -58,11 +58,11 @@ public class DB2024TEAM07_ReviewDAO {
     public int update(DB2024TEAM07_Review review){
         String Q = "UPDATE DB2024_Review SET menu_name=?, rating=?, review_content=? WHERE review_id=?";
         try{
-            pStmt = conn.preparedStatement(Q);
+            pStmt = conn.prepareStatement(Q);
             pStmt.setString(1, review.getMenu_name());
             pStmt.setInt(2, review.getRating());
             pStmt.setString(3, review.getReview_content());
-            pStmt.setString(4, review.getReview_id());
+            pStmt.setInt(4, review.getReview_id());
             return pStmt.executeUpdate();
         }catch(SQLException se){
             se.printStackTrace();
@@ -77,7 +77,7 @@ public class DB2024TEAM07_ReviewDAO {
         String Q = "SELECT COUNT(*) FROM DB2024_Review";
         try{
             pStmt = conn.prepareStatement(Q);
-            rs = pstmt.executeQuery();
+            rs = pStmt.executeQuery();
             if(rs.next()) {
                 return rs.getInt(1);
             }
@@ -98,9 +98,9 @@ public class DB2024TEAM07_ReviewDAO {
         ArrayList<DB2024TEAM07_Review> list = new ArrayList<>();
         try{
             pStmt = conn.prepareStatement(Q, ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY);
-            rs = pstmt.executeQuery();
+            rs = pStmt.executeQuery();
             rs.absolute((page-1)*10);
-            i=0;
+            int i=0;
             while(rs.next() && i<10) {
                 DB2024TEAM07_Review review  = new DB2024TEAM07_Review(
                         rs.getInt(1),
@@ -114,7 +114,7 @@ public class DB2024TEAM07_ReviewDAO {
             }
         }
         catch(SQLException se) {
-            e.printStackTrace();
+            se.printStackTrace();
         }
         return list;
     }
@@ -126,8 +126,8 @@ public class DB2024TEAM07_ReviewDAO {
         String Q = "SELECT COUNT(*) FROM DB2024_Rating WHERE user_id = ?";
         try{
             pStmt = conn.prepareStatement(Q);
-            pstmt.setInt(1, user_id);
-            rs = pstmt.executeQuery();
+            pStmt.setString(1, user_id);
+            rs = pStmt.executeQuery();
             if(rs.next()) {
                 return rs.getInt(1);
             }
@@ -142,7 +142,7 @@ public class DB2024TEAM07_ReviewDAO {
     //특정 유저의 리뷰 몰아보기 기능(DB2024_Review 테이블의 투플 반환)-----------------------------------------------------------------------
     //일단은 최신순, 10개 단위로 반환하는 형태 선택
     //프로젝트 요구사항-조인 쿼리 사용됨
-    public ArrayList<DB2024TEAM07_UserReview> getUserReview(int page, String user_id){
+    public ArrayList<DB2024TEAM07_Review> getUserReview(int page, String user_id){
         /*
             SELECT *
             FROM DB2024_Review INNER JOIN DB2024_OtherUser ON (user_id)
@@ -150,41 +150,41 @@ public class DB2024TEAM07_ReviewDAO {
             ORDER BY review_id DESC;
          */
         String Q = "SELECT * FROM DB2024_Review INNER JOIN DB2024_OtherUser ON (user_id) WHERE user_id=? ORDER BY review_id DESC";
-        ArrayList<DB2024TEAM07_UserReview> list = new ArrayList<>();
+        ArrayList<DB2024TEAM07_UserReview> userReviews = new ArrayList<>();
         try{
             pStmt = conn.prepareStatement(Q, ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY);
-            pstmt.setInt(1, user_id);
-            rs = pstmt.executeQuery();
+            pStmt.setInt(1, user_id);
+            rs = pStmt.executeQuery();
             rs.absolute((page-1)*10);
-            i=0;
+            int i=0;
             while(rs.next() && i<10) { {
-                DB2024TEAM07_Usereview review  = new DB2024TEAM07_UserReview(
+                DB2024TEAM07_UserReview review  = new DB2024TEAM07_UserReview(
                         rs.getInt(1),
                         rs.getString(2),
                         rs.getString(3),
                         rs.getInt(4),
-                        rs.getString(5)
+                        rs.getString(5),
                         rs.getString(6),
                         rs.getString(7)
                 );
-                list.add(review);
+                userReviews.add(review);
                 i++;
             }
         }
         catch(SQLException se) {
-            e.printStackTrace();
+            se.printStackTrace();
         }
-        return list;
+        return userReviews;
     }
 
     //특정 가게의 리뷰 개수 반환(DB2024_Rating 테이블의 투플 반환)----------------------------------------------------------------------
     // 이 함수 반환값을 통해 페이지 값 계산하기
-    public int getResCount(String res_id) {
+    public int getResCount(int res_id) {
         String Q = "SELECT COUNT(*) FROM DB2024_Rating WHERE res_id = ?";
         try{
             pStmt = conn.prepareStatement(Q);
-            pstmt.setInt(1, res_id);
-            rs = pstmt.executeQuery();
+            pStmt.setInt(1, res_id);
+            rs = pStmt.executeQuery();
             if(rs.next()) {
                 return rs.getInt(1);
             }
@@ -199,7 +199,7 @@ public class DB2024TEAM07_ReviewDAO {
     //특정 가게의 리뷰 몰아보기 기능(DB2024_Review 테이블의 투플 반환)-----------------------------------------------------------------------
     //일단은 최신순, 10개 단위로 반환하는 형태 선택
     //프로젝트 요구사항-중첩된 쿼리 사용됨
-    public ArrayList<DB2024TEAM07_Review> getResReview(int page, String res_id){
+    public ArrayList<DB2024TEAM07_Review> getResReview(int page, int res_id){
         /*  SELECT *
             FROM DB2024_Review
             WHERE review_id IN (SELECT review_id
@@ -208,13 +208,13 @@ public class DB2024TEAM07_ReviewDAO {
             ORDER BY review_id DESC;
         */
         String Q = "SELECT * FROM DB2024_Review WHERE review_id IN (SELECT review_id FROM DB2024_Rating WHERE res_id = ?) ORDER BY review_id DESC";
-        ArrayList<DB2024TEAM07_Review> list = new ArrayList<>();
+        ArrayList<DB2024TEAM07_Review> restaurantReviews = new ArrayList<>();
         try{
             pStmt = conn.prepareStatement(Q, ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY);
             pStmt.setInt(1, res_id);
-            rs = pstmt.executeQuery();
+            rs = pStmt.executeQuery();
             rs.absolute((page-1)*10);
-            i=0;
+            int i=0;
             while(rs.next() && i<10) {
                 DB2024TEAM07_Review review  = new DB2024TEAM07_Review(
                         rs.getInt(1),
@@ -223,14 +223,14 @@ public class DB2024TEAM07_ReviewDAO {
                         rs.getInt(4),
                         rs.getString(5)
                 );
-                list.add(review);
+                restaurantReviews.add(review);
                 i++;
             }
         }
         catch(SQLException se) {
-            e.printStackTrace();
+            se.printStackTrace();
         }
-        return list;
+        return restaurantReviews;
     }
 
     //리뷰 삭제 기능(DB2024_Review 테이블의 투플 삭제)-----------------------------------------------------------------------
@@ -246,7 +246,7 @@ public class DB2024TEAM07_ReviewDAO {
         String Q = "DELETE FROM DB2024_Review WHERE review_id = ?";
         try{
             pStmt = conn.prepareStatement(Q);
-            pStmt.setString(1, review_id);
+            pStmt.setInt(1, review_id);
             rs = pStmt.executeQuery();
             return pStmt.executeUpdate();
         }catch(SQLException se){

@@ -14,7 +14,7 @@ public class DB2024TEAM07_UserVO{
         this.email = email;
     }
 
-    public int getUser_id(){
+    public int getUser_id() {
         return user_id;
     }
 
