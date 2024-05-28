@@ -156,15 +156,20 @@ ON m.res_id = r.res_id;
 -- DB2024_Rating.res_id: 특정 가게의 평점 평균을 구할 때 DB2024_Rating 테이블의 res_id가 자주 사용됨
 CREATE INDEX DB2024_idx_AvgRating
     ON DB2024_Rating (res_id);
---
+
 -- DB2024_Review.user_id: 특정 유저의 리뷰를 몰아볼 때 DB2024_Review 테이블의 user_id가 자주 사용됨
 CREATE INDEX DB2024_idx_Review
     ON DB2024_Review (user_id);
---
+
 -- DB2024_Restaurant.location: 특정 위치 주변의 식당들을 찾을 때 DB2024_Restaurant 테이블의 location 이 자주 사용됨
 CREATE INDEX DB2024_idx_Restaurant
     ON DB2024_Restaurant(location);
---
+
+-- DB2024_Restaurant.cuisine_type: 특정 cuisine에 포함되는 식당을 찾거나, DB2024_Category 뷰를 사용할 때 등
+-- DB2024_Restaurant 테이블의 cuisine_type 이 자주 사용됨
+CREATE INDEX DB2024_idx2_Restaurant
+    ON DB2024_Restaurant(cuisine_type);
+
 
 -- 테이블 삭제 (맨 윗줄 코드로 대체) -----------------------------------------------------------------------
 -- DROP DATABASE DB2024TEAM07;
