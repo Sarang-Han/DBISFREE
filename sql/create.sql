@@ -140,7 +140,7 @@ cuisine_type VARCHAR(50),
 );
 */
 -- restaurant dao의 구성 상 꼭 필요할 지 의문이 들기는 하다
---> 식당 페이지에 처음 접속했을 땐 상단에 cuisine_type 별로 버튼을 만들고 그 아래에 식당 리스트가 쫙 있고
+-- > 식당 페이지에 처음 접속했을 땐 상단에 cuisine_type 별로 버튼을 만들고 그 아래에 식당 리스트가 쫙 있고
 --  cuisine_type 버튼을 누르면 type 별로 식당 리스트가 바뀌는걸로 해도 좋을 것 같아요.
 -- 메인 페이지에서 보여주는 용도로 사용해도 괜찮을듯(예: 배민)
 CREATE VIEW DB2024_Category AS SELECT (res_id, res_name) FROM DB2024_Restaurant GROUP BY cuisine_type;
