@@ -20,7 +20,6 @@ import java.sql.*;
 public class DB2024TEAM07_ReviewDAO {
     private Connection conn;
     private PreparedStatement pStmt;
-    private Statement stmt;
     private ResultSet rs;
 
     public DB2024TEAM07_ReviewDAO() {
@@ -97,7 +96,9 @@ public class DB2024TEAM07_ReviewDAO {
         String Q = "SELECT * FROM DB2024_Review ORDER BY review_id DESC";
         ArrayList<DB2024TEAM07_Review> list = new ArrayList<>();
         try{
-            pStmt = conn.prepareStatement(Q, ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY);
+            pStmt = conn.prepareStatement(Q,
+                    ResultSet.TYPE_SCROLL_SENSITIVE,
+                    ResultSet.CONCUR_READ_ONLY);
             rs = pStmt.executeQuery();
             rs.absolute((page-1)*10);
             int i=0;
@@ -142,22 +143,24 @@ public class DB2024TEAM07_ReviewDAO {
     //특정 유저의 리뷰 몰아보기 기능(DB2024_Review 테이블의 투플 반환)-----------------------------------------------------------------------
     //일단은 최신순, 10개 단위로 반환하는 형태 선택
     //프로젝트 요구사항-조인 쿼리 사용됨
-    public ArrayList<DB2024TEAM07_Review> getUserReview(int page, String user_id){
+    public ArrayList<DB2024TEAM07_UserReview> getUserReview(int page, String user_id){
         /*
             SELECT *
             FROM DB2024_Review INNER JOIN DB2024_OtherUser ON (user_id)
             WHERE user_id = ?
             ORDER BY review_id DESC;
          */
-        String Q = "SELECT * FROM DB2024_Review INNER JOIN DB2024_OtherUser ON (user_id) WHERE user_id=? ORDER BY review_id DESC";
+        String Q = "SELECT * FROM DB2024_Review NATURAL JOIN DB2024_OtherUser ON (user_id) WHERE user_id= ? ORDER BY review_id DESC";
         ArrayList<DB2024TEAM07_UserReview> userReviews = new ArrayList<>();
         try{
-            pStmt = conn.prepareStatement(Q, ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY);
-            pStmt.setInt(1, user_id);
+            pStmt = conn.prepareStatement(Q,
+                    ResultSet.TYPE_SCROLL_SENSITIVE,
+                    ResultSet.CONCUR_READ_ONLY);
+            pStmt.setString(1, user_id);
             rs = pStmt.executeQuery();
             rs.absolute((page-1)*10);
             int i=0;
-            while(rs.next() && i<10) { {
+            while(rs.next() && i<10) {
                 DB2024TEAM07_UserReview review  = new DB2024TEAM07_UserReview(
                         rs.getInt(1),
                         rs.getString(2),
@@ -170,8 +173,7 @@ public class DB2024TEAM07_ReviewDAO {
                 userReviews.add(review);
                 i++;
             }
-        }
-        catch(SQLException se) {
+        }catch(SQLException se) {
             se.printStackTrace();
         }
         return userReviews;
@@ -210,7 +212,9 @@ public class DB2024TEAM07_ReviewDAO {
         String Q = "SELECT * FROM DB2024_Review WHERE review_id IN (SELECT review_id FROM DB2024_Rating WHERE res_id = ?) ORDER BY review_id DESC";
         ArrayList<DB2024TEAM07_Review> restaurantReviews = new ArrayList<>();
         try{
-            pStmt = conn.prepareStatement(Q, ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_READ_ONLY);
+            pStmt = conn.prepareStatement(Q,
+                    ResultSet.TYPE_SCROLL_SENSITIVE,
+                    ResultSet.CONCUR_READ_ONLY);
             pStmt.setInt(1, res_id);
             rs = pStmt.executeQuery();
             rs.absolute((page-1)*10);

@@ -117,9 +117,9 @@ public class DB2024TEAM07_UserDAO{
             pStmt.setString(1, user_id);
             rs = pStmt.executeQuery();
             if(rs.next()){    //id: 존재
-                user.getUser_id(rs.getString(1));
-                user.getName(rs.getString(2));
-                user.getEmail(rs.getString(3));
+                user.setUser_id(rs.getString(1));
+                user.setName(rs.getString(2));
+                user.setEmail(rs.getString(3));
                 return user;
             }
             //else
