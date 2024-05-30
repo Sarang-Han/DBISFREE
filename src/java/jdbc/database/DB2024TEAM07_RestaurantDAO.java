@@ -143,12 +143,12 @@ public class DB2024TEAM07_RestaurantDAO {
             pStmt = conn.prepareStatement(Q);
             pStmt.setInt(1, res_id);
 
-            rs = pStmt.executeQuery();
+            // executeQuery()는 결과를 반환하지 않아서 executeUpdate()로 수정
             return pStmt.executeUpdate();
-
         } catch (SQLException se) {
             se.printStackTrace();
         }
         return 0;
     }
+
 }
