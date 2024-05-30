@@ -1,18 +1,18 @@
 package jdbc.model;
 
 public class DB2024TEAM07_Review{
-    //review_id, user_id, menu_name, rating, review_content
+    //review_id, user_id, menu_id, rating, review_content
     private int review_id;
     private String user_id;
-    private String menu_name;
+    private String menu_id;
     private int rating;
     private String review_content;
 
     public DB2024TEAM07_Review(){}
-    public DB2024TEAM07_Review(int review_id, String user_id, String menu_name, int rating, String review_content) {
+    public DB2024TEAM07_Review(int review_id, String user_id, String menu_id, int rating, String review_content) {
         this.review_id = review_id;
         this.user_id = user_id;
-        this.menu_name = menu_name;
+        this.menu_id = menu_id;
         this.rating = rating;
         this.review_content = review_content;
     }
@@ -33,12 +33,12 @@ public class DB2024TEAM07_Review{
         this.user_id = user_id;
     }
 
-    public String getMenu_name() {
-        return menu_name;
+    public String getMenu_id() {
+        return menu_id;
     }
 
-    public void setMenu_name(String menu_name) {
-        this.menu_name = menu_name;
+    public void setmMenu_id(String menu_id) {
+        this.menu_id = menu_id;
     }
 
     public int getRating() {

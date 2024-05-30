@@ -45,7 +45,7 @@ public class DB2024TEAM07_ReviewDAO {
             pStmt = conn.prepareStatement(Q);
             pStmt.setInt(1, review.getReview_id());
             pStmt.setString(2, review.getUser_id());
-            pStmt.setString(3, review.getMenu_name());
+            pStmt.setString(3, review.getMenu_id());
             pStmt.setInt(4, review.getRating());
             pStmt.setString(5, review.getReview_content());
             return pStmt.executeUpdate();
@@ -59,10 +59,10 @@ public class DB2024TEAM07_ReviewDAO {
     //리뷰 수정은 로그인 한 회원만 할 수 있게 제한이 필요하다
     //review_id는 절대로 바뀌지 않는 값이므로 유저 업데이트 함수와 달리 기존 아이디 전달이 불필요하다
     public int update(DB2024TEAM07_Review review){
-        String Q = "UPDATE DB2024_Review SET menu_name=?, rating=?, review_content=? WHERE review_id=?";
+        String Q = "UPDATE DB2024_Review SET menu_id=?, rating=?, review_content=? WHERE review_id=?";
         try{
             pStmt = conn.prepareStatement(Q);
-            pStmt.setString(1, review.getMenu_name());
+            pStmt.setString(1, review.getMenu_id());
             pStmt.setInt(2, review.getRating());
             pStmt.setString(3, review.getReview_content());
             pStmt.setInt(4, review.getReview_id());
@@ -154,7 +154,7 @@ public class DB2024TEAM07_ReviewDAO {
             WHERE user_id = ?
             ORDER BY review_id DESC;
          */
-        String Q = "SELECT * FROM DB2024_Review NATURAL JOIN DB2024_OtherUser ON (user_id) WHERE user_id= ? ORDER BY review_id DESC";
+        String Q = "SELECT * FROM DB2024_Review NATURAL JOIN DB2024_OtherUser WHERE user_id= ? ORDER BY review_id DESC";
         ArrayList<DB2024TEAM07_UserReview> userReviews = new ArrayList<>();
         try{
             pStmt = conn.prepareStatement(Q,
