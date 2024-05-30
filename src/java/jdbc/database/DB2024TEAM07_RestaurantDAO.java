@@ -1,7 +1,6 @@
 package jdbc.database;
 
 import jdbc.model.DB2024TEAM07_Restaurant;
-import jdbc.view.DB2024TEAM07_CategoryVO;
 
 import java.sql.*;
 import java.util.*;
@@ -88,26 +87,21 @@ public class DB2024TEAM07_RestaurantDAO {
                 );
                 restaurants.add(restaurant);
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch (SQLException se) {
+            se.printStackTrace();
         }
         return restaurants;
     }
 
-    public DB2024TEAM07_CategoryVO searchByCategory(String cuisine_type) {
-        String Q = "SELECT * FROM DB2024_Category WHERE cuisine_type = ?";
+    // 식당 검색 - cuisine_type 별로
+    public ResultSet searchRestaurantByCategory(String cuisine_type) {
+        ResultSet rs = null;
+        String Q = "SELECT res_name, phone_num, address, operating_hours, break_time, rating, location " +
+                "FROM DB2024_Restaurant USE INDEX(DB2024_idx_Restaurant) WHERE cuisine_type = ?";
         try {
             pStmt = conn.prepareStatement(Q);
             pStmt.setString(1, cuisine_type);
-            rs = pStmt.executeQuery();
-
-            if (rs.next()) {
-                DB2024TEAM07_CategoryVO category = new DB2024TEAM07_CategoryVO(
-                        rs.getString("cuisine_type"),
-                        rs.getString("res_name")
-                );
-                return category;
-            }
+            return pStmt.executeQuery();
         } catch (SQLException se) {
             se.printStackTrace();
         }
@@ -143,12 +137,11 @@ public class DB2024TEAM07_RestaurantDAO {
             pStmt = conn.prepareStatement(Q);
             pStmt.setInt(1, res_id);
 
-            // executeQuery()는 결과를 반환하지 않아서 executeUpdate()로 수정
             return pStmt.executeUpdate();
+
         } catch (SQLException se) {
             se.printStackTrace();
         }
         return 0;
     }
-
 }
