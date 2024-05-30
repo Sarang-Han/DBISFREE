@@ -10,6 +10,9 @@ import java.util.*;
 import jdbc.database.DB2024TEAM07_RestaurantDAO;
 import jdbc.database.DB2024TEAM07_MenuDAO;
 import jdbc.database.DB2024TEAM07_ReviewDAO;
+import jdbc.model.DB2024TEAM07_Menu;
+import jdbc.model.DB2024TEAM07_Restaurant;
+import jdbc.model.DB2024TEAM07_Review;
 
 public class DB2024TEAM07_App {
     private static DB2024TEAM07_RestaurantDAO restaurantDAO = new DB2024TEAM07_RestaurantDAO();
