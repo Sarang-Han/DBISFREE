@@ -131,6 +131,14 @@ INSERT INTO DB2024_Restaurant VALUES
       ('등촌샤브칼국수 신촌점', 31, '0507-1398-7850', '서울 서대문구 신촌역로 43 1층', '월~일 11:00~22:00', '월~일 15:00~17:00', '5', '샤브샤브', '정문'),
       ('슬로우캘리 이대점', 32, '0507-1391-7188', '서울 서대문구 이화여대길 78 가동 1층', '월~일 11:00~21:00', '월~일 15:00~17:00', NULL, '샐러드', '정문');
 
+INSERT INTO DB2024_User VALUES
+	("s2eojeong", "s2eojeong", "조서정", 2276305, "s2eojeong@gmail.com", "후문"),
+    ("astralfinance", "astralfinance", "한사랑", 2271064, "astralfinance", "후문"),
+    ("cannes7", "cannes7", "고은서", 2122004, "cannes7@ewhain.net", "정문"),
+    ("meanwest", "meanwest", "김민서", 2276046, "meanwestk@gmail.com", "후문"),
+    ("chacha091", "chacha091", "차현주", 2276321, "chacha09@ewhain.net", "정문");
+
+
 -- 뷰 생성 -----------------------------------------------------------------------
 /*
 -- 카테고리 테이블(뷰로 대체)
@@ -172,13 +180,12 @@ CREATE INDEX DB2024_idx_AvgRating
 CREATE INDEX DB2024_idx_Review
     ON DB2024_Review (user_id);
 
--- DB2024_Restaurant.location: 특정 위치 주변의 식당들을 찾을 때 DB2024_Restaurant 테이블의 location 이 자주 사용됨
-CREATE INDEX DB2024_idx_Restaurant
-    ON DB2024_Restaurant(location);
+-- DB2024_Menu.res_id: Restaurant별로 메뉴를 검색
+CREATE INDEX DB2024_idx_Menu
+    ON DB2024_Menu(res_id);
 
--- DB2024_Restaurant.cuisine_type: 특정 cuisine에 포함되는 식당을 찾거나, DB2024_Category 뷰를 사용할 때 등
--- DB2024_Restaurant 테이블의 cuisine_type 이 자주 사용됨
-CREATE INDEX DB2024_idx2_Restaurant
+-- DB2024_Restaurant.cuisine_type: cuisine_type별로 Restaurant를 검색
+CREATE INDEX DB2024_idx_Restaurant
     ON DB2024_Restaurant(cuisine_type);
 
 
