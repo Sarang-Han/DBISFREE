@@ -46,7 +46,6 @@ CREATE TABLE DB2024_Menu(
     menu_name VARCHAR(50),
     res_id INT,
     price INT,
-    menu_comment VARCHAR(100),
 
 -- 특정 식당의 특정 메뉴라는 점이 각각의 투플을 구별한다
     PRIMARY KEY(menu_id, res_id),
@@ -240,15 +239,13 @@ CREATE VIEW DB2024_OtherUser AS
 FROM DB2024_User);
 -- SELECT * FROM DB2024_OtherUser;
 
--- 사용자가 한 삭당 안에 있는 메뉴들을 검색할 때 res_name 을 이용하므로 DB2024_Restaurant 와 DB2024_Menu 의 조인을 통해 res_name 을 받아와야함.
 CREATE VIEW DB2024_MenuView AS
-(SELECT r.res_name, m.menu_name, m.price, m.menu_comment
-FROM DB2024_Menu m JOIN DB2024_Restaurant r
-                        ON m.res_id = r.res_id);
+SELECT r.res_name, m.menu_name, m.price
+FROM DB2024_Restaurant r JOIN DB2024_Menu m ON r.res_id = m.res_id;
 -- SELECT * FROM DB2024_MenuView;
 
 -- 인덱스 생성 -----------------------------------------------------------------------
--- DB2024_Rating.res_id: 특정 가게의 평점 평균을 구할 때 DB2024_Rating 테이블의 res_id가 자주 사용됨
+-- DB2024_Rating.res_id: 특정 가게의 평점 평을 구할 때 DB2024_Rating 테이블의 res_id가 자주 사용됨
 CREATE INDEX DB2024_idx_AvgRating
     ON DB2024_Rating (res_id);
 
@@ -256,10 +253,10 @@ CREATE INDEX DB2024_idx_AvgRating
 CREATE INDEX DB2024_idx_Review
     ON DB2024_Review (user_id);
 
--- DB2024_Menu.res_id: Restaurant별로 메뉴를 검색
+-- DB2024_Menu.res_id: Restaurant별로 menu 검색
 CREATE INDEX DB2024_idx_Menu
     ON DB2024_Menu(res_id);
-
+    
 -- DB2024_Restaurant.cuisine_type: cuisine_type별로 Restaurant를 검색
 CREATE INDEX DB2024_idx_Restaurant
     ON DB2024_Restaurant(cuisine_type);

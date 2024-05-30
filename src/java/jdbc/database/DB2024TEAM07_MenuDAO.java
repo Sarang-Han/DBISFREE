@@ -2,11 +2,13 @@ package jdbc.database;
 
 import jdbc.model.DB2024TEAM07_Menu;
 
-import java.sql.*;
-import java.util.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
-//구현해야할 기능: 메뉴 등록, 메뉴 조회, 메뉴 수정, 메뉴 삭제
-//건의할거: menu 테이블에 menu_id 추가? 한 식당 내에 메뉴 여러개라 메뉴 id 속성도 추가하면 좋을거같음.
 public class DB2024TEAM07_MenuDAO{
     private Connection conn;
     private PreparedStatement pStmt;
@@ -79,6 +81,19 @@ public class DB2024TEAM07_MenuDAO{
         return null;
     }
 
+    // 메뉴 조회 - 식당별로 메뉴 검색
+    public ResultSet searchMenuByRestaurant(String res_id) {
+        String Q = "SELECT menu_id, menu_name, price FROM DB2024_Menu use index(DB2024_idx_Menu) WHERE res_id = ?";
+        try {
+            pStmt = conn.prepareStatement(Q);
+            pStmt.setString(1, res_id);
+            return pStmt.executeQuery();
+        } catch (SQLException se) {
+            se.printStackTrace();
+        }
+        return null;
+    }
+
     // 메뉴 조회 2 (관리자 관점 - res_id로 검색해도 괜찮은 주체)
     public ResultSet searchByManager(int res_id) {
         String Q = "SELECT * FROM DB2024_Menu WHERE res_id=?";
@@ -94,37 +109,37 @@ public class DB2024TEAM07_MenuDAO{
     }
 
     //메뉴 수정 (관리자 관점)
-        public int update(DB2024TEAM07_Menu menu, int pRes_id, int pMenu_id) {
-            String Q = "UPDATE DB2024_Menu SET menu_id=?, menu_name=?, res_id=?, price=?, menu_comment=? WHERE res_id=? AND menu_id=?";
-            try {
-                pStmt = conn.prepareStatement(Q);
-                pStmt.setInt(1, menu.getMenu_id());
-                pStmt.setString(2, menu.getMenu_name());
-                pStmt.setInt(3, menu.getRes_id());
-                pStmt.setInt(4, menu.getPrice());
-                pStmt.setString(5, menu.getMenu_comment());
-                pStmt.setInt(6, pRes_id);
-                pStmt.setInt(7, pMenu_id);
+    public int update(DB2024TEAM07_Menu menu, int pRes_id, int pMenu_id) {
+        String Q = "UPDATE DB2024_Menu SET menu_id=?, menu_name=?, res_id=?, price=?, menu_comment=? WHERE res_id=? AND menu_id=?";
+        try {
+            pStmt = conn.prepareStatement(Q);
+            pStmt.setInt(1, menu.getMenu_id());
+            pStmt.setString(2, menu.getMenu_name());
+            pStmt.setInt(3, menu.getRes_id());
+            pStmt.setInt(4, menu.getPrice());
+            pStmt.setString(5, menu.getMenu_comment());
+            pStmt.setInt(6, pRes_id);
+            pStmt.setInt(7, pMenu_id);
 
-                return pStmt.executeUpdate();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-            return 0;
+            return pStmt.executeUpdate();
+        } catch (SQLException se) {
+            se.printStackTrace();
         }
+        return 0;
+    }
 
     //메뉴 삭제 (관리자 관점)
-        public int delete(int res_id, int menu_id) {
-            String Q = "DELETE FROM DB2024_Menu WHERE res_id=? AND menu_id=?";
-            try {
-                pStmt = conn.prepareStatement(Q);
-                pStmt.setInt(1, res_id);
-                pStmt.setInt(2, menu_id);
+    public int delete(int res_id, int menu_id) {
+        String Q = "DELETE FROM DB2024_Menu WHERE res_id=? AND menu_id=?";
+        try {
+            pStmt = conn.prepareStatement(Q);
+            pStmt.setInt(1, res_id);
+            pStmt.setInt(2, menu_id);
 
-                return pStmt.executeUpdate();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-            return 0;
+            return pStmt.executeUpdate();
+        } catch (SQLException se) {
+            se.printStackTrace();
         }
+        return 0;
+    }
 }
