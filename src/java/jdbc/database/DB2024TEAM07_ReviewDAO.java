@@ -1,3 +1,4 @@
+package jdbc.database;
 //Database 파일의 커넥션과의 연결 필요
 //error라고 적힌 부분은 조치 필요(고민)-롤백/무시/등
 
@@ -13,6 +14,9 @@
     리뷰 삭제:  delete(int review_id)
  */
 
+
+import jdbc.model.DB2024TEAM07_Review;
+import jdbc.model.DB2024TEAM07_UserReview;
 
 import java.util.ArrayList;
 import java.sql.*;

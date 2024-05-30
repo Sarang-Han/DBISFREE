@@ -1,11 +1,13 @@
+package jdbc.database;
+
 import java.sql.*;
 
 public class DB2024TEAM07_Database{
 
     static final String JDBC_DRIVER = "com.mysql.cj.jdbc.Driver";
-    static final String DB_URL = "jdbc:mysql://localhost:3306/DB2024Team07";
-    static final String USER = "DB2024Team07";
-    static final String PASS = "DB2024Team07";
+    static final String DB_URL = "jdbc:mysql://localhost:3306/DB2024TEAM07"; // 수정
+    static final String USER = "DB2024TEAM07"; // 수정
+    static final String PASS = "DB2024TEAM07"; // 수정
 
     private static DB2024TEAM07_Database instance;
     private Connection conn;

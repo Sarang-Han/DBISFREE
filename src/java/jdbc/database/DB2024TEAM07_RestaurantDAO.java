@@ -1,3 +1,8 @@
+package jdbc.database;
+
+import jdbc.model.DB2024TEAM07_Restaurant;
+import jdbc.view.DB2024TEAM07_CategoryVO;
+
 import java.sql.*;
 import java.util.*;
 
