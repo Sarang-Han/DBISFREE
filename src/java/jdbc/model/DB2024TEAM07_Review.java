@@ -1,3 +1,5 @@
+package jdbc.model;
+
 public class DB2024TEAM07_Review{
     //review_id, user_id, menu_name, rating, review_content
     private int review_id;

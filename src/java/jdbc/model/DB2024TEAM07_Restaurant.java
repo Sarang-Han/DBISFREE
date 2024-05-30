@@ -1,3 +1,5 @@
+package jdbc.model;
+
 public class DB2024TEAM07_Restaurant{
     String res_name;
     int res_id;

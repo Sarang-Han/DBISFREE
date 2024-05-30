@@ -1,3 +1,4 @@
+package jdbc.model;
 
 public class DB2024TEAM07_User {
     //user_id, user_pw, name, student_id, email, location

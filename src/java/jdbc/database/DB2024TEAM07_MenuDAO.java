@@ -1,3 +1,7 @@
+package jdbc.database;
+
+import jdbc.model.DB2024TEAM07_Menu;
+
 import java.sql.*;
 import java.util.*;
 

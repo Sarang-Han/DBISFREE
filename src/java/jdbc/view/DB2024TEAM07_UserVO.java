@@ -1,3 +1,5 @@
+package jdbc.view;
+
 //뷰를 위한 VO
 
 public class DB2024TEAM07_UserVO{

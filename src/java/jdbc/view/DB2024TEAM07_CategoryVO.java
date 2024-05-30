@@ -1,3 +1,5 @@
+package jdbc.view;
+
 // category 뷰
 
 public class DB2024TEAM07_CategoryVO {

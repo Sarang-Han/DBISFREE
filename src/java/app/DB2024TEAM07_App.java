@@ -1,5 +1,15 @@
+package app;
+
+/*
+함수 분리 후 삭제할 파일입니다 - 고은서 -
+ */
+
 import java.sql.*;
 import java.util.*;
+
+import jdbc.database.DB2024TEAM07_RestaurantDAO;
+import jdbc.database.DB2024TEAM07_MenuDAO;
+import jdbc.database.DB2024TEAM07_ReviewDAO;
 
 public class DB2024TEAM07_App {
     private static DB2024TEAM07_RestaurantDAO restaurantDAO = new DB2024TEAM07_RestaurantDAO();

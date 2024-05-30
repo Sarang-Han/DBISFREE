@@ -1,3 +1,5 @@
+package jdbc.model;
+
 public class DB2024TEAM07_Menu{
     int menu_id;
     String menu_name;
