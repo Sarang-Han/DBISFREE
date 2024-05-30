@@ -45,11 +45,10 @@ public class DB2024TEAM07_RatingDAO{
             pStmt = conn.prepareStatement(Q);
             pStmt.setInt(1, res_id);
             rs = pStmt.executeQuery();
-            float ratingAvg = rs.next();
-            if(ratingAvg == null){
-                return -1;  //res_id is wrong
+            if(rs.next()){
+                return rs.getFloat(1);
             }
-            return ratingAvg;
+            return -1;   //res_id is wrong
         }catch(SQLException se){
             se.printStackTrace();
         }
