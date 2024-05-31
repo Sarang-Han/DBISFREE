@@ -241,7 +241,7 @@ FROM DB2024_User);
 
 -- 리뷰를 유저이름, 메뉴이름, 평점, 리뷰내용의 형태로 보기 위한 뷰
 CREATE VIEW DB2024_viewReview AS
-SELECT DB2024_User.name, DB2024_Menu.menu_name, rating, review_content
+SELECT review_id, DB2024_User.name, DB2024_Menu.menu_name, rating, review_content
 FROM DB2024_User, DB2024_Menu, DB2024_Review
 WHERE DB2024_User.user_id = DB2024_Review.user_id AND DB2024_Menu.menu_id = DB2024_Review.menu_id;
 -- SELECT * FROM DB2024_viewReview;
