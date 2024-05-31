@@ -22,9 +22,11 @@ public class DB2024TEAM07_Main {
             switch (choice) {
                 case 1:
                     DB2024TEAM07_UserMain.main(new String[]{});
+                    running = false;
                     break;
                 case 2:
                     DB2024TEAM07_AdminMain.main(new String[]{});
+                    running = false;
                     break;
                 case 3:
                     running = false;
