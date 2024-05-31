@@ -116,14 +116,15 @@ public class DB2024TEAM07_UserDAO{
     public DB2024TEAM07_UserVO getOtherUser(String user_id){
         String Q = "SELECT * FROM DB2024_OtherUser WHERE user_id = ?";
         try{
-            DB2024TEAM07_UserVO user = new DB2024TEAM07_UserVO();
             pStmt = conn.prepareStatement(Q);
             pStmt.setString(1, user_id);
             rs = pStmt.executeQuery();
             if(rs.next()){    //id: 존재
-                user.setUser_id(rs.getString(1));
-                user.setName(rs.getString(2));
-                user.setEmail(rs.getString(3));
+                DB2024TEAM07_UserVO user  = new DB2024TEAM07_UserVO(
+                        rs.getString(1),
+                        rs.getString(2),
+                        rs.getString(3)
+                );
                 return user;
             }
             //else

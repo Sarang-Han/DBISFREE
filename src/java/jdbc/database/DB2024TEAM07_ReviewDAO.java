@@ -17,6 +17,7 @@ package jdbc.database;
 
 import jdbc.model.DB2024TEAM07_Review;
 import jdbc.model.DB2024TEAM07_UserReview;
+import jdbc.view.DB2024TEAM07_ReviewVO;
 
 import java.util.ArrayList;
 import java.sql.*;
@@ -77,7 +78,7 @@ public class DB2024TEAM07_ReviewDAO {
     //리뷰 개수 반환(DB2024_Review 테이블의 투플 반환)----------------------------------------------------------------------
     // 이 함수 반환값을 통해 페이지 값 계산하기
     public int getCount() {
-        String Q = "SELECT COUNT(*) FROM DB2024_Review";
+        String Q = "SELECT COUNT(*) FROM DB2024_viewReview";
         try{
             pStmt = conn.prepareStatement(Q);
             rs = pStmt.executeQuery();
@@ -96,9 +97,9 @@ public class DB2024TEAM07_ReviewDAO {
     //일단은 최신순, 10개 단위로 반환하는 형태 선택
     //ArrayList<Review>형식으로 반환
     //page는 가장 최신 값이 보이는 페이지가 1이라는 가정 하에 작성됨
-    public ArrayList<DB2024TEAM07_Review> getReview(int page){
-        String Q = "SELECT * FROM DB2024_Review ORDER BY review_id DESC";
-        ArrayList<DB2024TEAM07_Review> list = new ArrayList<>();
+    public ArrayList<DB2024TEAM07_ReviewVO> getReview(int page){
+        String Q = "SELECT * FROM DB2024_viewReview ORDER BY review_id DESC";
+        ArrayList<DB2024TEAM07_ReviewVO> list = new ArrayList<>();
         try{
             pStmt = conn.prepareStatement(Q,
                     ResultSet.TYPE_SCROLL_SENSITIVE,
@@ -107,7 +108,7 @@ public class DB2024TEAM07_ReviewDAO {
             rs.absolute((page-1)*10);
             int i=0;
             while(rs.next() && i<10) {
-                DB2024TEAM07_Review review  = new DB2024TEAM07_Review(
+                DB2024TEAM07_ReviewVO review  = new DB2024TEAM07_ReviewVO(
                         rs.getInt(1),
                         rs.getString(2),
                         rs.getString(3),
@@ -205,7 +206,7 @@ public class DB2024TEAM07_ReviewDAO {
     //특정 가게의 리뷰 몰아보기 기능(DB2024_Review 테이블의 투플 반환)-----------------------------------------------------------------------
     //일단은 최신순, 10개 단위로 반환하는 형태 선택
     //프로젝트 요구사항-중첩된 쿼리 사용됨
-    public ArrayList<DB2024TEAM07_Review> getResReview(int page, int res_id){
+    public ArrayList<DB2024TEAM07_ReviewVO> getResReview(int page, int res_id){
         /*  SELECT *
             FROM DB2024_Review
             WHERE review_id IN (SELECT review_id
@@ -213,8 +214,8 @@ public class DB2024TEAM07_ReviewDAO {
                                 WHERE res_id = ?)
             ORDER BY review_id DESC;
         */
-        String Q = "SELECT * FROM DB2024_Review WHERE review_id IN (SELECT review_id FROM DB2024_Rating WHERE res_id = ?) ORDER BY review_id DESC";
-        ArrayList<DB2024TEAM07_Review> restaurantReviews = new ArrayList<>();
+        String Q = "SELECT * FROM DB2024_ReviewVO WHERE review_id IN (SELECT review_id FROM DB2024_Rating WHERE res_id = ?) ORDER BY review_id DESC";
+        ArrayList<DB2024TEAM07_ReviewVO> restaurantReviews = new ArrayList<>();
         try{
             pStmt = conn.prepareStatement(Q,
                     ResultSet.TYPE_SCROLL_SENSITIVE,
@@ -224,7 +225,7 @@ public class DB2024TEAM07_ReviewDAO {
             rs.absolute((page-1)*10);
             int i=0;
             while(rs.next() && i<10) {
-                DB2024TEAM07_Review review  = new DB2024TEAM07_Review(
+                DB2024TEAM07_ReviewVO review  = new DB2024TEAM07_ReviewVO(
                         rs.getInt(1),
                         rs.getString(2),
                         rs.getString(3),
