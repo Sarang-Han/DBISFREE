@@ -91,9 +91,9 @@ public class DB2024TEAM07_MenuManager {
             if (result != null && result.next()) {
                 System.out.println("Menu found by search:");
                 do {
+                    System.out.println("Restaurant Name: " + result.getString("res_name"));
                     System.out.println("Menu Name: " + result.getString("menu_name"));
                     System.out.println("Price: " + result.getInt("price"));
-                    System.out.println("Comment: " + result.getString("menu_comment"));
                 } while (result.next());
             } else {
                 System.out.println("No menu found matching user search criteria.");
@@ -102,6 +102,8 @@ public class DB2024TEAM07_MenuManager {
             e.printStackTrace();
         }
     }
+
+    //searchByRestaurant는 menu_id(해당 식당 내에 있는 메뉴 나열 표시), menu_name, price만 출력되도록 하면 좋을 것 같아용
 
     /* Delete Function */
     public static void deleteMenu(Scanner scanner) {

@@ -43,7 +43,7 @@ public class DB2024TEAM07_MenuDAO{
     //    사용자에게 필요한 정보(res_name, menu_name, price, menu_comment 만 보여주기
     public ResultSet searchByUsers(String res_name, String menu_name, Integer minPrice, Integer maxPrice) {
         StringBuilder Q = new StringBuilder( // DB2024_MenuView 뷰 활용.
-                "SELECT res_name, menu_name, price, menu_comment FROM DB2024_MenuView WHERE 1=1"
+                "SELECT res_name, menu_name, price FROM DB2024_MenuView WHERE 1=1"
         );
 
         List<Object> params = new ArrayList<>();
@@ -82,11 +82,11 @@ public class DB2024TEAM07_MenuDAO{
     }
 
     // 메뉴 조회 - 식당별로 메뉴 검색
-    public ResultSet searchMenuByRestaurant(String res_id) {
+    public ResultSet searchMenuByRestaurant(String res_name) {
         String Q = "SELECT menu_id, menu_name, price FROM DB2024_Menu use index(DB2024_idx_Menu) WHERE res_id = ?";
         try {
             pStmt = conn.prepareStatement(Q);
-            pStmt.setString(1, res_id);
+            pStmt.setString(1, res_name);
             return pStmt.executeQuery();
         } catch (SQLException se) {
             se.printStackTrace();
