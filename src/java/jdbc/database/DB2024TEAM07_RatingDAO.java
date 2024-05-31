@@ -40,8 +40,9 @@ public class DB2024TEAM07_RatingDAO{
     //레스토랑 평점 반환 기능-----------------------------------------------------------------------
     //DB2024_Review 테이블의 투플이 추가/삭제되거나, rating 속성 수정이 이뤄졌을 때 호출되어야 한다.
     //테이블 간 변화 적용이 필요한 부분이므로 트랜잭션 필수
+    //인덱스 힌트(DB2024_idx_AvgRating)
     public float getAvg(int res_id){
-        String Q = "SELECT AVG(rating) FROM DB2024_Rating WHERE res_id = ? GROUP BY res_id";
+        String Q = "SELECT AVG(rating) FROM DB2024_Rating USE INDEX(DB2024_idx_AvgRating) WHERE res_id = ? GROUP BY res_id";
         try{
             pStmt = conn.prepareStatement(Q);
             pStmt.setInt(1, res_id);
