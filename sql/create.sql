@@ -131,11 +131,11 @@ INSERT INTO DB2024_Restaurant VALUES
       ('슬로우캘리 이대점', 31, '0507-1391-7188', '서울 서대문구 이화여대길 78 가동 1층', '월~일 11:00~21:00', '월~일 15:00~17:00', NULL, '샐러드', '정문');
 
 INSERT INTO DB2024_User VALUES
-	("s2eojeong", "s2eojeong", "조서정", 2276305, "s2eojeong@gmail.com", "후문"),
-    ("astralfinance", "astralfinance", "한사랑", 2271064, "astralfinance", "후문"),
-    ("cannes7", "cannes7", "고은서", 2122004, "cannes7@ewhain.net", "정문"),
-    ("meanwest", "meanwest", "김민서", 2276046, "meanwestk@gmail.com", "후문"),
-    ("chacha091", "chacha091", "차현주", 2276321, "chacha09@ewhain.net", "정문");
+	('s2eojeong', 's2eojeong', '조서정', 2276305, 's2eojeong@gmail.com', '후문'),
+    ('astralfinance', 'astralfinance', '한사랑', 2271064, 'astralfinance@', '후문'),
+    ('cannes7', 'cannes7', '고은서', 2122004, 'cannes7@ewhain.net', '정문'),
+    ('meanwest', 'meanwest', '김민서', 2276046, 'meanwestk@gmail.com', '후문'),
+    ('chacha091', 'chacha091', '차현주', 2276321, 'chacha09@ewhain.net', '정문');
     
 INSERT INTO DB2024_Menu VALUES
 	(1, '육회덮밥', 1, 11000),
@@ -238,6 +238,13 @@ CREATE VIEW DB2024_OtherUser AS
 (SELECT user_id, `name`, email
 FROM DB2024_User);
 -- SELECT * FROM DB2024_OtherUser;
+
+-- 리뷰를 유저이름, 메뉴이름, 평점, 리뷰내용의 형태로 보기 위한 뷰
+CREATE VIEW DB2024_viewReview AS
+SELECT review_id, DB2024_User.name, DB2024_Menu.menu_name, rating, review_content
+FROM DB2024_User, DB2024_Menu, DB2024_Review
+WHERE DB2024_User.user_id = DB2024_Review.user_id AND DB2024_Menu.menu_id = DB2024_Review.menu_id;
+-- SELECT * FROM DB2024_viewReview;
 
 CREATE VIEW DB2024_MenuView AS
 SELECT r.res_name, m.menu_name, m.price
