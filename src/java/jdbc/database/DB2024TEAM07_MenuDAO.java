@@ -110,7 +110,7 @@ public class DB2024TEAM07_MenuDAO{
 
     //메뉴 수정 (관리자 관점)
     public int update(DB2024TEAM07_Menu menu, int pRes_id, int pMenu_id) {
-        String Q = "UPDATE DB2024_Menu SET menu_id=?, menu_name=?, res_id=?, price=?, menu_comment=? WHERE res_id=? AND menu_id=?";
+        String Q = "UPDATE DB2024_Menu SET menu_id=?, menu_name=?, res_id=?, price=? WHERE res_id=? AND menu_id=?";
         try {
             pStmt = conn.prepareStatement(Q);
             pStmt.setInt(1, menu.getMenu_id());

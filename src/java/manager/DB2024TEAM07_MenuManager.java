@@ -28,10 +28,7 @@ public class DB2024TEAM07_MenuManager {
         int price = scanner.nextInt();
         scanner.nextLine();
 
-        System.out.print("Enter Menu Comment: ");
-        String menu_comment = scanner.nextLine();
-
-        DB2024TEAM07_Menu menu = new DB2024TEAM07_Menu(menu_id, menu_name, res_id, price, menu_comment);
+        DB2024TEAM07_Menu menu = new DB2024TEAM07_Menu(menu_id, menu_name, res_id, price);
         int result = menuDAO.add(menu);
 
         if (result > 0) {
@@ -58,10 +55,7 @@ public class DB2024TEAM07_MenuManager {
         int newPrice = scanner.nextInt();
         scanner.nextLine();
 
-        System.out.print("Enter New Menu Comment: ");
-        String newMenuComment = scanner.nextLine();
-
-        DB2024TEAM07_Menu updatedMenu = new DB2024TEAM07_Menu(menu_id, newMenuName, res_id, newPrice, newMenuComment);
+        DB2024TEAM07_Menu updatedMenu = new DB2024TEAM07_Menu(menu_id, newMenuName, res_id, newPrice);
         int result = menuDAO.update(updatedMenu, res_id, menu_id);
 
         if (result > 0) {
