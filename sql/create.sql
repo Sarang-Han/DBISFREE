@@ -6,16 +6,22 @@ CREATE DATABASE DB2024TEAM07 CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
 USE DB2024TEAM07;
 
 -- 테이블 생성 -----------------------------------------------------------------------
--- 1. DB2024_User: 유저 정보에 관한 테이블
+/*
+ 1. DB2024_User: 유저 정보에 관한 테이블
+ user_id: PK, 유저 아이디 정보
+ user_pw: 유저 비밀번호 정보
+ name: 유저 이름(닉네임) 정보
+ student_id: 유저 학번 정보
+ email: 유저 이메일 정보
+ location: 유저 장소 정보(주의! Restaurant 테이블의 location 속성과 이름만 같고 다른 의미 가짐)
+ */
 CREATE TABLE DB2024_User(
 -- 유저 아이디, 비밀번호, 이름, 학번, 이메일, 장소 속성
     user_id VARCHAR(50),
     user_pw VARCHAR(50) NOT NULL,
     name VARCHAR(50) NOT NULL,
--- 학번, 이메일, 장소는 필수로 작성하지 않아도 되게끔 설정되었다.
     student_id INT,
     email VARCHAR(50) CHECK (email LIKE '%@%'),
--- 주의: Restaurant 테이블의 location 속성과 이름만 같고 다른 의미 가짐
     location VARCHAR(100),
 
 -- 유일한 값을 가지는 유저 아이디가 각각의 투플을 구분한다.
@@ -23,22 +29,40 @@ CREATE TABLE DB2024_User(
     PRIMARY KEY (user_id)
 );
 
--- 2. DB2024_Restaurant: 식당 정보에 관한 테이블
+/*
+ 2. DB2024_Restaurant: 식당 정보에 관한 테이블
+     res_name: 식당 이름 정보
+     res_id: PK. 투플이 추가될 때마다 자동적으로 1씩 추가되어 입력된다.
+     phone_num: 식당 전화번호 정보
+     address: 식당 주소 정보
+     operating_hours: 식당 운영시간 정보
+     break_time: 식당 휴식시간 정보
+     rating: 식당 전체(평균) 평점
+     cuisine_type: 식당 요리 종류 정보
+     location: 식당 장소 정보
+ */
 CREATE TABLE DB2024_Restaurant(
-  res_name VARCHAR(200) NOT NULL,
-  res_id INT NOT NULL AUTO_INCREMENT,
-  phone_num VARCHAR(20) DEFAULT NULL,
-  address VARCHAR(200) DEFAULT NULL,
-  operating_hours VARCHAR(100) DEFAULT NULL,
-  break_time VARCHAR(100) DEFAULT NULL,
-  rating decimal(2,1) DEFAULT NULL,
-  cuisine_type VARCHAR(50) DEFAULT NULL,
-  location VARCHAR(50) DEFAULT NULL,
+    res_name VARCHAR(200) NOT NULL,
+    res_id INT NOT NULL AUTO_INCREMENT,
+    phone_num VARCHAR(20) DEFAULT NULL,
+    address VARCHAR(200) DEFAULT NULL,
+    operating_hours VARCHAR(100) DEFAULT NULL,
+    break_time VARCHAR(100) DEFAULT NULL,
+    rating decimal(2,1) DEFAULT NULL,
+    cuisine_type VARCHAR(50) DEFAULT NULL,
+    location VARCHAR(50) DEFAULT NULL,
 
-  PRIMARY KEY(res_id)
+    PRIMARY KEY(res_id)
 );
 
--- 3. DB2024_Menu: DB2024_Restaurant 테이블의 식당 메뉴 테이블
+/*
+ 3. DB2024_Menu: DB2024_Restaurant 테이블의 식당* 메뉴 테이블
+    menu_id: 각각의 메뉴 투플을 구별하는 식별자
+    menu_name: 메뉴의 이름 정보값. 50자까지 작성이 가능하다.
+    res_id: DB2024_Restaurant 테이블의 PK를 FK로 받아옴
+    price: 메뉴의 가격 정보값. INT 타입의 입력만 가능하다.
+ */
+-- *: Menu는 약한 개체 타입으로, Restaurant에 의존한다. (DB2024_Menu PK: menu_id, res_id)
 -- 레스토랑 -> 메뉴 -> 리뷰가 제3정규형으로 변환된 것
 CREATE TABLE DB2024_Menu(
 -- 메뉴 id, 메뉴 이름, 식당 이름, 메뉴 가격, 메뉴 설명 속성
@@ -53,13 +77,20 @@ CREATE TABLE DB2024_Menu(
     FOREIGN KEY(res_id) REFERENCES DB2024_Restaurant(res_id) ON DELETE CASCADE
 );
 
--- 4. DB2024_Review: DB2024_Menu 테이블의 메뉴에 대한 리뷰 테이블
+/*
+ 4. DB2024_Review: DB2024_User 테이블의 유저가* DB2024_Menu 테이블의 메뉴**에 대해 작성한 리뷰 테이블
+    review_id: 각각의 리뷰 투플을 구별하는 PK
+    user_id: 해당 리뷰를 작성한 유저 정보를 가지는 FK (DB2024_User의 PK)
+    menu_id: 해당 리뷰가 대상으로 하는 메뉴 정보를 가지는 FK (DB2024_Menu의 PK)
+    rating: 리뷰 점수. INT type으로, 0, 1, 2, 3, 4, 5값만을 작성할 수 있다.
+    review_content: 리뷰 텍스트. 500자까지 작성이 가능하다.
+ */
+-- *, **: 이진 1:N 관계
 -- 레스토랑 -> 메뉴 -> 리뷰가 제3정규형으로 변환된 것
 CREATE TABLE DB2024_Review (
    review_id INT AUTO_INCREMENT,
    user_id VARCHAR(50) NOT NULL,
    menu_id INT,
--- 0, 1, 2, 3, 4, 5점만 입력할 수 있게 설정
    rating INT NOT NULL CHECK(rating>-1 AND rating<6),
    review_content VARCHAR(500),
 
@@ -68,24 +99,26 @@ CREATE TABLE DB2024_Review (
    FOREIGN KEY (menu_id) REFERENCES DB2024_Menu(menu_id) ON DELETE SET NULL
 );
 
--- 5. DB2024_Rating: DB2024_Restaurant과 DB2024_Review간의 관계*를 mapping한 테이블
--- *: DB2024_Review 테이블에서의 GROUP BY(resid) AVG(rating) 값 -> DB2024_Restaurant의 rating 값
+/*
+ 5. DB2024_Rating: DB2024_Restaurant과 DB2024_Review간의 관계*를 mapping한 테이블
+    review_id: DB2024_Review 테이블의 PK를 FK로 받아옴
+    res_id: DB2024_Restaurant 테이블의 PK를 FK로 받아옴
+ */
+-- *: 이진 N:M 관계, DB2024_Review 테이블에서의 GROUP BY(resid) AVG(rating) 값 -> DB2024_Restaurant의 rating 값
 -- DB2024_Review 테이블에 투플이 삽입될 때마다 DB2024_Rating 테이블에도 투플을 삽입하는 연산 필수
 CREATE TABLE DB2024_Rating (
    review_id INT,
    res_id INT NOT NULL,
-   rating INT,
+   -- rating INT,
 
--- 유일한 값을 가지는 리뷰 아이디가 각각의 투플을 구별한다
-   PRIMARY KEY (review_id),
+   PRIMARY KEY (review_id, res_id),
 -- 이 테이블의 투플은 이 테이블이 참조하는 '리뷰', '식당'이 사라질 때 같이 삭제된다.
    FOREIGN KEY(review_id) REFERENCES DB2024_Review(review_id) ON DELETE CASCADE,
-   FOREIGN KEY(rating) REFERENCES DB2024_Review(review_id),
+   -- FOREIGN KEY(rating) REFERENCES DB2024_Review(review_id),
    FOREIGN KEY(res_id) REFERENCES DB2024_Restaurant(res_id) ON DELETE CASCADE
 );
 
 -- 릴레이션 확인 -----------------------------------------------------------------------
--- 제대로 생겼는지 확인 용도.
 /*
 SHOW TABLES;
 DESCRIBE DB2024_User;
