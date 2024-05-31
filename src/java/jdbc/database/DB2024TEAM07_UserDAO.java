@@ -18,7 +18,6 @@ import java.sql.*;
 public class DB2024TEAM07_UserDAO{
     private Connection conn;
     private PreparedStatement pStmt;
-    private Statement stmt;
     private ResultSet rs;
     public DB2024TEAM07_UserDAO(){
         this.conn = DB2024TEAM07_Database.getInstance().getConnection();
