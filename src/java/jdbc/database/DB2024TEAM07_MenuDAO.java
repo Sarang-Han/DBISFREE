@@ -27,7 +27,6 @@ public class DB2024TEAM07_MenuDAO{
             pStmt.setString(2, menu.getMenu_name());
             pStmt.setInt(3, menu.getRes_id());
             pStmt.setInt(4, menu.getPrice());
-            pStmt.setString(5, menu.getMenu_comment());
 
             return pStmt.executeUpdate();
 
