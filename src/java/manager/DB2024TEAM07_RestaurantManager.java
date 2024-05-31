@@ -1,5 +1,11 @@
+/*
+DB2024TEAM07_RestaurantManager.java
+*/
+
 package manager;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.*;
 import jdbc.database.DB2024TEAM07_RestaurantDAO;
 import jdbc.model.DB2024TEAM07_Restaurant;
@@ -8,6 +14,7 @@ public class DB2024TEAM07_RestaurantManager {
 
     private static DB2024TEAM07_RestaurantDAO restaurantDAO = new DB2024TEAM07_RestaurantDAO();
 
+    /* Add Function */
     public static void addRestaurant(Scanner scanner) {
         System.out.print("Enter Restaurant Name: ");
         String res_name = scanner.nextLine();
@@ -51,6 +58,7 @@ public class DB2024TEAM07_RestaurantManager {
         }
     }
 
+    /* Update Function */
     public static void updateRestaurant(Scanner scanner) {
         System.out.print("Enter Restaurant ID: ");
         int res_id = scanner.nextInt();
@@ -91,31 +99,76 @@ public class DB2024TEAM07_RestaurantManager {
         }
     }
 
+    /* Search Functions */
+    /* Search by Restaurant Name, Cuisine Type, Location, Minimum Rating */
     public static void searchRestaurant(Scanner scanner) {
-        System.out.print("Enter Restaurant Name: ");
-        String res_name = scanner.nextLine();
+        System.out.print("Enter Restaurant Name (or press Enter to skip): ");
+        String restaurantName = scanner.nextLine();
+        if (restaurantName.trim().isEmpty()) restaurantName = null;
 
-        System.out.print("Enter Cuisine Type: ");
-        String cuisine_type = scanner.nextLine();
+        System.out.print("Enter Cuisine Type (or press Enter to skip): ");
+        String cuisineType = scanner.nextLine();
+        if (cuisineType.trim().isEmpty()) cuisineType = null;
 
-        System.out.print("Enter Location: ");
+        System.out.print("Enter Location (or press Enter to skip): ");
         String location = scanner.nextLine();
+        if (location.trim().isEmpty()) location = null;
 
-        System.out.print("Enter Minimum Rating (optional): ");
-        Float rating = null;
+        System.out.print("Enter Minimum Rating (or press Enter to skip): ");
         String ratingInput = scanner.nextLine();
-        if (!ratingInput.isEmpty()) {
-            rating = Float.parseFloat(ratingInput);
+        Float rating = null;
+        if (!ratingInput.trim().isEmpty()) {
+            try {
+                rating = Float.parseFloat(ratingInput);
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid rating input. Please enter a valid number or press Enter to skip.");
+                return;
+            }
         }
 
-        List<DB2024TEAM07_Restaurant> restaurants = restaurantDAO.search(res_name, cuisine_type, location, rating);
+        List<DB2024TEAM07_Restaurant> restaurants = restaurantDAO.search(restaurantName, cuisineType, location, rating);
+
         if (restaurants.isEmpty()) {
             System.out.println("No restaurants found matching the criteria.");
         } else {
-            System.out.println("Found restaurants:");
+            System.out.println("Restaurants found:");
             for (DB2024TEAM07_Restaurant restaurant : restaurants) {
-                System.out.println(restaurant);
+                System.out.println("Name: " + restaurant.getRes_name());
+                System.out.println("ID: " + restaurant.getRes_id());
+                System.out.println("Phone Number: " + restaurant.getPhone_num());
+                System.out.println("Address: " + restaurant.getAddress());
+                System.out.println("Operating Hours: " + restaurant.getOperating_hours());
+                System.out.println("Break Time: " + restaurant.getBreak_time());
+                System.out.println("Rating: " + restaurant.getRating());
+                System.out.println("Cuisine Type: " + restaurant.getCuisine_type());
+                System.out.println("Location: " + restaurant.getLocation());
+                System.out.println("----------------------------");
             }
+        }
+    }
+
+    /* Search by Cuisine Type */
+    public static void searchRestaurantByCategory(Scanner scanner) {
+        System.out.print("Enter Cuisine Type: ");
+        String cuisineType = scanner.nextLine();
+
+        try (ResultSet rs = restaurantDAO.searchRestaurantByCategory(cuisineType)) {
+            if (rs != null && rs.next()) {
+                do {
+                    System.out.println("Restaurant Name: " + rs.getString("res_name"));
+                    System.out.println("Phone Number: " + rs.getString("phone_num"));
+                    System.out.println("Address: " + rs.getString("address"));
+                    System.out.println("Operating Hours: " + rs.getString("operating_hours"));
+                    System.out.println("Break Time: " + rs.getString("break_time"));
+                    System.out.println("Rating: " + rs.getFloat("rating"));
+                    System.out.println("Location: " + rs.getString("location"));
+                    System.out.println();
+                } while (rs.next());
+            } else {
+                System.out.println("No restaurants found for the given cuisine type.");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 

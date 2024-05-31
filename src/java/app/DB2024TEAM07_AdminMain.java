@@ -38,7 +38,7 @@ public class DB2024TEAM07_AdminMain {
                     DB2024TEAM07_RestaurantManager.updateRestaurant(scanner);
                     break;
                 case 3:
-                    DB2024TEAM07_RestaurantManager.searchRestaurant(scanner);
+                    search_options(scanner);
                     break;
                 case 4:
                     DB2024TEAM07_RestaurantManager.deleteRestaurant(scanner);
@@ -63,5 +63,29 @@ public class DB2024TEAM07_AdminMain {
             }
         }
         scanner.close();
+    }
+
+    public static void search_options(Scanner scanner){
+        while (true) {
+            System.out.println("1. Search by Restaurant Name, Cuisine Type, Location, Minimum Rating");
+            System.out.println("2. Search by Cuisine Type");
+            System.out.println("3. Exit");
+            System.out.print("Choose an option: ");
+            int sub_choice = scanner.nextInt();
+            scanner.nextLine();
+
+            switch (sub_choice) {
+                case 1:
+                    DB2024TEAM07_RestaurantManager.searchRestaurant(scanner);
+                    break;
+                case 2:
+                    DB2024TEAM07_RestaurantManager.searchRestaurantByCategory(scanner);
+                    break;
+                case 3:
+                    return; // Exit the search options menu
+                default:
+                    System.out.println("Invalid choice. Please try again.");
+            }
+        }
     }
 }
