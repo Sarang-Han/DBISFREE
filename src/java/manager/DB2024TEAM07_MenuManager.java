@@ -1,3 +1,7 @@
+/*
+DB2024TEAM07_MenuManager.java
+ */
+
 package manager;
 
 import java.sql.ResultSet;
@@ -87,13 +91,13 @@ public class DB2024TEAM07_MenuManager {
         int maxPrice = scanner.nextInt();
         scanner.nextLine();
 
-        try (ResultSet result = menuDAO.searchByUsers(restaurantName, menuName, minPrice, maxPrice)) {
+        try (ResultSet result = menuDAO.searchMenuByRestaurant(restaurantName)) {
             if (result != null && result.next()) {
                 System.out.println("Menu found by search:");
                 do {
+                    System.out.println("Restaurant: " + restaurantName);
                     System.out.println("Menu Name: " + result.getString("menu_name"));
                     System.out.println("Price: " + result.getInt("price"));
-                    System.out.println("Comment: " + result.getString("menu_comment"));
                 } while (result.next());
             } else {
                 System.out.println("No menu found matching user search criteria.");
