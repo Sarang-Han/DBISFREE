@@ -20,7 +20,7 @@ public class DB2024TEAM07_MenuDAO{
 
     //메뉴 등록 (관리자 관점)
     public int add(DB2024TEAM07_Menu menu) {
-        String Q = "INSERT INTO DB2024_Menu (menu_id, menu_name, res_id, price, menu_comment) VALUES (?, ?, ?, ?, ?)";
+        String Q = "INSERT INTO DB2024_Menu (menu_id, menu_name, res_id, price) VALUES (?, ?, ?, ?)";
         try {
             pStmt = conn.prepareStatement(Q);
             pStmt.setInt(1, menu.getMenu_id());
@@ -39,7 +39,7 @@ public class DB2024TEAM07_MenuDAO{
     //    메뉴 조회 1 (사용자 관점)
     //    minPrice 와 maxPrice 사이의 가격에 해당하는 메뉴들 조회
     //    사용자 입장에서 어떤 식당에 있는 메뉴들을 검색할 땐 res_name으로 검색하지 res_id로 검색하지 않기 때문에 Menu 테이블과 Restaurant 테이블을 조인해서 res_name 받아옴.
-    //    사용자에게 필요한 정보(res_name, menu_name, price, menu_comment 만 보여주기
+    //    사용자에게 필요한 정보(res_name, menu_name, price 만 보여주기
     public ResultSet searchByUsers(String res_name, String menu_name, Integer minPrice, Integer maxPrice) {
         StringBuilder Q = new StringBuilder( // DB2024_MenuView 뷰 활용.
                 "SELECT res_name, menu_name, price FROM DB2024_MenuView WHERE 1=1"
