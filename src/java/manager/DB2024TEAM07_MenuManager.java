@@ -1,7 +1,3 @@
-/*
-DB2024TEAM07_MenuManager.java
- */
-
 package manager;
 
 import java.sql.ResultSet;
@@ -32,10 +28,7 @@ public class DB2024TEAM07_MenuManager {
         int price = scanner.nextInt();
         scanner.nextLine();
 
-        System.out.print("Enter Menu Comment: ");
-        String menu_comment = scanner.nextLine();
-
-        DB2024TEAM07_Menu menu = new DB2024TEAM07_Menu(menu_id, menu_name, res_id, price, menu_comment);
+        DB2024TEAM07_Menu menu = new DB2024TEAM07_Menu(menu_id, menu_name, res_id, price);
         int result = menuDAO.add(menu);
 
         if (result > 0) {
@@ -62,10 +55,7 @@ public class DB2024TEAM07_MenuManager {
         int newPrice = scanner.nextInt();
         scanner.nextLine();
 
-        System.out.print("Enter New Menu Comment: ");
-        String newMenuComment = scanner.nextLine();
-
-        DB2024TEAM07_Menu updatedMenu = new DB2024TEAM07_Menu(menu_id, newMenuName, res_id, newPrice, newMenuComment);
+        DB2024TEAM07_Menu updatedMenu = new DB2024TEAM07_Menu(menu_id, newMenuName, res_id, newPrice);
         int result = menuDAO.update(updatedMenu, res_id, menu_id);
 
         if (result > 0) {
@@ -91,11 +81,11 @@ public class DB2024TEAM07_MenuManager {
         int maxPrice = scanner.nextInt();
         scanner.nextLine();
 
-        try (ResultSet result = menuDAO.searchMenuByRestaurant(restaurantName)) {
+        try (ResultSet result = menuDAO.searchByUsers(restaurantName, menuName, minPrice, maxPrice)) {
             if (result != null && result.next()) {
                 System.out.println("Menu found by search:");
                 do {
-                    System.out.println("Restaurant: " + restaurantName);
+                    System.out.println("Restaurant Name: " + result.getString("res_name"));
                     System.out.println("Menu Name: " + result.getString("menu_name"));
                     System.out.println("Price: " + result.getInt("price"));
                 } while (result.next());
@@ -106,6 +96,8 @@ public class DB2024TEAM07_MenuManager {
             e.printStackTrace();
         }
     }
+
+    //searchByRestaurant는 menu_id(해당 식당 내에 있는 메뉴 나열 표시), menu_name, price만 출력되도록 하면 좋을 것 같아용
 
     /* Delete Function */
     public static void deleteMenu(Scanner scanner) {
