@@ -117,9 +117,8 @@ public class DB2024TEAM07_MenuDAO{
             pStmt.setString(2, menu.getMenu_name());
             pStmt.setInt(3, menu.getRes_id());
             pStmt.setInt(4, menu.getPrice());
-            pStmt.setString(5, menu.getMenu_comment());
-            pStmt.setInt(6, pRes_id);
-            pStmt.setInt(7, pMenu_id);
+            pStmt.setInt(5, pRes_id);
+            pStmt.setInt(6, pMenu_id);
 
             return pStmt.executeUpdate();
         } catch (SQLException se) {
