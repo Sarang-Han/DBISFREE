@@ -87,7 +87,7 @@ public class DB2024TEAM07_AdminMain {
 
     public static void search_menu_options(Scanner scanner) {
         System.out.println("\n1. Search Menu by Restaurant Name, Menu Name, and Price Range (User)");
-        System.out.println("2. Search Menu by Restaurant Name (User)");
+        System.out.println("2. Search Menu by Restaurant ID (User)");
         System.out.println("3. Search Menu by Restaurant ID (Manager)");
         System.out.println("4. Exit");
         System.out.println("\nChoose an option:");
