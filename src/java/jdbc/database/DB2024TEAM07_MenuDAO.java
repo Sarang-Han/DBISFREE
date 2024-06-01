@@ -81,11 +81,11 @@ public class DB2024TEAM07_MenuDAO{
     }
 
     // 메뉴 조회 - 식당별로 메뉴 검색
-    public ResultSet searchMenuByRestaurant(String res_name) {
+    public ResultSet searchMenuByRestaurant(int res_id) {
         String Q = "SELECT menu_id, menu_name, price FROM DB2024_Menu use index(DB2024_idx_Menu) WHERE res_id = ?";
         try {
             pStmt = conn.prepareStatement(Q);
-            pStmt.setString(1, res_name);
+            pStmt.setInt(1, res_id);
             return pStmt.executeQuery();
         } catch (SQLException se) {
             se.printStackTrace();
