@@ -65,39 +65,87 @@ public class DB2024TEAM07_MenuManager {
         }
     }
 
-    /* Search Function */
-    public static void searchMenu(Scanner scanner) {
-        System.out.print("Enter Restaurant Name: ");
+    /* Search Functions */
+    public static void searchByUsers(Scanner scanner) {
+        System.out.print("Enter Restaurant Name (or press Enter to skip): ");
         String restaurantName = scanner.nextLine();
+        if (restaurantName.trim().isEmpty()) restaurantName = null;
 
-        System.out.print("Enter Menu Name: ");
+        System.out.print("Enter Menu Name (or press Enter to skip): ");
         String menuName = scanner.nextLine();
+        if (menuName.trim().isEmpty()) menuName = null;
 
-        System.out.print("Enter Minimum Price: ");
-        int minPrice = scanner.nextInt();
-        scanner.nextLine();
-
-        System.out.print("Enter Maximum Price: ");
-        int maxPrice = scanner.nextInt();
-        scanner.nextLine();
-
-        try (ResultSet result = menuDAO.searchByUsers(restaurantName, menuName, minPrice, maxPrice)) {
-            if (result != null && result.next()) {
-                System.out.println("Menu found by search:");
-                do {
-                    System.out.println("Restaurant Name: " + result.getString("res_name"));
-                    System.out.println("Menu Name: " + result.getString("menu_name"));
-                    System.out.println("Price: " + result.getInt("price"));
-                } while (result.next());
-            } else {
-                System.out.println("No menu found matching user search criteria.");
+        System.out.print("Enter Minimum Price (or press Enter to skip): ");
+        String minPriceInput = scanner.nextLine();
+        Integer minPrice = null;
+        if (!minPriceInput.trim().isEmpty()) {
+            try {
+                minPrice = Integer.parseInt(minPriceInput);
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid minimum price input. Please enter a valid number or press Enter to skip.");
+                return;
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
+        }
+
+        System.out.print("Enter Maximum Price (or press Enter to skip): ");
+        String maxPriceInput = scanner.nextLine();
+        Integer maxPrice = null;
+        if (!maxPriceInput.trim().isEmpty()) {
+            try {
+                maxPrice = Integer.parseInt(maxPriceInput);
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid maximum price input. Please enter a valid number or press Enter to skip.");
+                return;
+            }
+        }
+
+        ResultSet rs = menuDAO.searchByUsers(restaurantName, menuName, minPrice, maxPrice);
+        try {
+            while (rs != null && rs.next()) {
+                System.out.println("Restaurant Name: " + rs.getString("res_name"));
+                System.out.println("Menu Name: " + rs.getString("menu_name"));
+                System.out.println("Price: " + rs.getInt("price"));
+                System.out.println("----------------------------");
+            }
+        } catch (SQLException se) {
+            se.printStackTrace();
         }
     }
 
-    //searchByRestaurant는 menu_id(해당 식당 내에 있는 메뉴 나열 표시), menu_name, price만 출력되도록 하면 좋을 것 같아용
+    public static void searchMenuByRestaurant(Scanner scanner) {
+        System.out.print("Enter Restaurant Name: ");
+        String restaurantName = scanner.nextLine();
+
+        ResultSet rs = menuDAO.searchMenuByRestaurant(restaurantName);
+        try {
+            while (rs != null && rs.next()) {
+                System.out.println("Menu ID: " + rs.getInt("menu_id"));
+                System.out.println("Menu Name: " + rs.getString("menu_name"));
+                System.out.println("Price: " + rs.getInt("price"));
+                System.out.println("----------------------------");
+            }
+        } catch (SQLException se) {
+            se.printStackTrace();
+        }
+    }
+
+    public static void searchByManager(Scanner scanner) {
+        System.out.print("Enter Restaurant ID: ");
+        int resId = scanner.nextInt();
+
+        ResultSet rs = menuDAO.searchByManager(resId);
+        try {
+            while (rs != null && rs.next()) {
+                System.out.println("Menu ID: " + rs.getInt("menu_id"));
+                System.out.println("Restaurant ID: " + rs.getInt("res_id"));
+                System.out.println("Menu Name: " + rs.getString("menu_name"));
+                System.out.println("Price: " + rs.getInt("price"));
+                System.out.println("----------------------------");
+            }
+        } catch (SQLException se) {
+            se.printStackTrace();
+        }
+    }
 
     /* Delete Function */
     public static void deleteMenu(Scanner scanner) {

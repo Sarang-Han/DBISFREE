@@ -21,7 +21,7 @@ public class DB2024TEAM07_Main {
 
             switch (choice) {
                 case 1:
-                    DB2024TEAM07_UserMain.main(new String[]{});
+                    //DB2024TEAM07_UserMain.main(new String[]{});
                     running = false;
                     break;
                 case 2:
