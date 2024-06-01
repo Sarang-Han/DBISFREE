@@ -112,11 +112,13 @@ public class DB2024TEAM07_MenuManager {
         }
     }
 
+    /* main에 res name과 res id를 모두 출력하는 코드 추가해야 함 */
     public static void searchMenuByRestaurant(Scanner scanner) {
-        System.out.print("Enter Restaurant Name: ");
-        String restaurantName = scanner.nextLine();
+        System.out.print("Enter Restaurant ID: ");
+        int restaurantId = scanner.nextInt();
+        scanner.nextLine();
 
-        ResultSet rs = menuDAO.searchMenuByRestaurant(restaurantName);
+        ResultSet rs = menuDAO.searchMenuByRestaurant(restaurantId);
         try {
             while (rs != null && rs.next()) {
                 System.out.println("Menu ID: " + rs.getInt("menu_id"));
