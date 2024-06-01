@@ -17,14 +17,25 @@ public class DB2024TEAM07_Main {
 
         while (running) {
             System.out.println(" ");
-            System.out.println("===== E-MATEASY =====");
+            System.out.println(" ");
+            System.out.println("███████╗    ███╗   ███╗ █████╗ ████████╗███████╗ █████╗ ███████╗██╗   ██╗");
+            System.out.println("██╔════╝    ████╗ ████║██╔══██╗╚══██╔══╝██╔════╝██╔══██╗██╔════╝╚██╗ ██╔╝");
+            System.out.println("█████╗█████╗██╔████╔██║███████║   ██║   █████╗  ███████║███████╗ ╚████╔╝ ");
+            System.out.println("██╔══╝╚════╝██║╚██╔╝██║██╔══██║   ██║   ██╔══╝  ██╔══██║╚════██║  ╚██╔╝  ");
+            System.out.println("███████╗    ██║ ╚═╝ ██║██║  ██║   ██║   ███████╗██║  ██║███████║   ██║   ");
+            System.out.println("╚══════╝    ╚═╝     ╚═╝╚═╝  ╚═╝   ╚═╝   ╚══════╝╚═╝  ╚═╝╚══════╝   ╚═╝   ");
+            System.out.println(" ");
+            System.out.println(" =================== ");
             System.out.println(" ");
             System.out.println("1. 회원 로그인");
             System.out.println("2. 회원 가입");
             System.out.println("3. 관리자 로그인");
             System.out.println("4. 종료");
             System.out.println(" ");
+            System.out.println(" =================== ");
+            System.out.println(" ");
             System.out.print("메뉴 선택: ");
+            System.out.println(" ");
             int choice = scanner.nextInt();
             scanner.nextLine();
 
