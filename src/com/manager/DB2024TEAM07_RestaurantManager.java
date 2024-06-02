@@ -2,13 +2,13 @@
 DB2024TEAM07_RestaurantManager.java
 */
 
-package manager;
+package com.manager;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.*;
-import jdbc.database.DB2024TEAM07_RestaurantDAO;
-import jdbc.model.DB2024TEAM07_Restaurant;
+import com.jdbc.database.DB2024TEAM07_RestaurantDAO;
+import com.jdbc.model.DB2024TEAM07_Restaurant;
 
 public class DB2024TEAM07_RestaurantManager {
 

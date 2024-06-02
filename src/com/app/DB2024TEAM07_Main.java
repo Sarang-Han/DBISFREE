@@ -1,8 +1,8 @@
-package app;
+package com.app;
 
-import jdbc.database.DB2024TEAM07_UserDAO;
-import jdbc.model.DB2024TEAM07_User;
-import manager.DB2024TEAM07_UserManager;
+import com.manager.DB2024TEAM07_UserManager;
+import com.jdbc.database.DB2024TEAM07_UserDAO;
+import com.jdbc.model.DB2024TEAM07_User;
 
 import java.util.Scanner;
 

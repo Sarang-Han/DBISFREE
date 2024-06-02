@@ -1,11 +1,11 @@
-package manager;
+package com.manager;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Scanner;
 
-import jdbc.database.DB2024TEAM07_MenuDAO;
-import jdbc.model.DB2024TEAM07_Menu;
+import com.jdbc.database.DB2024TEAM07_MenuDAO;
+import com.jdbc.model.DB2024TEAM07_Menu;
 
 public class DB2024TEAM07_MenuManager {
 

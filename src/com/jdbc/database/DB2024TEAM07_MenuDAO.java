@@ -1,6 +1,6 @@
-package jdbc.database;
+package com.jdbc.database;
 
-import jdbc.model.DB2024TEAM07_Menu;
+import com.jdbc.model.DB2024TEAM07_Menu;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

@@ -1,4 +1,4 @@
-package jdbc.view;
+package com.jdbc.view;
 
 //뷰(DB2024_OtherUser)를 위한 VO
 

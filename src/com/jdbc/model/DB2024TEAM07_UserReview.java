@@ -1,4 +1,4 @@
-package jdbc.model;
+package com.jdbc.model;
 
 public class DB2024TEAM07_UserReview extends DB2024TEAM07_Review{
     private int review_id;

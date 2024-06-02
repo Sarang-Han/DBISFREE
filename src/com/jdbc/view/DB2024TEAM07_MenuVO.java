@@ -1,4 +1,4 @@
-package jdbc.view;
+package com.jdbc.view;
 
 public class DB2024TEAM07_MenuVO {
     private String res_name;

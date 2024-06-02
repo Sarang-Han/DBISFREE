@@ -1,8 +1,9 @@
-package app;
+package com.app;
+
+import com.manager.DB2024TEAM07_MenuManager;
+import com.manager.DB2024TEAM07_RestaurantManager;
 
 import java.util.Scanner;
-import manager.DB2024TEAM07_RestaurantManager;
-import manager.DB2024TEAM07_MenuManager;
 
 public class DB2024TEAM07_AdminMain {
 

@@ -1,4 +1,4 @@
-package jdbc.model;
+package com.jdbc.model;
 
 public class DB2024TEAM07_Review{
     //review_id, user_id, menu_id, rating, review_content

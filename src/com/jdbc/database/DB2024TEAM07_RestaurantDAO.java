@@ -1,6 +1,6 @@
-package jdbc.database;
+package com.jdbc.database;
 
-import jdbc.model.DB2024TEAM07_Restaurant;
+import com.jdbc.model.DB2024TEAM07_Restaurant;
 
 import java.sql.*;
 import java.util.*;

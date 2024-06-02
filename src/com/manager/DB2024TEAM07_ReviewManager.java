@@ -1,9 +1,9 @@
-package manager;
+package com.manager;
 
-import jdbc.database.DB2024TEAM07_ReviewDAO;
-import jdbc.model.DB2024TEAM07_Review;
-import jdbc.model.DB2024TEAM07_UserReview;
-import jdbc.view.DB2024TEAM07_ReviewVO;
+import com.jdbc.database.DB2024TEAM07_ReviewDAO;
+import com.jdbc.model.DB2024TEAM07_Review;
+import com.jdbc.model.DB2024TEAM07_UserReview;
+import com.jdbc.view.DB2024TEAM07_ReviewVO;
 
 import java.util.*;
 
@@ -115,8 +115,8 @@ public class DB2024TEAM07_ReviewManager {
         System.out.print("Enter restaurant ID: ");
         int resId = sc.nextInt();
 
-        ArrayList<jdbc.view.DB2024TEAM07_ReviewVO> restaurantReviews = reviewDAO.getResReview(page, resId);
-        for (jdbc.view.DB2024TEAM07_ReviewVO review : restaurantReviews) {
+        ArrayList<DB2024TEAM07_ReviewVO> restaurantReviews = reviewDAO.getResReview(page, resId);
+        for (DB2024TEAM07_ReviewVO review : restaurantReviews) {
             System.out.println("Review ID: " + review.getReview_id());
             System.out.println("Menu Name: " + review.getMenu_name());
             System.out.println("Rating: " + review.getRating());

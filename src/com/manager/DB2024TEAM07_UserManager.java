@@ -1,7 +1,7 @@
-package manager;
+package com.manager;
 
-import jdbc.database.DB2024TEAM07_UserDAO;
-import jdbc.model.DB2024TEAM07_User;
+import com.jdbc.database.DB2024TEAM07_UserDAO;
+import com.jdbc.model.DB2024TEAM07_User;
 
 public class DB2024TEAM07_UserManager {
     private DB2024TEAM07_UserDAO userDAO;

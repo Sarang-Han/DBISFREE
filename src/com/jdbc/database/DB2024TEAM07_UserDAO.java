@@ -1,4 +1,4 @@
-package jdbc.database;
+package com.jdbc.database;
 //Database 파일의 커넥션과의 연결 필요
 //error라고 적힌 부분은 조치 필요(고민)-롤백/무시/등
 
@@ -10,8 +10,8 @@ package jdbc.database;
     회원탈퇴:   delete(String user_id, String user_pw)
  */
 
-import jdbc.model.DB2024TEAM07_User;
-import jdbc.view.DB2024TEAM07_UserVO;
+import com.jdbc.model.DB2024TEAM07_User;
+import com.jdbc.view.DB2024TEAM07_UserVO;
 
 import java.sql.*;
 

@@ -1,4 +1,4 @@
-package jdbc.model;
+package com.jdbc.model;
 
 public class DB2024TEAM07_Menu{
     int menu_id;

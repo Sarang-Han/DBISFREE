@@ -1,6 +1,6 @@
-package app;
+package com.app;
 
-import manager.DB2024TEAM07_UserManager;
+import com.manager.DB2024TEAM07_UserManager;
 
 import java.util.Scanner;
 
