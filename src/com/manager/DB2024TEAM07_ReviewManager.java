@@ -149,7 +149,7 @@ public class DB2024TEAM07_ReviewManager {
                 System.out.println("Failed to delete review.");
             }
 
-            String ratingDeleteQuery = "DELETE FROM Rating WHERE review_id = ?";
+            String ratingDeleteQuery = "DELETE FROM DB2024_Rating WHERE review_id = ?";
             try {
                 PreparedStatement pStmt = conn.prepareStatement(ratingDeleteQuery);
                 pStmt.setInt(1, reviewId);
@@ -161,7 +161,7 @@ public class DB2024TEAM07_ReviewManager {
             int resId = getResIdForReview(conn, reviewId);
 
             double newAvgRating = ratingDAO.getAvg(resId);
-            String updateRatingQuery = "UPDATE Restaurant SET rating = ? WHERE restaurant_id = ?";
+            String updateRatingQuery = "UPDATE DB2024_Restaurant SET rating = ? WHERE restaurant_id = ?";
             try {
                 PreparedStatement pStmt = conn.prepareStatement(updateRatingQuery);
                 pStmt.setDouble(1, newAvgRating);
@@ -186,7 +186,7 @@ public class DB2024TEAM07_ReviewManager {
         }
     }
     private static int getResIdForReview(Connection conn, int reviewId) {
-        String resIdQuery = "SELECT res_id FROM Review WHERE review_id = ?";
+        String resIdQuery = "SELECT res_id FROM DB2024_Review WHERE review_id = ?";
         try {
             PreparedStatement pStmt = conn.prepareStatement(resIdQuery);
             pStmt.setInt(1, reviewId);
