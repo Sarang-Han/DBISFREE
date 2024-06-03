@@ -43,10 +43,13 @@ public class DB2024TEAM07_ReviewManager {
     public static void updateReview(Scanner scanner) {
         System.out.print("Enter review ID to update: ");
         int reviewId = scanner.nextInt();
+
         System.out.print("Enter updated menu ID: ");
         String menuId = scanner.next();
+
         System.out.print("Enter updated rating (1-5): ");
         int rating = scanner.nextInt();
+
         System.out.print("Enter updated review content: ");
         scanner.nextLine();
         String reviewContent = scanner.nextLine();
@@ -74,7 +77,7 @@ public class DB2024TEAM07_ReviewManager {
         System.out.println("=== Reviews ===");
         for (DB2024TEAM07_ReviewVO review : reviews) {
             System.out.println("Review ID: " + review.getReview_id());
-            //System.out.println("User ID: " + review.getUser_id());
+            System.out.println("User: " + review.getName());
             System.out.println("Menu name: " + review.getMenu_name());
             System.out.println("Rating: " + review.getRating());
             System.out.println("Review Content: " + review.getReview_content());
@@ -198,32 +201,4 @@ public class DB2024TEAM07_ReviewManager {
             return -1;
         }
     }
-
-
-    /*public static void searchReviewByResMenu(Scanner scanner) {
-        System.out.print("Enter Restaurant Name: ");
-        String restaurantName = scanner.nextLine();
-
-        System.out.print("Enter Menu Name: ");
-        String menuName = scanner.nextLine();
-
-        try (ResultSet rs = reviewDAO.searchReviewByResMenu(restaurantName, menuName)) {
-            if (rs != null && rs.next()) {
-                do {
-                    System.out.println("Review for Restaurant: " + rs.getString("res_name"));
-                    System.out.println("Menu: " + rs.getString("menu_name"));
-                    System.out.println("Review Text: " + rs.getString("review_content"));
-                    System.out.println("Rating: " + rs.getFloat("rating"));
-                    System.out.println();
-                } while (rs.next());
-            } else {
-                System.out.println("No reviews found for the given restaurant and menu.");
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-    }*/
-
-
 }
