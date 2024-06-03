@@ -49,9 +49,8 @@ public class DB2024TEAM07_RatingDAO{
             (SELECT review_id
             FROM DB2024_Rating DB2024_Rating USE INDEX(DB2024_idx_AvgRating)
             WHERE res_id = ?)
-        GROUP BY res_id;
          */
-        String Q = "SELECT AVG(rating) FROM DB2024_Review WHERE review_id = (SELECT review_id FROM DB2024_Rating DB2024_Rating USE INDEX(DB2024_idx_AvgRating) WHERE res_id = ?) GROUP BY res_id";
+        String Q = "SELECT AVG(rating) FROM DB2024_Review WHERE review_id = (SELECT review_id FROM DB2024_Rating DB2024_Rating USE INDEX(DB2024_idx_AvgRating) WHERE res_id = ?)";
         try{
             pStmt = conn.prepareStatement(Q);
             pStmt.setInt(1, res_id);

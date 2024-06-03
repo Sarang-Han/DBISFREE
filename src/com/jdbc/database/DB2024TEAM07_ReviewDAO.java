@@ -129,7 +129,7 @@ public class DB2024TEAM07_ReviewDAO {
     //특정 유저의 리뷰 개수 반환(DB2024_Rating 테이블의 투플 반환)----------------------------------------------------------------------
     // 이 함수 반환값을 통해 페이지 값 계산하기
     public int getUserCount(String user_id) {
-        String Q = "SELECT COUNT(*) FROM DB2024_Rating WHERE user_id = ?";
+        String Q = "SELECT COUNT(*) FROM DB2024_Review WHERE user_id = ?";
         try{
             pStmt = conn.prepareStatement(Q);
             pStmt.setString(1, user_id);
@@ -214,7 +214,7 @@ public class DB2024TEAM07_ReviewDAO {
                                 WHERE res_id = ?)
             ORDER BY review_id DESC;
         */
-        String Q = "SELECT * FROM DB2024_ReviewVO WHERE review_id IN (SELECT review_id FROM DB2024_Rating WHERE res_id = ?) ORDER BY review_id DESC";
+        String Q = "SELECT * FROM DB2024_viewReview WHERE review_id IN (SELECT review_id FROM DB2024_Rating WHERE res_id = ?) ORDER BY review_id DESC";
         ArrayList<DB2024TEAM07_ReviewVO> restaurantReviews = new ArrayList<>();
         try{
             pStmt = conn.prepareStatement(Q,
