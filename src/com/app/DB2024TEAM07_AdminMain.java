@@ -91,7 +91,8 @@ public class DB2024TEAM07_AdminMain {
                     DB2024TEAM07_ReviewManager.deleteReview(scanner);
                     break;
                 case 18:
-                    return;
+                    running = false;
+                    break;
                 default:
                     System.out.println("Invalid choice. Please try again.");
             }
