@@ -90,8 +90,7 @@ public class DB2024TEAM07_Main {
                     }
                     break;
                 case 4:
-                    running = false;
-                    break;
+                    return;
                 default:
                     System.out.println("잘못된 선택입니다. 다시 시도해주세요.");
             }
