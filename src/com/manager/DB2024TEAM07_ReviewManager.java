@@ -18,7 +18,7 @@ public class DB2024TEAM07_ReviewManager {
 
     public static void addReview(Scanner scanner) {
         System.out.print("Enter User ID: ");
-        String userId = scanner.next();
+        String userId = scanner.nextLine();
 
         System.out.print("Enter Menu ID: ");
         String menuId = scanner.next();
@@ -95,9 +95,10 @@ public class DB2024TEAM07_ReviewManager {
 
     public static void getUserReview(Scanner scanner) {
         System.out.print("Enter user ID: ");
-        String userId = scanner.next();
+        String userId = scanner.nextLine();
         System.out.print("Enter page number: ");
         int page = scanner.nextInt();
+        scanner.nextLine();
 
         ArrayList<DB2024TEAM07_UserReview> userReviews = reviewDAO.getUserReview(page, userId);
         System.out.println("=== User Reviews ===");
