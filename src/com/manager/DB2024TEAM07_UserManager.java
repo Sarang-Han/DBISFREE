@@ -45,14 +45,4 @@ public class DB2024TEAM07_UserManager {
         return restaurantDAO;
     }
 
-    public static void recommendRandomRestaurant() {
-        DB2024TEAM07_Restaurant randomRestaurant = restaurantDAO.getRandomRestaurant();
-        if (randomRestaurant != null) {
-            System.out.println("추천 식당:");
-            System.out.println("이름: " + randomRestaurant.getRes_name());
-            // 나머지 정보 출력
-        } else {
-            System.out.println("식당 정보를 가져오지 못했습니다.");
-        }
-    }
 }
