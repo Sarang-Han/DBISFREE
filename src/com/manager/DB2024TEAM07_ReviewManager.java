@@ -5,7 +5,7 @@ import com.jdbc.database.DB2024TEAM07_ReviewDAO;
 import com.jdbc.database.DB2024TEAM07_RatingDAO;
 import com.jdbc.model.DB2024TEAM07_Review;
 import com.jdbc.model.DB2024TEAM07_UserReview;
-import com.jdbc.view.DB2024TEAM07_ReviewVO;
+import com.jdbc.view.DB2024TEAM07_UserReviewVO;
 
 import java.sql.*;
 import java.util.*;
@@ -20,9 +20,6 @@ public class DB2024TEAM07_ReviewManager {
         System.out.print("Enter User ID: ");
         String userId = scanner.nextLine();
 
-        System.out.print("Enter Menu ID: ");
-        String menuId = scanner.next();
-
         System.out.print("Enter Rating (1-5): ");
         int rating = scanner.nextInt();
 
@@ -30,7 +27,7 @@ public class DB2024TEAM07_ReviewManager {
         scanner.nextLine();
         String reviewContent = scanner.nextLine();
 
-        DB2024TEAM07_Review review = new DB2024TEAM07_Review(0, userId, menuId, rating, reviewContent);
+        DB2024TEAM07_Review review = new DB2024TEAM07_Review(0, userId, rating, reviewContent);
         int result = reviewDAO.add(review);
 
         if (result > 0) {
@@ -44,9 +41,6 @@ public class DB2024TEAM07_ReviewManager {
         System.out.print("Enter review ID to update: ");
         int reviewId = scanner.nextInt();
 
-        System.out.print("Enter updated menu ID: ");
-        String menuId = scanner.next();
-
         System.out.print("Enter updated rating (1-5): ");
         int rating = scanner.nextInt();
 
@@ -54,7 +48,7 @@ public class DB2024TEAM07_ReviewManager {
         scanner.nextLine();
         String reviewContent = scanner.nextLine();
 
-        DB2024TEAM07_Review review = new DB2024TEAM07_Review(reviewId, null, menuId, rating, reviewContent);
+        DB2024TEAM07_Review review = new DB2024TEAM07_Review(reviewId, null, rating, reviewContent);
         int result = reviewDAO.update(review);
         if (result > 0) {
             System.out.println("Review updated successfully.");
@@ -72,13 +66,12 @@ public class DB2024TEAM07_ReviewManager {
         System.out.print("Enter page number: ");
         int page = scanner.nextInt();
 
-        ArrayList<DB2024TEAM07_ReviewVO> reviews = reviewDAO.getReview(page);
+        ArrayList<DB2024TEAM07_UserReviewVO> reviews = reviewDAO.getReview(page);
 
         System.out.println("=== Reviews ===");
-        for (DB2024TEAM07_ReviewVO review : reviews) {
+        for (DB2024TEAM07_UserReviewVO review : reviews) {
             System.out.println("Review ID: " + review.getReview_id());
             System.out.println("User: " + review.getName());
-            System.out.println("Menu name: " + review.getMenu_name());
             System.out.println("Rating: " + review.getRating());
             System.out.println("Review Content: " + review.getReview_content());
             System.out.println();
@@ -93,6 +86,7 @@ public class DB2024TEAM07_ReviewManager {
         System.out.println("Total number of reviews for user " + userId + ": " + count);
     }
 
+    //레스토랑 이름이 필요- 추후 뷰 추가 고려
     public static void getUserReview(Scanner scanner) {
         System.out.print("Enter user ID: ");
         String userId = scanner.nextLine();
@@ -105,7 +99,6 @@ public class DB2024TEAM07_ReviewManager {
         for (DB2024TEAM07_UserReview review : userReviews) {
             System.out.println("Reivew ID: " + review.getReview_id());
             System.out.println("User ID: " + review.getUser_id());
-            System.out.println("Menu ID: " + review.getMenu_id());
             System.out.println("Rating: " + review.getRating());
             System.out.println("Review Comment: " + review.getReview_content());
             System.out.println("");
@@ -124,10 +117,9 @@ public class DB2024TEAM07_ReviewManager {
         System.out.print("Enter restaurant ID: ");
         int resId = scanner.nextInt();
 
-        ArrayList<DB2024TEAM07_ReviewVO> restaurantReviews = reviewDAO.getResReview(page, resId);
-        for (DB2024TEAM07_ReviewVO review : restaurantReviews) {
+        ArrayList<DB2024TEAM07_UserReviewVO> restaurantReviews = reviewDAO.getResReview(page, resId);
+        for (DB2024TEAM07_UserReviewVO review : restaurantReviews) {
             System.out.println("Review ID: " + review.getReview_id());
-            System.out.println("Menu Name: " + review.getMenu_name());
             System.out.println("Rating: " + review.getRating());
             System.out.println("Review Content: " + review.getReview_content());
             System.out.println();
@@ -162,7 +154,7 @@ public class DB2024TEAM07_ReviewManager {
             int resId = getResIdForReview(conn, reviewId);
 
             double newAvgRating = ratingDAO.getAvg(resId);
-            String updateRatingQuery = "UPDATE DB2024_Restaurant SET rating = ? WHERE restaurant_id = ?";
+            String updateRatingQuery = "UPDATE DB2024_Restaurant SET rating = ? WHERE res_id = ?";
             try {
                 PreparedStatement pStmt = conn.prepareStatement(updateRatingQuery);
                 pStmt.setDouble(1, newAvgRating);
