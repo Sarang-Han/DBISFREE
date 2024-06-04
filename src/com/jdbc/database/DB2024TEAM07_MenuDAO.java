@@ -109,15 +109,41 @@ public class DB2024TEAM07_MenuDAO{
 
     //메뉴 수정 (관리자 관점)
     public int update(DB2024TEAM07_Menu menu, int pRes_id, int pMenu_id) {
-        String Q = "UPDATE DB2024_Menu SET menu_id=?, menu_name=?, res_id=?, price=? WHERE res_id=? AND menu_id=?";
+        StringBuilder queryBuilder = new StringBuilder("UPDATE DB2024_Menu SET ");
+        List<Object> parameters = new ArrayList<>();
+
+        if (menu.getMenu_id() != -1) {
+            queryBuilder.append("menu_id = ?, ");
+            parameters.add(menu.getMenu_id());
+        }
+        if (menu.getMenu_name() != null && !menu.getMenu_name().isEmpty()) {
+            queryBuilder.append("menu_name = ?, ");
+            parameters.add(menu.getMenu_name());
+        }
+        if (menu.getRes_id() != -1) {
+            queryBuilder.append("res_id = ?, ");
+            parameters.add(menu.getRes_id());
+        }
+        if (menu.getPrice() != -1) {
+            queryBuilder.append("price = ?, ");
+            parameters.add(menu.getPrice());
+        }
+
+        queryBuilder.setLength(queryBuilder.length() - 2);
+
+        queryBuilder.append(" WHERE res_id = ? AND menu_id = ?");
+        parameters.add(pRes_id);
+        parameters.add(pMenu_id);
+
+        String query = queryBuilder.toString();
+
         try {
-            pStmt = conn.prepareStatement(Q);
-            pStmt.setInt(1, menu.getMenu_id());
-            pStmt.setString(2, menu.getMenu_name());
-            pStmt.setInt(3, menu.getRes_id());
-            pStmt.setInt(4, menu.getPrice());
-            pStmt.setInt(5, pRes_id);
-            pStmt.setInt(6, pMenu_id);
+            pStmt = conn.prepareStatement(query);
+
+            // Set the parameters for the prepared statement
+            for (int i = 0; i < parameters.size(); i++) {
+                pStmt.setObject(i + 1, parameters.get(i));
+            }
 
             return pStmt.executeUpdate();
         } catch (SQLException se) {
