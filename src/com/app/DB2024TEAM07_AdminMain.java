@@ -1,5 +1,7 @@
 package com.app;
 
+import com.jdbc.database.DB2024TEAM07_MenuDAO;
+import com.jdbc.database.DB2024TEAM07_RestaurantDAO;
 import com.manager.DB2024TEAM07_MenuManager;
 import com.manager.DB2024TEAM07_RestaurantManager;
 import com.manager.DB2024TEAM07_ReviewManager;
@@ -43,7 +45,7 @@ public class DB2024TEAM07_AdminMain {
                     DB2024TEAM07_RestaurantManager.addRestaurant(scanner);
                     break;
                 case 2:
-                    DB2024TEAM07_RestaurantManager.updateRestaurant(scanner);
+                    DB2024TEAM07_RestaurantManager.updateRestaurant(scanner, new DB2024TEAM07_RestaurantDAO());
                     break;
                 case 3:
                     search_restaurant_options(scanner);
@@ -55,7 +57,7 @@ public class DB2024TEAM07_AdminMain {
                     DB2024TEAM07_MenuManager.addMenu(scanner);
                     break;
                 case 6:
-                    DB2024TEAM07_MenuManager.updateMenu(scanner);
+                    DB2024TEAM07_MenuManager.updateMenu(scanner, new DB2024TEAM07_MenuDAO());
                     break;
                 case 7:
                     search_menu_options(scanner);
