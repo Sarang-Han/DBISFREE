@@ -202,13 +202,11 @@ public class DB2024TEAM07_ReviewDAO {
     //프로젝트 요구사항-조인 쿼리, 중첩된 쿼리 사용됨
     public ArrayList<DB2024TEAM07_UserReview> getResReview(int page, int res_id){
         /*  SELECT *
-            FROM DB2024_Review r INNER JOIN DB2024_OtherUser u ON(r.user_id=u.user_id)
-            WHERE review_id IN (SELECT review_id
-                                FROM DB2024_Rating
-                                WHERE res_id = ?)
+            FROM DB2024_Review r NATURAL JOIN DB2024_OtherUser u
+            WHERE review_id IN (SELECT review_id FROM DB2024_Rating WHERE res_id = ?)
             ORDER BY review_id DESC;
         */
-        String Q = "SELECT * FROM DB2024_Review r INNER JOIN DB2024_OtherUser u ON(r.user_id=u.user_id) WHERE review_id IN (SELECT review_id FROM DB2024_Rating WHERE res_id = ?) ORDER BY review_id DESC";
+        String Q = "SELECT * FROM DB2024_Review r NATURAL JOIN DB2024_OtherUser u WHERE review_id IN (SELECT review_id FROM DB2024_Rating WHERE res_id = ?) ORDER BY review_id DESC";
         ArrayList<DB2024TEAM07_UserReview> restaurantReviews = new ArrayList<>();
         try{
             pStmt = conn.prepareStatement(Q,
@@ -220,8 +218,8 @@ public class DB2024TEAM07_ReviewDAO {
             int i=0;
             while(rs.next() && i<10) {
                 DB2024TEAM07_UserReview review  = new DB2024TEAM07_UserReview(
-                        rs.getInt(1),
-                        rs.getString(2),
+                        rs.getString(1),
+                        rs.getInt(2),
                         rs.getInt(3),
                         rs.getString(4),
                         rs.getString(5),
