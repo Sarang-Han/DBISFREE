@@ -112,7 +112,8 @@ public class DB2024TEAM07_UserMain {
                     }
                     break;
                 case 3:
-                    System.out.println("My Page");
+                    DB2024TEAM07_UserPage userPage = new DB2024TEAM07_UserPage(userManager.getUserDAO(), userManager.getLoggedInUser());
+                    userPage.showUserPage();
                     break;
                 case 4:
                     userManager.logout();
