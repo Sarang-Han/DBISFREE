@@ -207,10 +207,15 @@ public class DB2024TEAM07_RestaurantDAO {
 
         try {
             pStmt = conn.prepareStatement(query);
-            for (int i = 0; i < parameters.size(); i++) {
-                pStmt.setObject(i + 1, parameters.get(i));
+//            for (int i = 0; i < parameters.size(); i++) {
+//                pStmt.setObject(i + 1, parameters.get(i));
+//            }
+//            pStmt.setInt(parameters.size() + 1, pRes_id);
+            int i = 1;
+            for (Object param : parameters) {
+                pStmt.setObject(i, param);
+                i++;
             }
-            pStmt.setInt(parameters.size() + 1, pRes_id);
             return pStmt.executeUpdate();
         } catch (SQLException se) {
             se.printStackTrace();
