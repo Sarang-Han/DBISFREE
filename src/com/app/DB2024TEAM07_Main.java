@@ -23,16 +23,12 @@ public class DB2024TEAM07_Main {
             System.out.println("██╔══╝╚════╝██║╚██╔╝██║██╔══██║   ██║   ██╔══╝  ██╔══██║╚════██║  ╚██╔╝  ");
             System.out.println("███████╗    ██║ ╚═╝ ██║██║  ██║   ██║   ███████╗██║  ██║███████║   ██║   ");
             System.out.println("╚══════╝    ╚═╝     ╚═╝╚═╝  ╚═╝   ╚═╝   ╚══════╝╚═╝  ╚═╝╚══════╝   ╚═╝   ");
-            System.out.println(" ");
-            System.out.println(" =================== ");
-            System.out.println(" ");
+            System.out.println("\n===================\n");
             System.out.println("1. User Login");
             System.out.println("2. User Register");
             System.out.println("3. Admin Login");
             System.out.println("4. Exit");
-            System.out.println(" ");
-            System.out.println(" =================== ");
-            System.out.println(" ");
+            System.out.println("\n===================");
 
             boolean validChoice = false;
             int choice = 0;
