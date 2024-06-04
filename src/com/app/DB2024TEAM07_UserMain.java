@@ -33,7 +33,7 @@ public class DB2024TEAM07_UserMain {
                     choice = scanner.nextInt();
                     scanner.nextLine();
 
-                    if (choice >= 1 && choice <= 3) {
+                    if (choice >= 1 && choice <= 4) {
                         validChoice = true;
                     } else {
                         System.out.println("Invalid choice. Please enter a number between 1 and 4.");
@@ -110,6 +110,14 @@ public class DB2024TEAM07_UserMain {
                     } else {
                         System.out.println("Failed to get restaurant information.");
                     }
+                    break;
+                case 3:
+                    System.out.println("My Page");
+                    break;
+                case 4:
+                    userManager.logout();
+                    System.out.println("Logout successful!");
+                    running = false;
                     break;
             }
         }
