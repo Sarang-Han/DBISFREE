@@ -65,7 +65,8 @@ public class DB2024TEAM07_Main {
 
                     if (userManager.login(username, password)) {
                         System.out.println("Login successful!");
-                        DB2024TEAM07_UserMain.showMenu(userManager);
+                        String loggedInUsername = username; // 사용자 이름 저장
+                        DB2024TEAM07_UserMain.showMenu(userManager, loggedInUsername); // 사용자 이름 전달
                     } else {
                         System.out.println("Invalid username or password.");
                     }
