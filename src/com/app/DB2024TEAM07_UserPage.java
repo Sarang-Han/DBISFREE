@@ -20,7 +20,7 @@ public class DB2024TEAM07_UserPage {
         boolean running = true;
 
         while (running) {
-            System.out.println("\n====== My Page ======");
+            System.out.println("\n====== My Page ======\n");
             System.out.println("1. My information");
             System.out.println("2. Search for Other Users");
             System.out.println("3. Delete My Account");
@@ -53,13 +53,13 @@ public class DB2024TEAM07_UserPage {
 
     private void showMyInfo() {
         DB2024TEAM07_User user = userDAO.getUser(loggedInUser.getUser_id());
-        System.out.println("\n===== My Information =====");
+        System.out.println("\n=== My Information ===\n");
         System.out.println("ID: " + user.getUser_id());
         System.out.println("Name: " + user.getName());
         System.out.println("Student ID: " + user.getStudent_id());
         System.out.println("Email: " + user.getEmail());
         System.out.println("Location: " + user.getLocation());
-        System.out.println("\n==========================");
+        System.out.println("\n======================");
     }
 
     private void searchOtherUser(Scanner scanner) {
@@ -68,17 +68,20 @@ public class DB2024TEAM07_UserPage {
         DB2024TEAM07_UserVO otherUser = userDAO.getOtherUser(userId);
 
         if (otherUser != null) {
-            System.out.println("\n===== User Information =====");
+            System.out.println("\n== User Information ==\n");
             System.out.println("ID: " + otherUser.getUser_id());
             System.out.println("Name: " + otherUser.getName());
-            System.out.println("\n============================");
+            System.out.println("\n======================");
         } else {
             System.out.println("The user could not be found..");
         }
     }
 
     private void deleteAccount(Scanner scanner) {
+        System.out.println("\n====== Good Bye ======\n");
         System.out.print("Please enter your PASSWORD: ");
+        System.out.println("\n======================");
+
         String password = scanner.nextLine();
         int result = userDAO.delete(loggedInUser.getUser_id(), password);
 
@@ -87,5 +90,6 @@ public class DB2024TEAM07_UserPage {
         } else {
             System.out.println("The password does not match.");
         }
+
     }
 }
