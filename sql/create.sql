@@ -347,7 +347,7 @@ SELECT r.review_id, user_id, DB2024_Restaurant.res_name, r.rating, review_conten
 FROM DB2024_Restaurant, DB2024_Review r, DB2024_Rating
 WHERE DB2024_Restaurant.res_id = DB2024_Rating.res_id
   AND r.review_id = DB2024_Rating.review_id;
-SELECT * FROM DB2024_ResReview;
+-- SELECT * FROM DB2024_ResReview;
 
 CREATE VIEW DB2024_MenuView AS
 SELECT r.res_name, m.menu_name, m.price
@@ -370,7 +370,6 @@ CREATE INDEX DB2024_idx_Menu
 -- DB2024_Restaurant.cuisine_type: cuisine_type별로 Restaurant를 검색
 CREATE INDEX DB2024_idx_Restaurant
     ON DB2024_Restaurant(cuisine_type);
-
 
 -- 테이블 삭제 (맨 윗줄 코드로 대체) -----------------------------------------------------------------------
 -- DROP DATABASE DB2024TEAM07;
