@@ -16,10 +16,10 @@ public class DB2024TEAM07_UserMain {
             System.out.println(STR."Welcome to E-MATEASY, \{loggedInUsername}!");
             System.out.println(" =================== ");
             System.out.println(" ");
-            System.out.println("1. 맛집 검색하기");
-            System.out.println("2. 랜덤 식당 추천받기");
-            System.out.println("3. 내 정보 수정하기");
-            System.out.println("4. 로그아웃");
+            System.out.println("1. Search for good restaurants");
+            System.out.println("2. Get Random Restaurant");
+            System.out.println("3. My Page");
+            System.out.println("4. Logout");
             System.out.println(" ");
             System.out.println(" =================== ");
             System.out.println(" ");
@@ -74,7 +74,6 @@ public class DB2024TEAM07_UserMain {
                     if (restaurants.isEmpty()) {
                         System.out.println("No search results.");
                     } else {
-                        System.out.println("검색 결과:");
                         System.out.printf("%-30s%-15s%-20s%-40s%-25s%-20s%-10s%-20s%-20s%n", "이름", "ID", "전화번호", "주소", "운영시간", "브레이크 타임", "평점", "음식 종류", "지역");
                         System.out.println("------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
                         for (DB2024TEAM07_Restaurant restaurant : restaurants) {
@@ -89,6 +88,27 @@ public class DB2024TEAM07_UserMain {
                                     restaurant.getCuisine_type(),
                                     restaurant.getLocation());
                         }
+                    }
+                    break;
+
+                case 2:
+                    System.out.println("Randomly recommended restaurants for you!");
+                    DB2024TEAM07_Restaurant randomRestaurant = userManager.getRestaurantDAO().getRandomRestaurant();
+                    if (randomRestaurant != null) {
+                        System.out.printf("%-25s%-10s%-20s%-30s%-25s%-25s%-10s%-20s%-10s%n", "이름", "ID", "전화번호", "주소", "운영시간", "브레이크 타임", "평점", "음식 종류", "지역");
+                        System.out.println("---------------------------------------------------------------------------------------------------------------------------------------------------------");
+                        System.out.printf("%-25s%-10d%-20s%-30s%-25s%-25s%-10.1f%-20s%-10s%n",
+                                randomRestaurant.getRes_name(),
+                                randomRestaurant.getRes_id(),
+                                randomRestaurant.getPhone_num(),
+                                randomRestaurant.getAddress(),
+                                randomRestaurant.getOperating_hours(),
+                                randomRestaurant.getBreak_time(),
+                                randomRestaurant.getRating(),
+                                randomRestaurant.getCuisine_type(),
+                                randomRestaurant.getLocation());
+                    } else {
+                        System.out.println("Failed to get restaurant information.");
                     }
                     break;
             }
