@@ -339,7 +339,15 @@ CREATE VIEW DB2024_UserReview AS
 SELECT review_id, DB2024_User.name, rating, review_content
 FROM DB2024_User, DB2024_Review
 WHERE DB2024_User.user_id = DB2024_Review.user_id;
--- SELECT * FROM DB2024_viewReview;
+-- SELECT * FROM DB2024_UserReview;
+
+-- 리뷰를 식당이름, 평점, 리뷰내용의 형태로 보기 위한 뷰
+CREATE VIEW DB2024_ResReview AS
+SELECT r.review_id, user_id, DB2024_Restaurant.res_name, r.rating, review_content
+FROM DB2024_Restaurant, DB2024_Review r, DB2024_Rating
+WHERE DB2024_Restaurant.res_id = DB2024_Rating.res_id
+  AND r.review_id = DB2024_Rating.review_id;
+SELECT * FROM DB2024_ResReview;
 
 CREATE VIEW DB2024_MenuView AS
 SELECT r.res_name, m.menu_name, m.price

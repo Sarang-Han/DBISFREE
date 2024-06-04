@@ -5,7 +5,7 @@ import com.jdbc.database.DB2024TEAM07_ReviewDAO;
 import com.jdbc.database.DB2024TEAM07_RatingDAO;
 import com.jdbc.model.DB2024TEAM07_Review;
 import com.jdbc.model.DB2024TEAM07_UserReview;
-import com.jdbc.view.DB2024TEAM07_UserReviewVO;
+import com.jdbc.view.DB2024TEAM07_ResReviewVO;
 
 import java.sql.*;
 import java.util.*;
@@ -66,12 +66,12 @@ public class DB2024TEAM07_ReviewManager {
         System.out.print("Enter page number: ");
         int page = scanner.nextInt();
 
-        ArrayList<DB2024TEAM07_UserReviewVO> reviews = reviewDAO.getReview(page);
+        ArrayList<DB2024TEAM07_Review> reviews = reviewDAO.getReview(page);
 
         System.out.println("=== Reviews ===");
-        for (DB2024TEAM07_UserReviewVO review : reviews) {
+        for (DB2024TEAM07_Review review : reviews) {
             System.out.println("Review ID: " + review.getReview_id());
-            System.out.println("User: " + review.getName());
+            System.out.println("User: " + review.getUser_id());
             System.out.println("Rating: " + review.getRating());
             System.out.println("Review Content: " + review.getReview_content());
             System.out.println();
@@ -94,11 +94,12 @@ public class DB2024TEAM07_ReviewManager {
         int page = scanner.nextInt();
         scanner.nextLine();
 
-        ArrayList<DB2024TEAM07_UserReview> userReviews = reviewDAO.getUserReview(page, userId);
+        ArrayList<DB2024TEAM07_ResReviewVO> userReviews = reviewDAO.getUserReview(page, userId);
         System.out.println("=== User Reviews ===");
-        for (DB2024TEAM07_UserReview review : userReviews) {
+        for (DB2024TEAM07_ResReviewVO review : userReviews) {
             System.out.println("Reivew ID: " + review.getReview_id());
             System.out.println("User ID: " + review.getUser_id());
+            System.out.println("Restaurant: " + review.getRes_name());
             System.out.println("Rating: " + review.getRating());
             System.out.println("Review Comment: " + review.getReview_content());
             System.out.println("");
@@ -117,9 +118,12 @@ public class DB2024TEAM07_ReviewManager {
         System.out.print("Enter restaurant ID: ");
         int resId = scanner.nextInt();
 
-        ArrayList<DB2024TEAM07_UserReviewVO> restaurantReviews = reviewDAO.getResReview(page, resId);
-        for (DB2024TEAM07_UserReviewVO review : restaurantReviews) {
+        ArrayList<DB2024TEAM07_UserReview> restaurantReviews = reviewDAO.getResReview(page, resId);
+        for (DB2024TEAM07_UserReview review : restaurantReviews) {
             System.out.println("Review ID: " + review.getReview_id());
+            System.out.println("User ID: " + review.getUser_id());
+            System.out.println("User Name: " + review.getName());
+            System.out.println("User email: " + review.getEmail());
             System.out.println("Rating: " + review.getRating());
             System.out.println("Review Content: " + review.getReview_content());
             System.out.println();
