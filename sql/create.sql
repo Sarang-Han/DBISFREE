@@ -163,7 +163,7 @@ INSERT INTO DB2024_Restaurant VALUES
 
 INSERT INTO DB2024_User VALUES
 	('s2eojeong', 's2eojeong', '조서정', 2276305, 's2eojeong@gmail.com', '후문'),
-    ('astralfinance', 'astralfinance', '한사랑', 2271064, 'astralfinance@', '후문'),
+    ('astralfinance', 'astralfinance', '한사랑', 2271064, 'astralfinance@ewhain.net', '후문'),
     ('cannes7', 'cannes7', '고은서', 2122004, 'cannes7@ewhain.net', '정문'),
     ('meanwest', 'meanwest', '김민서', 2276046, 'meanwestk@gmail.com', '후문'),
     ('chacha091', 'chacha091', '차현주', 2276321, 'chacha09@ewhain.net', '정문');
