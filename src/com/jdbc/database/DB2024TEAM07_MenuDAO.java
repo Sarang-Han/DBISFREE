@@ -140,7 +140,6 @@ public class DB2024TEAM07_MenuDAO{
         try {
             pStmt = conn.prepareStatement(query);
 
-            // Set the parameters for the prepared statement
             for (int i = 0; i < parameters.size(); i++) {
                 pStmt.setObject(i + 1, parameters.get(i));
             }
