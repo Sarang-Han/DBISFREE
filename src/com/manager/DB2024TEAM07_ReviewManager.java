@@ -5,7 +5,7 @@ import com.jdbc.database.DB2024TEAM07_ReviewDAO;
 import com.jdbc.database.DB2024TEAM07_RatingDAO;
 import com.jdbc.model.DB2024TEAM07_Review;
 import com.jdbc.model.DB2024TEAM07_UserReview;
-import com.jdbc.view.DB2024TEAM07_ReviewVO;
+import com.jdbc.view.DB2024TEAM07_ResReviewVO;
 
 import java.sql.*;
 import java.util.*;
