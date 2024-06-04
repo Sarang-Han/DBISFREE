@@ -59,38 +59,51 @@ public class DB2024TEAM07_RestaurantManager {
     }
 
     /* Update Function */
-    public static void updateRestaurant(Scanner scanner) {
+    public static void updateRestaurant(Scanner scanner, DB2024TEAM07_RestaurantDAO restaurantDAO) {
         System.out.print("Enter Restaurant ID: ");
         int res_id = scanner.nextInt();
         scanner.nextLine();
 
-        System.out.print("Enter New Restaurant Name: ");
+        System.out.print("Enter New Restaurant Name (Press enter to skip): ");
         String res_name = scanner.nextLine();
 
-        System.out.print("Enter New Phone Number: ");
+        System.out.print("Enter New Phone Number (Press enter to skip): ");
         String phone_num = scanner.nextLine();
 
-        System.out.print("Enter New Address: ");
+        System.out.print("Enter New Address (Press enter to skip): ");
         String address = scanner.nextLine();
 
-        System.out.print("Enter New Operating Hours: ");
+        System.out.print("Enter New Operating Hours (Press enter to skip): ");
         String operating_hours = scanner.nextLine();
 
-        System.out.print("Enter New Break Time: ");
+        System.out.print("Enter New Break Time (Press enter to skip): ");
         String break_time = scanner.nextLine();
 
-        System.out.print("Enter New Rating: ");
-        int rating = scanner.nextInt();
-        scanner.nextLine();
+        System.out.print("Enter New Rating (Press enter to skip): ");
+        String ratingInput = scanner.nextLine();
+        int rating = -1;
+        if (!ratingInput.isEmpty()) {
+            rating = Integer.parseInt(ratingInput);
+        }
 
-        System.out.print("Enter New Cuisine Type: ");
+        System.out.print("Enter New Cuisine Type (Press enter to skip): ");
         String cuisine_type = scanner.nextLine();
 
-        System.out.print("Enter New Location: ");
+        System.out.print("Enter New Location (Press enter to skip): ");
         String location = scanner.nextLine();
 
         DB2024TEAM07_Restaurant updatedRestaurant = new DB2024TEAM07_Restaurant(
-                res_name, res_id, phone_num, address, operating_hours, break_time, rating, cuisine_type, location);
+                res_name.isEmpty() ? null : res_name,
+                res_id,
+                phone_num.isEmpty() ? null : phone_num,
+                address.isEmpty() ? null : address,
+                operating_hours.isEmpty() ? null : operating_hours,
+                break_time.isEmpty() ? null : break_time,
+                rating,
+                cuisine_type.isEmpty() ? null : cuisine_type,
+                location.isEmpty() ? null : location
+        );
+
         int updateRestaurantResult = restaurantDAO.update(updatedRestaurant, res_id);
         if (updateRestaurantResult > 0) {
             System.out.println("Restaurant updated successfully.");

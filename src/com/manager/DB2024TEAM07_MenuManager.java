@@ -39,7 +39,7 @@ public class DB2024TEAM07_MenuManager {
     }
 
     /* Update Function */
-    public static void updateMenu(Scanner scanner) {
+    public static void updateMenu(Scanner scanner, DB2024TEAM07_MenuDAO menuDAO) {
         System.out.print("Enter Restaurant ID: ");
         int res_id = scanner.nextInt();
         scanner.nextLine();
@@ -48,14 +48,23 @@ public class DB2024TEAM07_MenuManager {
         int menu_id = scanner.nextInt();
         scanner.nextLine();
 
-        System.out.print("Enter New Menu Name: ");
+        System.out.print("Enter New Menu Name (Press enter to skip): ");
         String newMenuName = scanner.nextLine();
 
-        System.out.print("Enter New Price: ");
-        int newPrice = scanner.nextInt();
-        scanner.nextLine();
+        System.out.print("Enter New Price (Press enter to skip): ");
+        String priceInput = scanner.nextLine();
+        int newPrice = -1;
+        if (!priceInput.isEmpty()) {
+            newPrice = Integer.parseInt(priceInput);
+        }
 
-        DB2024TEAM07_Menu updatedMenu = new DB2024TEAM07_Menu(menu_id, newMenuName, res_id, newPrice);
+        DB2024TEAM07_Menu updatedMenu = new DB2024TEAM07_Menu(
+                menu_id,
+                newMenuName.isEmpty() ? null : newMenuName,
+                res_id,
+                newPrice
+        );
+
         int result = menuDAO.update(updatedMenu, res_id, menu_id);
 
         if (result > 0) {
