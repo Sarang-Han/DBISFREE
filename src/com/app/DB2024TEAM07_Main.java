@@ -13,9 +13,8 @@ public class DB2024TEAM07_Main {
         DB2024TEAM07_UserDAO userDAO = new DB2024TEAM07_UserDAO();
         DB2024TEAM07_UserManager userManager = new DB2024TEAM07_UserManager(userDAO);
         Scanner scanner = new Scanner(System.in);
-        boolean running = true;
 
-        while (running) {
+        while (true) {
             System.out.println(" ");
             System.out.println(" ");
             System.out.println("███████╗    ███╗   ███╗ █████╗ ████████╗███████╗ █████╗ ███████╗██╗   ██╗");
@@ -34,15 +33,33 @@ public class DB2024TEAM07_Main {
             System.out.println(" ");
             System.out.println(" =================== ");
             System.out.println(" ");
-            System.out.print("Choose an option: ");
-            int choice = scanner.nextInt();
-            scanner.nextLine();
+
+            boolean validChoice = false;
+            int choice = 0;
+
+            while (!validChoice) {
+                System.out.print("Choose an option: ");
+                try {
+                    choice = scanner.nextInt();
+                    scanner.nextLine();
+
+                    if (choice >= 1 && choice <= 4) {
+                        validChoice = true;
+                    } else {
+                        System.out.println("Invalid choice. Please enter a number between 1 and 4.");
+                    }
+                } catch (Exception e) {
+                    System.out.println("Invalid input. Please enter a number.");
+                    scanner.nextLine();
+                }
+            }
 
             switch (choice) {
                 case 1:
-                    // 회원 로그인
+                    // User Login
                     System.out.print("Enter username: ");
                     String username = scanner.nextLine();
+
                     System.out.print("Enter password: ");
                     String password = scanner.nextLine();
 
@@ -54,20 +71,73 @@ public class DB2024TEAM07_Main {
                     }
                     break;
                 case 2:
-                    // 회원 가입
+                    // User Register
                     System.out.print("New username: ");
                     String newUsername = scanner.nextLine();
+
+                    // Validate username format (maximum length of 50 characters)
+                    if (newUsername.length() > 50) {
+                        System.out.println("Username cannot exceed 50 characters.");
+                        return;
+                    }
+
                     System.out.print("New password: ");
                     String newPassword = scanner.nextLine();
+
+                    // Validate password format (maximum length of 50 characters)
+                    if (newPassword.length() > 50) {
+                        System.out.println("Password cannot exceed 50 characters.");
+                        return;
+                    }
+
                     System.out.print("Name: ");
                     String name = scanner.nextLine();
+
+                    if (name.length() > 50) {
+                        System.out.println("Password cannot exceed 50 characters.");
+                        return;
+                    }
+
                     System.out.print("Student ID: ");
-                    int studentId = scanner.nextInt();
-                    scanner.nextLine();
-                    System.out.print("Email: ");
-                    String email = scanner.nextLine();
-                    System.out.print("Location: ");
-                    String location = scanner.nextLine();
+                    String studentIdStr = scanner.nextLine();
+
+                    while (!studentIdStr.matches("[0-9]{1,50}")) {
+                        System.out.println("Invalid student ID. Please enter a numerical value between 1 and 50 characters long.");
+                        studentIdStr = scanner.nextLine();
+                    }
+
+                    int studentId = Integer.parseInt(studentIdStr);
+
+                    String email;
+                    do {
+                        System.out.print("Email (format: example@domain.com): ");
+                        email = scanner.nextLine();
+
+                        if (!email.matches("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,}$")) {
+                            System.out.println("Please enter a valid email address (ex: example@domain.com).");
+                        } else if (email.length() > 50) {
+                            System.out.println("Email cannot exceed 50 characters.");
+                            break;
+                        }
+                    } while (!email.matches("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,}$"));
+
+                    System.out.println("1. 정문");
+                    System.out.println("2. 후문");
+                    System.out.print("Choose an Location (Enter 1 or 2): ");
+                    String locationChoice = scanner.nextLine();
+
+                    String location;
+                    switch (locationChoice) {
+                        case "1":
+                            location = "정문";
+                            break;
+                        case "2":
+                            location = "후문";
+                            break;
+                        default:
+                            System.out.println("Invalid choice. Please enter 1 for 정문 or 2 for 후문:");
+                            return; // Exit registration process
+                    }
 
                     DB2024TEAM07_User newUser = new DB2024TEAM07_User(newUsername, newPassword, name, studentId, email, location);
                     if (userManager.addUser(newUser)) {
@@ -90,10 +160,7 @@ public class DB2024TEAM07_Main {
                     break;
                 case 4:
                     return;
-                default:
-                    System.out.println("Invalid choice. Please try again.");
             }
         }
-        scanner.close();
     }
 }
