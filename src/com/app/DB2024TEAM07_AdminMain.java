@@ -2,9 +2,12 @@ package com.app;
 
 import com.jdbc.database.DB2024TEAM07_MenuDAO;
 import com.jdbc.database.DB2024TEAM07_RestaurantDAO;
+import com.jdbc.database.DB2024TEAM07_UserDAO;
+import com.jdbc.model.DB2024TEAM07_User;
 import com.manager.DB2024TEAM07_MenuManager;
 import com.manager.DB2024TEAM07_RestaurantManager;
 import com.manager.DB2024TEAM07_ReviewManager;
+import com.manager.DB2024TEAM07_UserManager;
 
 import java.util.Scanner;
 
@@ -14,6 +17,8 @@ public class DB2024TEAM07_AdminMain {
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
+        DB2024TEAM07_UserDAO userDAO = new DB2024TEAM07_UserDAO();
+        DB2024TEAM07_UserManager userManager = new DB2024TEAM07_UserManager(userDAO);
 
         while (true) {
             System.out.println("\n======= Restaurant ======== =========== Menu ==========\n");
@@ -74,13 +79,26 @@ public class DB2024TEAM07_AdminMain {
                     DB2024TEAM07_ReviewManager.deleteReview(scanner);
                     break;
                 case 13:
+                    userManager.addAccountByManager(scanner);
+                    break;
+                case 14:
+                    userManager.displayAllUsers();
+                    userManager.updateAccountByManager(scanner);
+                    break;
+                case 15:
+                    userManager.searchAccountByManager(scanner);
+                    break;
+                case 16:
+                    userManager.displayAllUsers();
+                    userManager.deleteAccountByManager(scanner);
+                    break;
+                case 17:
                     return;
                 default:
                     System.out.println("Invalid choice. Please try again.");
             }
         }
     }
-
 
     public static void search_restaurant_options(Scanner scanner){
         while (true) {
