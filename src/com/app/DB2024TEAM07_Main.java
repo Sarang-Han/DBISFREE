@@ -1,3 +1,9 @@
+/**
+ * This class represents the main entry point of the application.
+ * It provides a menu-driven interface for users to interact with the system.
+ *
+ * @author Sarang
+ */
 package com.app;
 
 import com.manager.DB2024TEAM07_UserManager;

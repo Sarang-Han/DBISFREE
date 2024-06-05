@@ -1,3 +1,9 @@
+/**
+ * User interface for logged-in users.
+ * This class provides functionalities such as searching for restaurants,
+ * getting random restaurant recommendations, writing reviews, managing user information,
+ * and logging out.
+ */
 package com.app;
 
 import com.manager.DB2024TEAM07_RestaurantManager;
@@ -6,7 +12,14 @@ import com.manager.DB2024TEAM07_UserManager;
 
 import java.util.Scanner;
 
+
 public class DB2024TEAM07_UserMain {
+    /**
+     * Displays the user menu after successful login.
+     *
+     * @param userManager  a reference to the UserManager object for user-related operations
+     * @param loggedInUsername the username of the currently logged-in user
+     */
     public static void showMenu(DB2024TEAM07_UserManager userManager, String loggedInUsername) {
         Scanner scanner = new Scanner(System.in);
         boolean running = true;
@@ -65,6 +78,9 @@ public class DB2024TEAM07_UserMain {
         }
     }
 
+    /**
+     * Displays the search menu for finding restaurants.
+     */
     private static void showSearchMenu(){
         Scanner scanner = new Scanner(System.in);
 
@@ -108,6 +124,9 @@ public class DB2024TEAM07_UserMain {
         }
     }
 
+    /**
+     * Displays the user page menu for managing user information.
+     */
     private static void showUserPage() {
         Scanner scanner = new Scanner(System.in);
         boolean running = true;
@@ -164,6 +183,5 @@ public class DB2024TEAM07_UserMain {
             }
         }
     }
-
 
 }

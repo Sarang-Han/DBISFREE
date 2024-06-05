@@ -1,3 +1,8 @@
+/**
+ * Main class for administrator functionalities in the E-MATEASY application.
+ * This class provides a menu-driven interface for managing restaurants, menus, reviews,
+ * and users.
+ */
 package com.app;
 
 import com.jdbc.database.DB2024TEAM07_MenuDAO;
@@ -15,6 +20,11 @@ import static com.manager.DB2024TEAM07_RestaurantManager.displayAllRestaurants;
 
 public class DB2024TEAM07_AdminMain {
 
+    /**
+     * The main entry point of the application.
+     *
+     * @param args command line arguments (unused in this program)
+     */
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         DB2024TEAM07_UserDAO userDAO = new DB2024TEAM07_UserDAO();
@@ -100,6 +110,11 @@ public class DB2024TEAM07_AdminMain {
         }
     }
 
+    /**
+     * Presents sub-menu options for searching restaurants.
+     *
+     * @param scanner the input scanner
+     */
     public static void search_restaurant_options(Scanner scanner){
         while (true) {
             System.out.println("\n1. Search by Restaurant Name, Cuisine Type, Location, Minimum Rating");
@@ -124,6 +139,11 @@ public class DB2024TEAM07_AdminMain {
         }
     }
 
+    /**
+     * Presents sub-menu options for searching menus.
+     *
+     * @param scanner the input scanner
+     */
     public static void search_menu_options(Scanner scanner) {
         displayAllRestaurants();
         System.out.println("\n1. Search Menu by Restaurant Name, Menu Name, and Price Range (User)");
@@ -151,6 +171,11 @@ public class DB2024TEAM07_AdminMain {
         }
     }
 
+    /**
+     * Presents sub-menu options for review management.
+     *
+     * @param scanner the input scanner
+     */
     private static void search_review_options(Scanner scanner) {
         while (true) {
             System.out.println("\n1. Get Review Count");
