@@ -14,6 +14,8 @@ import com.jdbc.model.DB2024TEAM07_User;
 import com.jdbc.view.DB2024TEAM07_UserVO;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class DB2024TEAM07_UserDAO {
     private Connection conn;
@@ -158,5 +160,27 @@ public class DB2024TEAM07_UserDAO {
             se.printStackTrace();
         }
         return -2;  //error
+    }
+
+    public List<DB2024TEAM07_User> getAllUsers() {
+        List<DB2024TEAM07_User> users = new ArrayList<>();
+        String query = "SELECT * FROM DB2024_User";
+        try {
+            pStmt = conn.prepareStatement(query);
+            rs = pStmt.executeQuery();
+            while (rs.next()) {
+                DB2024TEAM07_User user = new DB2024TEAM07_User();
+                user.setUser_id(rs.getString("user_id"));
+                user.setUser_pw(rs.getString("user_pw"));
+                user.setName(rs.getString("name"));
+                user.setStudent_id(rs.getInt("student_id"));
+                user.setEmail(rs.getString("email"));
+                user.setLocation(rs.getString("location"));
+                users.add(user);
+            }
+        } catch (SQLException se) {
+            se.printStackTrace();
+        }
+        return users;
     }
 }
