@@ -99,19 +99,27 @@ public class DB2024TEAM07_MyPage {
     }
 
     private void deleteAccount(Scanner scanner) {
-        System.out.println("\n====== Good Bye ======\n");
-        System.out.print("Please enter your PASSWORD: ");
-        System.out.println("\n======================\n");
+        System.out.print("\nAre you sure you want to delete your account?\n");
+        System.out.print("All data related to your will be deleted.\n\n");
+        System.out.print("Enter 'y' if you want to delete, or 'n': ");
+        String confirm = scanner.nextLine().toLowerCase();
 
-        String password = scanner.nextLine();
-        int result = userDAO.delete(loggedInUser.getUser_id(), password);
+        if (confirm.equals("y")) {
+            System.out.print("Please enter your PASSWORD: ");
+            String password = scanner.nextLine();
+            int result = userDAO.delete(loggedInUser.getUser_id(), password);
 
-        if (result > 0) {
-            System.out.println("Membership withdrawal completed.");
-            DB2024TEAM07_Main.main(null);
-            System.exit(0);
+            if (result > 0) {
+                System.out.println("Membership withdrawal completed.");
+                DB2024TEAM07_Main.main(null);
+                System.exit(0);
+            } else {
+                System.out.println("The password does not match.");
+            }
+        } else if (confirm.equals("n")) {
+            System.out.println("Membership withdrawal canceled.");
         } else {
-            System.out.println("The password does not match.");
+            System.out.println("Invalid input. Membership withdrawal canceled.");
         }
 
     }
