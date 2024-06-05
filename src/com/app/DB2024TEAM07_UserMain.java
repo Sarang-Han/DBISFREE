@@ -109,7 +109,7 @@ public class DB2024TEAM07_UserMain {
                     }
                     break;
                 case 3:
-                    DB2024TEAM07_UserPage userPage = new DB2024TEAM07_UserPage(userManager.getUserDAO(), userManager.getLoggedInUser());
+                    DB2024TEAM07_MyPage userPage = new DB2024TEAM07_MyPage(userManager.getUserDAO(), userManager.getLoggedInUser());
                     userPage.showUserPage();
                     break;
                 case 4:
