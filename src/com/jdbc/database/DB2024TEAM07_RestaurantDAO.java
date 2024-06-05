@@ -14,7 +14,7 @@ import java.util.Random;
 // 생각해볼것: location으로 검색할건지 cuisine_type으로 검색할건지 식당 이름으로 검색할건지 --> 복합적인 검색조건으로 식당 조회하는 기능
 
 public class DB2024TEAM07_RestaurantDAO {
-    private Connection conn;
+    private static Connection conn;
     private PreparedStatement pStmt;
 
     public DB2024TEAM07_RestaurantDAO() {
@@ -240,7 +240,7 @@ public class DB2024TEAM07_RestaurantDAO {
         return 0;
     }
 
-    public DB2024TEAM07_Restaurant getRandomRestaurant() {
+    public static DB2024TEAM07_Restaurant getRandomRestaurant() {
         String query = "SELECT * FROM DB2024_Restaurant ORDER BY RAND() LIMIT 1";
         try {
             ResultSet rs = conn.createStatement().executeQuery(query);

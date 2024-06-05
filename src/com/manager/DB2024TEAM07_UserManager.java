@@ -12,7 +12,6 @@ public class DB2024TEAM07_UserManager {
 
     public DB2024TEAM07_UserManager(DB2024TEAM07_UserDAO userDAO) {
         this.userDAO = userDAO;
-        this.restaurantDAO = new DB2024TEAM07_RestaurantDAO();
     }
 
     // 사용자 로그인
@@ -47,9 +46,5 @@ public class DB2024TEAM07_UserManager {
 
     public DB2024TEAM07_UserDAO getUserDAO() {
         return userDAO;
-    }
-
-    public static void recommendRandomRestaurant() {
-        DB2024TEAM07_Restaurant randomRestaurant = restaurantDAO.getRandomRestaurant();
     }
 }

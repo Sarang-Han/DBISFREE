@@ -226,4 +226,29 @@ public class DB2024TEAM07_RestaurantManager {
         // Footer
         System.out.println("---------------------------------------------------");
     }
+
+    public static void displayRandomRestaurant() {
+        System.out.println("Randomly recommended restaurants for you!");
+        DB2024TEAM07_Restaurant randomRestaurant = DB2024TEAM07_RestaurantDAO.getRandomRestaurant();
+
+        if (randomRestaurant != null) {
+            System.out.println("--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
+            System.out.printf("%-25s%-10s%-20s%-30s%-25s%-25s%-10s%-20s%-10s%n", "Name", "ID", "Phone", "Address", "Operating hour", "Break time", "Rating", "Cuisine Type", "Location");
+            System.out.println("--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
+            System.out.printf("%-25s%-10d%-20s%-30s%-25s%-25s%-10.1f%-20s%-10s%n",
+                    randomRestaurant.getRes_name(),
+                    randomRestaurant.getRes_id(),
+                    randomRestaurant.getPhone_num(),
+                    randomRestaurant.getAddress(),
+                    randomRestaurant.getOperating_hours(),
+                    randomRestaurant.getBreak_time(),
+                    randomRestaurant.getRating(),
+                    randomRestaurant.getCuisine_type(),
+                    randomRestaurant.getLocation());
+            System.out.println("--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
+        } else {
+            System.out.println("Failed to get restaurant information.");
+        }
+    }
+
 }
