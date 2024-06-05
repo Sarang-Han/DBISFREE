@@ -28,8 +28,26 @@ public class DB2024TEAM07_UserPage {
             System.out.println("\n======================");
             System.out.print("Choose an option: ");
 
-            int choice = scanner.nextInt();
-            scanner.nextLine();
+            int choice = 0;
+            boolean validChoice = false;
+
+            while (!validChoice) {
+                if (scanner.hasNextInt()) {
+                    choice = scanner.nextInt();
+                    scanner.nextLine(); // Clear the newline character from the input buffer
+
+                    if (choice >= 1 && choice <= 4) {
+                        validChoice = true;
+                    } else {
+                        System.out.println("Invalid choice. Please enter a number between 1 and 4.");
+                        System.out.print("Choose an option: ");
+                    }
+                } else {
+                    System.out.println("Invalid input. Please enter a number.");
+                    System.out.print("Choose an option: ");
+                    scanner.nextLine(); // Clear the invalid input from the buffer
+                }
+            }
 
             switch (choice) {
                 case 1:
