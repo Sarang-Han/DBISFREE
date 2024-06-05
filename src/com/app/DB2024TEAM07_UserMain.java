@@ -71,8 +71,8 @@ public class DB2024TEAM07_UserMain {
                     if (restaurants.isEmpty()) {
                         System.out.println("No search results.");
                     } else {
-                        System.out.printf("%-30s%-15s%-20s%-40s%-25s%-20s%-10s%-20s%-20s%n", "이름", "ID", "전화번호", "주소", "운영시간", "브레이크 타임", "평점", "음식 종류", "지역");
-                        System.out.println("------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
+                        System.out.printf("%-25s%-7s%-20s%-30s%-25s%-20s%-20s%-25s%-20s%n", "Name", "ID", "Phone", "Address", "Operating hour", "Break time", "Rating", "Cuisine Type", "Location");
+                        System.out.println("--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
                         for (DB2024TEAM07_Restaurant restaurant : restaurants) {
                             System.out.printf("%-30s%-15d%-20s%-40s%-25s%-20s%-10.1f%-20s%-20s%n",
                                     restaurant.getRes_name(),
@@ -92,8 +92,8 @@ public class DB2024TEAM07_UserMain {
                     System.out.println("Randomly recommended restaurants for you!");
                     DB2024TEAM07_Restaurant randomRestaurant = userManager.getRestaurantDAO().getRandomRestaurant();
                     if (randomRestaurant != null) {
-                        System.out.printf("%-25s%-10s%-20s%-30s%-25s%-25s%-10s%-20s%-10s%n", "이름", "ID", "전화번호", "주소", "운영시간", "브레이크 타임", "평점", "음식 종류", "지역");
-                        System.out.println("---------------------------------------------------------------------------------------------------------------------------------------------------------");
+                        System.out.printf("%-25s%-10s%-20s%-30s%-25s%-25s%-10s%-20s%-10s%n", "Name", "ID", "Phone", "Address", "Operating hour", "Break time", "Rating", "Cuisine Type", "Location");
+                        System.out.println("--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
                         System.out.printf("%-25s%-10d%-20s%-30s%-25s%-25s%-10.1f%-20s%-10s%n",
                                 randomRestaurant.getRes_name(),
                                 randomRestaurant.getRes_id(),
