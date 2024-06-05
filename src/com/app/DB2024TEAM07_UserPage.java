@@ -80,13 +80,15 @@ public class DB2024TEAM07_UserPage {
     private void deleteAccount(Scanner scanner) {
         System.out.println("\n====== Good Bye ======\n");
         System.out.print("Please enter your PASSWORD: ");
-        System.out.println("\n======================");
+        System.out.println("\n======================\n");
 
         String password = scanner.nextLine();
         int result = userDAO.delete(loggedInUser.getUser_id(), password);
 
         if (result > 0) {
             System.out.println("Membership withdrawal completed.");
+            DB2024TEAM07_Main.main(null);
+            System.exit(0);
         } else {
             System.out.println("The password does not match.");
         }
