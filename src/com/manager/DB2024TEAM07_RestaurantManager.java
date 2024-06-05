@@ -198,5 +198,21 @@ public class DB2024TEAM07_RestaurantManager {
         }
     }
 
+    /* Print Function */
+    public static void displayAllRestaurants() {
+        List<DB2024TEAM07_Restaurant> restaurants = restaurantDAO.getAllRestaurants();
 
+        // Print header
+        System.out.println("---------------------------------------------------");
+        System.out.printf("%-15s %-30s%n", "Restaurant ID", "Restaurant Name");
+        System.out.println("---------------------------------------------------");
+
+        // Print each restaurant (ID and Name)
+        for (DB2024TEAM07_Restaurant restaurant : restaurants) {
+            System.out.printf("%-15d %-30s%n", restaurant.getRes_id(), restaurant.getRes_name());
+        }
+
+        // Footer
+        System.out.println("---------------------------------------------------");
+    }
 }

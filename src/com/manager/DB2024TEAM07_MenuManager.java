@@ -44,6 +44,8 @@ public class DB2024TEAM07_MenuManager {
         int res_id = scanner.nextInt();
         scanner.nextLine();
 
+        displayAllMenu(res_id);
+
         System.out.print("Enter Menu ID: ");
         int menu_id = scanner.nextInt();
         scanner.nextLine();
@@ -121,7 +123,6 @@ public class DB2024TEAM07_MenuManager {
         }
     }
 
-    /* main에 res name과 res id를 모두 출력하는 코드 추가해야 함 */
     public static void searchMenuByRestaurant(Scanner scanner) {
         System.out.print("Enter Restaurant ID: ");
         int restaurantId = scanner.nextInt();
@@ -164,6 +165,8 @@ public class DB2024TEAM07_MenuManager {
         int res_id = scanner.nextInt();
         scanner.nextLine();
 
+        displayAllMenu(res_id);
+
         System.out.print("Enter Menu ID: ");
         int menu_id = scanner.nextInt();
         scanner.nextLine();
@@ -175,5 +178,26 @@ public class DB2024TEAM07_MenuManager {
         } else {
             System.out.println("Error deleting menu.");
         }
+    }
+
+    /* Print Function */
+    public static void displayAllMenu(int res_id) {
+        ResultSet resultSet = menuDAO.getAllMenuByRestaurant(res_id);
+
+        // Print header
+        System.out.println("--------------------------------");
+        System.out.println("Menu ID\t\tMenu Name");
+        System.out.println("--------------------------------");
+
+        try {
+            while (resultSet != null && resultSet.next()) {
+                System.out.printf("%-8d\t%-30s%n", resultSet.getInt("menu_id"), resultSet.getString("menu_name"));
+            }
+        } catch (SQLException se) {
+            se.printStackTrace();
+        }
+
+        // Footer
+        System.out.println("--------------------------------");
     }
 }
