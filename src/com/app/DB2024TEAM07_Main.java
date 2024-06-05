@@ -61,8 +61,8 @@ public class DB2024TEAM07_Main {
 
                     if (userManager.login(username, password)) {
                         System.out.println("Login successful!");
-                        String loggedInUsername = username; // 사용자 이름 저장
-                        DB2024TEAM07_UserMain.showMenu(userManager, loggedInUsername); // 사용자 이름 전달
+                        String loggedInUsername = username;
+                        DB2024TEAM07_UserMain.showMenu(userManager, loggedInUsername);
                     } else {
                         System.out.println("Invalid username or password.");
                     }
@@ -133,7 +133,7 @@ public class DB2024TEAM07_Main {
                             break;
                         default:
                             System.out.println("Invalid choice. Please enter 1 for 정문 or 2 for 후문:");
-                            return; // Exit registration process
+                            return;
                     }
 
                     DB2024TEAM07_User newUser = new DB2024TEAM07_User(newUsername, newPassword, name, studentId, email, location);
@@ -144,7 +144,7 @@ public class DB2024TEAM07_Main {
                     }
                     break;
                 case 3:
-                    // 관리자 로그인
+                    // Admin login
                     System.out.print("Enter admin password: ");
                     String adminPassword = scanner.nextLine();
 

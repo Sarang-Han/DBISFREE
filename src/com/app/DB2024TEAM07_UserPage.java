@@ -34,7 +34,7 @@ public class DB2024TEAM07_UserPage {
             while (!validChoice) {
                 if (scanner.hasNextInt()) {
                     choice = scanner.nextInt();
-                    scanner.nextLine(); // Clear the newline character from the input buffer
+                    scanner.nextLine();
 
                     if (choice >= 1 && choice <= 4) {
                         validChoice = true;
@@ -45,7 +45,7 @@ public class DB2024TEAM07_UserPage {
                 } else {
                     System.out.println("Invalid input. Please enter a number.");
                     System.out.print("Choose an option: ");
-                    scanner.nextLine(); // Clear the invalid input from the buffer
+                    scanner.nextLine();
                 }
             }
 
@@ -63,8 +63,6 @@ public class DB2024TEAM07_UserPage {
                 case 4:
                     running = false;
                     break;
-                default:
-                    System.out.println("Wrong choice. Please try again.");
             }
         }
     }
