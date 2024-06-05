@@ -10,11 +10,21 @@ import com.jdbc.view.DB2024TEAM07_ResReviewVO;
 import java.sql.*;
 import java.util.*;
 
+/**
+ * This class manages review functionalities in the E-MATEASY application.
+ * It provides methods for adding, updating, deleting, and retrieving reviews
+ * from the database.
+ */
 public class DB2024TEAM07_ReviewManager {
     private static DB2024TEAM07_ReviewDAO reviewDAO = new DB2024TEAM07_ReviewDAO();
     private static DB2024TEAM07_RatingDAO ratingDAO = new DB2024TEAM07_RatingDAO();
     private static int page;
 
+    /**
+     * Adds a new review to the database for a specific restaurant and menu item.
+     *
+     * @param scanner a Scanner object to read user input
+     */
     public static void addReview(Scanner scanner) {
         System.out.print("Enter User ID: ");
         String userId = scanner.nextLine();
@@ -78,8 +88,11 @@ public class DB2024TEAM07_ReviewManager {
         }
     }
 
-
-
+    /**
+     * Updates an existing review in the database.
+     *
+     * @param scanner a Scanner object to read user input
+     */
     public static void updateReview(Scanner scanner) {
         System.out.print("Enter review ID to update: ");
         int reviewId = scanner.nextInt();
@@ -141,11 +154,19 @@ public class DB2024TEAM07_ReviewManager {
         }
     }
 
+    /**
+     * Retrieves the total number of reviews in the database.
+     */
     public static void getCount() {
         int count = reviewDAO.getCount();
         System.out.println("Total number of reviews: " + count);
     }
 
+    /**
+     * Retrieves a page of reviews from the database.
+     *
+     * @param scanner a Scanner object to read user input
+     */
     public static void getReview(Scanner scanner) {
         System.out.print("Enter page number: ");
         int page = scanner.nextInt();
@@ -164,6 +185,11 @@ public class DB2024TEAM07_ReviewManager {
 
     }
 
+    /**
+     * Retrieves the total number of reviews for a specific user.
+     *
+     * @param scanner a Scanner object to read user input
+     */
     public static void getUserCount(Scanner scanner) {
         System.out.print("Enter user ID: ");
         String userId = scanner.nextLine();
@@ -172,6 +198,11 @@ public class DB2024TEAM07_ReviewManager {
         System.out.println("Total number of reviews for user " + userId + ": " + count);
     }
 
+    /**
+     * Retrieves a page of reviews for a specific user from the database.
+     *
+     * @param scanner a Scanner object to read user input
+     */
     public static void getUserReview(Scanner scanner) {
         System.out.print("Enter user ID: ");
         String userId = scanner.nextLine();
@@ -193,6 +224,11 @@ public class DB2024TEAM07_ReviewManager {
 
     }
 
+    /**
+     * Retrieves the total number of reviews for a specific restaurant.
+     *
+     * @param scanner a Scanner object to read user input
+     */
     public static void getResCount(Scanner scanner) {
         System.out.print("Enter restaurant ID: ");
         int resId = scanner.nextInt();
@@ -201,6 +237,11 @@ public class DB2024TEAM07_ReviewManager {
         System.out.println("Total number of reviews for restaurant " + resId + ": " + count);
     }
 
+    /**
+     * Retrieves a page of reviews for a specific restaurant from the database.
+     *
+     * @param scanner a Scanner object to read user input
+     */
     public static void getResReview(Scanner scanner) {
         System.out.print("Enter restaurant ID: ");
         int resId = scanner.nextInt();
@@ -219,6 +260,11 @@ public class DB2024TEAM07_ReviewManager {
 
     }
 
+    /**
+     * Deletes a review from the database.
+     *
+     * @param scanner a Scanner object to read user input
+     */
     public static void deleteReview(Scanner scanner) {
         System.out.print("Enter review ID to delete: ");
         int reviewId = scanner.nextInt();
@@ -272,7 +318,13 @@ public class DB2024TEAM07_ReviewManager {
         }
     }
 
-    //레스토랑 ID 리뷰 테이블에서 가져오기
+    /**
+     * Helper method to retrieve the restaurant ID associated with a review from the database.
+     *
+     * @param conn a Connection object representing the database connection
+     * @param reviewId the ID of the review
+     * @return the restaurant ID or -1 if not found
+     */
     private static int getResIdForReview(Connection conn, int reviewId) {
         String resIdQuery = "SELECT res_id FROM DB2024_Rating WHERE review_id = ?";
         try {

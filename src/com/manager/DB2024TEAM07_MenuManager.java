@@ -7,11 +7,23 @@ import java.util.Scanner;
 import com.jdbc.database.DB2024TEAM07_MenuDAO;
 import com.jdbc.model.DB2024TEAM07_Menu;
 
+/**
+ * This class manages menu functionalities in the E-MATEASY application.
+ * It provides methods for adding, updating, searching, and deleting menus
+ * from the database.
+ */
 public class DB2024TEAM07_MenuManager {
 
+    /**
+     * An instance of the DB2024TEAM07_MenuDAO class for interacting with the menu table in the database.
+     */
     private static DB2024TEAM07_MenuDAO menuDAO = new DB2024TEAM07_MenuDAO();
 
-    /* Add Function */
+    /**
+     * Adds a new menu item to the database.
+     *
+     * @param scanner a Scanner object to read user input
+     */
     public static void addMenu(Scanner scanner) {
         System.out.print("Enter Menu ID: ");
         int menu_id = scanner.nextInt();
@@ -38,7 +50,12 @@ public class DB2024TEAM07_MenuManager {
         }
     }
 
-    /* Update Function */
+    /**
+     * Updates an existing menu item in the database.
+     *
+     * @param scanner a Scanner object to read user input
+     * @param menuDAO an instance of the DB2024TEAM07_MenuDAO class
+     */
     public static void updateMenu(Scanner scanner, DB2024TEAM07_MenuDAO menuDAO) {
         System.out.print("Enter Restaurant ID: ");
         int res_id = scanner.nextInt();
@@ -76,7 +93,11 @@ public class DB2024TEAM07_MenuManager {
         }
     }
 
-    /* Search Functions */
+    /**
+     * Searches for menus based on various criteria.
+     *
+     * @param scanner a Scanner object to read user input
+     */
     public static void searchByUsers(Scanner scanner) {
         System.out.print("Enter Restaurant Name (or press Enter to skip): ");
         String restaurantName = scanner.nextLine();
@@ -131,6 +152,11 @@ public class DB2024TEAM07_MenuManager {
 
     }
 
+    /**
+     * Searches for menus by a specific restaurant ID.
+     *
+     * @param scanner a Scanner object to read user input
+     */
     public static void searchMenuByRestaurant(Scanner scanner) {
         System.out.print("Enter Restaurant ID: ");
         int restaurantId = scanner.nextInt();
@@ -157,6 +183,11 @@ public class DB2024TEAM07_MenuManager {
 
     }
 
+    /**
+     * Searches for menus by a manager for a specific restaurant.
+     *
+     * @param scanner a Scanner object to read user input
+     */
     public static void searchByManager(Scanner scanner) {
         System.out.print("Enter Restaurant ID: ");
         int resId = scanner.nextInt();
@@ -183,7 +214,11 @@ public class DB2024TEAM07_MenuManager {
 
     }
 
-    /* Delete Function */
+    /**
+     * Deletes a menu item from the database.
+     *
+     * @param scanner a Scanner object to read
+     */
     public static void deleteMenu(Scanner scanner) {
         System.out.print("Enter Restaurant ID: ");
         int res_id = scanner.nextInt();
@@ -204,7 +239,11 @@ public class DB2024TEAM07_MenuManager {
         }
     }
 
-    /* Print Function */
+    /**
+     * Displays all menu items for a specific restaurant.
+     *
+     * @param res_id the ID of the restaurant
+     */
     public static void displayAllMenu(int res_id) {
         ResultSet resultSet = menuDAO.getAllMenuByRestaurant(res_id);
 

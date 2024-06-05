@@ -10,11 +10,20 @@ import java.util.*;
 import com.jdbc.database.DB2024TEAM07_RestaurantDAO;
 import com.jdbc.model.DB2024TEAM07_Restaurant;
 
+/**
+ * This class manages restaurant functionalities in the E-MATEASY application.
+ * It provides methods for adding, updating, searching, and deleting restaurants
+ * from the database.
+ */
 public class DB2024TEAM07_RestaurantManager {
 
     private static DB2024TEAM07_RestaurantDAO restaurantDAO = new DB2024TEAM07_RestaurantDAO();
 
-    /* Add Function */
+    /**
+     * Adds a new restaurant to the database.
+     *
+     * @param scanner a Scanner object to read user input
+     */
     public static void addRestaurant(Scanner scanner) {
         System.out.print("Enter Restaurant Name: ");
         String res_name = scanner.nextLine();
@@ -58,7 +67,12 @@ public class DB2024TEAM07_RestaurantManager {
         }
     }
 
-    /* Update Function */
+    /**
+     * Updates an existing restaurant in the database.
+     *
+     * @param scanner a Scanner object to read user input
+     * @param restaurantDAO an instance of the DB2024TEAM07_RestaurantDAO class
+     */
     public static void updateRestaurant(Scanner scanner, DB2024TEAM07_RestaurantDAO restaurantDAO) {
         System.out.print("Enter Restaurant ID: ");
         int res_id = scanner.nextInt();
@@ -112,8 +126,12 @@ public class DB2024TEAM07_RestaurantManager {
         }
     }
 
-    /* Search Functions */
     /* Search by Restaurant Name, Cuisine Type, Location, Minimum Rating */
+    /**
+     * Searches for restaurants based on various criteria.
+     *
+     * @param scanner a Scanner object to read user input
+     */
     public static void searchRestaurant(Scanner scanner) {
         System.out.print("Enter Restaurant Name (or press Enter to skip): ");
         String restaurantName = scanner.nextLine();
@@ -167,6 +185,11 @@ public class DB2024TEAM07_RestaurantManager {
     }
 
     /* Search by Cuisine Type */
+    /**
+     * Searches for restaurants by cuisine type.
+     *
+     * @param scanner a Scanner object to read user input
+     */
     public static void searchRestaurantByCategory(Scanner scanner) {
         System.out.print("Enter Cuisine Type: ");
         String cuisineType = scanner.nextLine();
@@ -196,6 +219,11 @@ public class DB2024TEAM07_RestaurantManager {
         }
     }
 
+    /**
+     * Deletes a restaurant from the database.
+     *
+     * @param scanner a Scanner object to read user input
+     */
     public static void deleteRestaurant(Scanner scanner) {
         System.out.print("Enter Restaurant ID: ");
         int res_id = scanner.nextInt();
@@ -209,7 +237,9 @@ public class DB2024TEAM07_RestaurantManager {
         }
     }
 
-    /* Print Function */
+    /**
+     * Displays a list of all restaurants in the database.
+     */
     public static void displayAllRestaurants() {
         List<DB2024TEAM07_Restaurant> restaurants = restaurantDAO.getAllRestaurants();
 
@@ -227,6 +257,9 @@ public class DB2024TEAM07_RestaurantManager {
         System.out.println("---------------------------------------------------");
     }
 
+    /**
+     * Displays a randomly selected restaurant from the database.
+     */
     public static void displayRandomRestaurant() {
         System.out.println("Randomly recommended restaurants for you!");
         DB2024TEAM07_Restaurant randomRestaurant = DB2024TEAM07_RestaurantDAO.getRandomRestaurant();
