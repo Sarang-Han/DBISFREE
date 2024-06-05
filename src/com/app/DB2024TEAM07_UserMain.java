@@ -1,18 +1,17 @@
-/**
- * User interface for logged-in users.
- * This class provides functionalities such as searching for restaurants,
- * getting random restaurant recommendations, writing reviews, managing user information,
- * and logging out.
- */
 package com.app;
-
 import com.manager.DB2024TEAM07_RestaurantManager;
 import com.manager.DB2024TEAM07_ReviewManager;
 import com.manager.DB2024TEAM07_UserManager;
 
 import java.util.Scanner;
 
-
+/**
+ * User interface for logged-in users.
+ *
+ * This class provides functionalities such as searching for restaurants,
+ * getting random restaurant recommendations, writing reviews, managing user information,
+ * and logging out.
+ */
 public class DB2024TEAM07_UserMain {
     /**
      * Displays the user menu after successful login.

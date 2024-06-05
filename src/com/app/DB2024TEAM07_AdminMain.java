@@ -1,10 +1,4 @@
-/**
- * Main class for administrator functionalities in the E-MATEASY application.
- * This class provides a menu-driven interface for managing restaurants, menus, reviews,
- * and users.
- */
 package com.app;
-
 import com.jdbc.database.DB2024TEAM07_MenuDAO;
 import com.jdbc.database.DB2024TEAM07_RestaurantDAO;
 import com.jdbc.database.DB2024TEAM07_UserDAO;
@@ -18,6 +12,12 @@ import java.util.Scanner;
 
 import static com.manager.DB2024TEAM07_RestaurantManager.displayAllRestaurants;
 
+/**
+ * Main class for administrator functionalities in the E-MATEASY application.
+ *
+ * This class provides a menu-driven interface for managing restaurants, menus, reviews,
+ * and users.
+ */
 public class DB2024TEAM07_AdminMain {
 
     /**
