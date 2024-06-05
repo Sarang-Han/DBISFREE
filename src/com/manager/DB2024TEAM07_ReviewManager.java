@@ -14,14 +14,16 @@ public class DB2024TEAM07_ReviewManager {
     private static DB2024TEAM07_ReviewDAO reviewDAO = new DB2024TEAM07_ReviewDAO();
     private static DB2024TEAM07_RatingDAO ratingDAO = new DB2024TEAM07_RatingDAO();
     private static int page;
-    private static DB2024TEAM07_Database instance;
 
     public static void addReview(Scanner scanner) {
         System.out.print("Enter User ID: ");
         String userId = scanner.nextLine();
 
+        System.out.print("Enter Restaurant ID: ");
+        int resId = scanner.nextInt();
+
         System.out.print("Enter Menu ID: ");
-        String menuId = scanner.next();
+        int menuId = scanner.nextInt();
 
         System.out.print("Enter Rating (1-5): ");
         int rating = scanner.nextInt();
@@ -32,16 +34,75 @@ public class DB2024TEAM07_ReviewManager {
 
         Connection conn = null;
         try {
-            conn = instance.getConnection();
+            conn = DB2024TEAM07_Database.getInstance().getConnection();
             conn.setAutoCommit(false);
 
             DB2024TEAM07_Review review = new DB2024TEAM07_Review(0, userId, rating, reviewContent);
-            int result = reviewDAO.add(review);
+            int result = reviewDAO.add(review, menuId, resId);
 
             if (result > 0) {
                 System.out.println("Review added successfully.");
 
-                int resId = getResIdForMenu(conn, menuId);
+                double newAvgRating = ratingDAO.getAvg(resId);
+                String updateRatingQuery = "UPDATE DB2024_Restaurant SET rating = ? WHERE res_id = ?";
+
+                try (PreparedStatement pStmt = conn.prepareStatement(updateRatingQuery)) {
+                    pStmt.setDouble(1, newAvgRating);
+                    pStmt.setInt(2, resId);
+                    pStmt.executeUpdate();
+                }
+                conn.commit();
+
+            } else {
+                System.out.println("Failed to add review.");
+                conn.rollback();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            try {
+                if (conn != null) {
+                    conn.rollback();
+                }
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        } finally {
+            if (conn != null) {
+                try {
+                    conn.setAutoCommit(true);
+                    //conn.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+
+
+    public static void updateReview(Scanner scanner) {
+        System.out.print("Enter review ID to update: ");
+        int reviewId = scanner.nextInt();
+
+        System.out.print("Enter rating (1-5) to update: ");
+        int rating = scanner.nextInt();
+
+        System.out.print("Enter review content to update: ");
+        scanner.nextLine();
+        String reviewContent = scanner.nextLine();
+
+        Connection conn = null;
+        try {
+            conn = DB2024TEAM07_Database.getInstance().getConnection();
+            conn.setAutoCommit(false);
+
+            DB2024TEAM07_Review review = new DB2024TEAM07_Review(reviewId, null,  rating, reviewContent);
+            int result = reviewDAO.update(review);
+
+            if (result > 0) {
+                System.out.println("Review updated successfully.");
+
+                int resId = getResIdForReview(conn, reviewId);
 
                 double newAvgRating = ratingDAO.getAvg(resId);
                 String updateRatingQuery = "UPDATE DB2024_Restaurant SET rating = ? WHERE res_id = ?";
@@ -60,66 +121,19 @@ public class DB2024TEAM07_ReviewManager {
                 System.out.println("Failed to add review.");
             }
         } catch (SQLException e) {
+            if (conn != null) {
+                try {
+                    conn.rollback();
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
+                }
+            }
             e.printStackTrace();
         } finally {
             if (conn != null) {
                 try {
                     conn.setAutoCommit(true);
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-    }
-
-    public static void updateReview(Scanner scanner) {  //트랜잭션으로 구현
-        System.out.print("Enter review ID to update: ");
-        int reviewId = scanner.nextInt();
-
-        System.out.print("Enter updated menu ID: ");
-        String menuId = scanner.nextLine();
-
-        System.out.print("Enter updated rating (1-5): ");
-        int rating = scanner.nextInt();
-
-        System.out.print("Enter updated review content: ");
-        scanner.nextLine();
-        String reviewContent = scanner.nextLine();
-
-        Connection conn = null;
-        try {
-            conn = instance.getConnection();
-            conn.setAutoCommit(false);
-
-            DB2024TEAM07_Review review = new DB2024TEAM07_Review(reviewId, null,  rating, reviewContent);
-            int result = reviewDAO.update(review);
-
-            if (result > 0) {
-                System.out.println("Review updated successfully.");
-
-                int resId = getResIdForReview(conn, reviewId);
-                double newAvgRating = ratingDAO.getAvg(resId);
-                String updateRatingQuery = "UPDATE DB2024_Restaurant SET rating = ? WHERE res_id = ?";
-                try {
-                    PreparedStatement pStmt = conn.prepareStatement(updateRatingQuery);
-                    pStmt.setDouble(1, newAvgRating);
-                    pStmt.setInt(2, resId);
-                    pStmt.executeUpdate();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-
-                conn.commit();
-
-            } else {
-                System.out.println("Failed to update review.");
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } finally {
-            if (conn != null) {
-                try {
-                    conn.setAutoCommit(true);
+                    //conn.close();
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
@@ -211,7 +225,7 @@ public class DB2024TEAM07_ReviewManager {
 
         Connection conn = null;
         try {
-            conn = instance.getConnection();
+            conn = DB2024TEAM07_Database.getInstance().getConnection();
             conn.setAutoCommit(false);
 
             int result = reviewDAO.delete(reviewId);
@@ -258,7 +272,7 @@ public class DB2024TEAM07_ReviewManager {
         }
     }
 
-    //리뷰 삭제 시 필요한 레스토랑 ID 리뷰 테이블에서 가져오기
+    //레스토랑 ID 리뷰 테이블에서 가져오기
     private static int getResIdForReview(Connection conn, int reviewId) {
         String resIdQuery = "SELECT res_id FROM DB2024_Rating WHERE review_id = ?";
         try {
@@ -268,7 +282,7 @@ public class DB2024TEAM07_ReviewManager {
             if (rs.next()) {
                 return rs.getInt("res_id");
             } else {
-                throw new IllegalArgumentException("Review ID not found");
+                return -1;
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -276,54 +290,5 @@ public class DB2024TEAM07_ReviewManager {
         }
     }
 
-    //리뷰 추가 시 필요한 레스토랑 ID 메뉴 테이블에서 가져오기
-    private static int getResIdForMenu(Connection conn, String menuId) throws SQLException {
-        String resIdQuery = "SELECT res_id FROM DB2024_Menu WHERE menu_id = ?";
-        PreparedStatement pStmt = conn.prepareStatement(resIdQuery);
-        pStmt.setString(1, menuId);
-        ResultSet rs = pStmt.executeQuery();
-        if (rs.next()) {
-            return rs.getInt("res_id");
-        } else {
-            throw new IllegalArgumentException("Menu ID not found");
-        }
-    }
-
-
-
-    public float getRatingForReview(Connection conn, int reviewId) throws SQLException {
-        String Q = "SELECT rating FROM DB2024_Review WHERE review_id = ?";
-        try (PreparedStatement pStmt = conn.prepareStatement(Q)) {
-            pStmt.setInt(1, reviewId);
-            try (ResultSet rs = pStmt.executeQuery()) {
-                if (rs.next()) {
-                    return rs.getFloat("rating");
-                }
-            }
-        }
-        throw new SQLException("Failed to retrieve rating for review ID: " + reviewId);
-    }
-
-
-    public static double calculateNewAvgRating(double currentAvgRating, int newRating, int reviewCount) {
-        return ((currentAvgRating * reviewCount) + newRating) / (reviewCount + 1);
-    }
-
-
-    public static double getNewAvgRating(Connection conn, int resId, int newRating) throws SQLException {
-        double currentAvgRating = ratingDAO.getAvg(resId);
-        int reviewCount = reviewDAO.getResCount(resId);
-        return calculateNewAvgRating(currentAvgRating, newRating, reviewCount);
-    }
-
-    public static float updateRating(Connection conn, int resId, double newAvgRating) throws SQLException {
-        String UPDATE_RATING_QUERY = "UPDATE DB2024_Restaurant SET rating = ? WHERE res_id = ?";
-        try (PreparedStatement preparedStatement = conn.prepareStatement(UPDATE_RATING_QUERY)) {
-            preparedStatement.setDouble(1, newAvgRating);
-            preparedStatement.setInt(2, resId);
-            preparedStatement.executeUpdate();
-        }
-        return 0;
-    }
 }
 

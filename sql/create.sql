@@ -410,5 +410,14 @@ CREATE INDEX DB2024_idx_Menu
 CREATE INDEX DB2024_idx_Restaurant
     ON DB2024_Restaurant(cuisine_type);
 
+CREATE TABLE DB2024_Review_Menu_Res_Mapping (
+    mapping_id INT AUTO_INCREMENT PRIMARY KEY,
+    review_id INT,
+    menu_id INT,
+    res_id INT,
+    FOREIGN KEY (review_id) REFERENCES DB2024_Review(review_id) ON DELETE CASCADE,
+    FOREIGN KEY (menu_id) REFERENCES DB2024_Menu(menu_id) ON DELETE CASCADE,
+    FOREIGN KEY (res_id) REFERENCES DB2024_Restaurant(res_id) ON DELETE CASCADE
+);
 -- 테이블 삭제 (맨 윗줄 코드로 대체) -----------------------------------------------------------------------
 -- DROP DATABASE DB2024TEAM07;

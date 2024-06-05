@@ -40,7 +40,8 @@ public class DB2024TEAM07_ReviewDAO {
     윗단에서 해당 함수를 수행 시 꼭!! 트랜잭션 처리를 하는 것이 요구된다
     만약에 구현하다가 잘 모르겠으면 저한테 연락 주세용.-김민서-
     */
-    public int add(DB2024TEAM07_Review review){
+
+    /*public int add(DB2024TEAM07_Review review){
         String Q = "INSERT INTO DB2024_Review VALUES (?, ?, ?, ?)";
         try{
             pStmt = conn.prepareStatement(Q);
@@ -53,7 +54,41 @@ public class DB2024TEAM07_ReviewDAO {
             se.printStackTrace();
         }
         return -2;  //error
+    }*/
+
+    public int add(DB2024TEAM07_Review review, int menuId, int resId) {
+        String reviewQuery = "INSERT INTO DB2024_Review (user_id, rating, review_content) VALUES (?, ?, ?)";
+        String mappingQuery = "INSERT INTO DB2024_Review_Menu_Res_Mapping (review_id, menu_id, res_id) VALUES (?, ?, ?)";
+
+        try (PreparedStatement pStmt = conn.prepareStatement(reviewQuery, Statement.RETURN_GENERATED_KEYS)) {
+            pStmt.setString(1, review.getUser_id());
+            pStmt.setInt(2, review.getRating());
+            pStmt.setString(3, review.getReview_content());
+            pStmt.executeUpdate();
+
+            // Get the generated review ID
+            try (ResultSet generatedKeys = pStmt.getGeneratedKeys()) {
+                if (generatedKeys.next()) {
+                    int reviewId = generatedKeys.getInt(1);
+
+                    // Add data to the mapping table
+                    try (PreparedStatement pStmtMapping = conn.prepareStatement(mappingQuery)) {
+                        pStmtMapping.setInt(1, reviewId);
+                        pStmtMapping.setInt(2, menuId);
+                        pStmtMapping.setInt(3, resId);
+                        pStmtMapping.executeUpdate();
+                    }
+                } else {
+                    return -1;
+                }
+            }
+            return 1;
+        } catch (SQLException se) {
+            se.printStackTrace();
+        }
+        return -2;
     }
+
 
     //리뷰수정 기능(DB2024_Review 테이블의 투플 수정)-----------------------------------------------------------------------
     //리뷰 수정은 로그인 한 회원만 할 수 있게 제한이 필요하다
@@ -249,8 +284,10 @@ public class DB2024TEAM07_ReviewDAO {
         try{
             pStmt = conn.prepareStatement(Q);
             pStmt.setInt(1, review_id);
-            rs = pStmt.executeQuery();
-            return pStmt.executeUpdate();
+            int rowsAffected = pStmt.executeUpdate(); // 변경된 부분
+            return rowsAffected;
+            //rs = pStmt.executeQuery();
+            //return pStmt.executeUpdate();
         }catch(SQLException se){
             se.printStackTrace();
         }

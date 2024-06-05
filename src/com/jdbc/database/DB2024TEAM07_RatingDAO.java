@@ -50,7 +50,8 @@ public class DB2024TEAM07_RatingDAO{
             FROM DB2024_Rating DB2024_Rating USE INDEX(DB2024_idx_AvgRating)
             WHERE res_id = ?)
          */
-        String Q = "SELECT AVG(rating) FROM DB2024_Review WHERE review_id = (SELECT review_id FROM DB2024_Rating DB2024_Rating USE INDEX(DB2024_idx_AvgRating) WHERE res_id = ?)";
+        String Q = "SELECT AVG(r.rating) FROM DB2024_Review r INNER JOIN DB2024_Rating ra ON r.review_id = ra.review_id WHERE ra.res_id = ?";
+        //서브쿼리때문에 오류나서 조인으로 바꿈
         try{
             pStmt = conn.prepareStatement(Q);
             pStmt.setInt(1, res_id);
@@ -65,3 +66,4 @@ public class DB2024TEAM07_RatingDAO{
         return -2;  //error
     }
 }
+
