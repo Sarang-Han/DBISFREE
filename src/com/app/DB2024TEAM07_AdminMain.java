@@ -28,14 +28,9 @@ public class DB2024TEAM07_AdminMain {
             System.out.println("\n========= Review =========");
             System.out.println("9. Add Review");
             System.out.println("10. Update Review");
-            System.out.println("11. Get Review Count");
-            System.out.println("12. Get Reviews");
-            System.out.println("13. Get User Review Count");
-            System.out.println("14. Get User Reviews");
-            System.out.println("15. Get Restaurant Review Count");
-            System.out.println("16. Get Restaurant Reviews");
-            System.out.println("17. Delete Review");
-            System.out.println("\n18. Exit");
+            System.out.println("11. Search Review");
+            System.out.println("12. Delete Review");
+            System.out.println("\n13. Exit");
             System.out.print("\nChoose an option: ");
             int choice = scanner.nextInt();
             scanner.nextLine();
@@ -72,27 +67,12 @@ public class DB2024TEAM07_AdminMain {
                     DB2024TEAM07_ReviewManager.updateReview(scanner);
                     break;
                 case 11:
-                    DB2024TEAM07_ReviewManager.getCount();
+                    search_review_options(scanner);
                     break;
                 case 12:
-                    DB2024TEAM07_ReviewManager.getReview(scanner);
-                    break;
-                case 13:
-                    DB2024TEAM07_ReviewManager.getUserCount(scanner);
-                    break;
-                case 14:
-                    DB2024TEAM07_ReviewManager.getUserReview(scanner);
-                    break;
-                case 15:
-                    DB2024TEAM07_ReviewManager.getResCount(scanner);
-                    break;
-                case 16:
-                    DB2024TEAM07_ReviewManager.getResReview(scanner);
-                    break;
-                case 17:
                     DB2024TEAM07_ReviewManager.deleteReview(scanner);
                     break;
-                case 18:
+                case 13:
                     return;
                 default:
                     System.out.println("Invalid choice. Please try again.");
@@ -149,6 +129,46 @@ public class DB2024TEAM07_AdminMain {
                 return; // Exit the menu
             default:
                 System.out.println("Invalid choice. Please try again.");
+        }
+    }
+
+    private static void search_review_options(Scanner scanner) {
+        while (true) {
+            System.out.println("\n1. Get Review Count");
+            System.out.println("2. Get Reviews");
+            System.out.println("3. Get User Review Count");
+            System.out.println("4. Get User Reviews");
+            System.out.println("5. Get Restaurant Review Count");
+            System.out.println("6. Get Restaurant Reviews");
+            System.out.println("7. Exit");
+            System.out.print("\nChoose an option: ");
+            int sub_choice = scanner.nextInt();
+            scanner.nextLine();
+
+            switch (sub_choice) {
+                case 1:
+                    DB2024TEAM07_ReviewManager.getCount();
+                    break;
+                case 2:
+                    DB2024TEAM07_ReviewManager.getReview(scanner);
+                    break;
+                case 3:
+                    DB2024TEAM07_ReviewManager.getUserCount(scanner);
+                    break;
+                case 4:
+                    DB2024TEAM07_ReviewManager.getUserReview(scanner);
+                    break;
+                case 5:
+                    DB2024TEAM07_ReviewManager.getResCount(scanner);
+                    break;
+                case 6:
+                    DB2024TEAM07_ReviewManager.getResReview(scanner);
+                    break;
+                case 7:
+                    return;
+                default:
+                    System.out.println("Invalid choice. Please try again.");
+            }
         }
     }
 }
