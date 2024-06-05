@@ -112,11 +112,15 @@ public class DB2024TEAM07_MenuManager {
 
         ResultSet rs = menuDAO.searchByUsers(restaurantName, menuName, minPrice, maxPrice);
         try {
-            while (rs != null && rs.next()) {
-                System.out.println("Restaurant Name: " + rs.getString("res_name"));
-                System.out.println("Menu Name: " + rs.getString("menu_name"));
-                System.out.println("Price: " + rs.getInt("price"));
-                System.out.println("----------------------------");
+            if (rs != null && rs.next()) {
+                System.out.println("Restaurant Name\tMenu Name\tPrice");
+                System.out.println("------------------------------------------");
+                do {
+                    System.out.printf("%-20s %-20s %-10d%n",
+                            rs.getString("res_name"), rs.getString("menu_name"), rs.getInt("price"));
+                } while (rs.next());
+            } else {
+                System.out.println("No data found.");
             }
         } catch (SQLException se) {
             se.printStackTrace();
@@ -130,11 +134,15 @@ public class DB2024TEAM07_MenuManager {
 
         ResultSet rs = menuDAO.searchMenuByRestaurant(restaurantId);
         try {
-            while (rs != null && rs.next()) {
-                System.out.println("Menu ID: " + rs.getInt("menu_id"));
-                System.out.println("Menu Name: " + rs.getString("menu_name"));
-                System.out.println("Price: " + rs.getInt("price"));
-                System.out.println("----------------------------");
+            if (rs != null && rs.next()) {
+                System.out.println("Menu ID\tMenu Name\tPrice");
+                System.out.println("------------------------------------------");
+                do {
+                    System.out.printf("%-10d %-20s %-10d%n",
+                            rs.getInt("menu_id"), rs.getString("menu_name"), rs.getInt("price"));
+                } while (rs.next());
+            } else {
+                System.out.println("No data found.");
             }
         } catch (SQLException se) {
             se.printStackTrace();
@@ -147,12 +155,15 @@ public class DB2024TEAM07_MenuManager {
 
         ResultSet rs = menuDAO.searchByManager(resId);
         try {
-            while (rs != null && rs.next()) {
-                System.out.println("Menu ID: " + rs.getInt("menu_id"));
-                System.out.println("Restaurant ID: " + rs.getInt("res_id"));
-                System.out.println("Menu Name: " + rs.getString("menu_name"));
-                System.out.println("Price: " + rs.getInt("price"));
-                System.out.println("----------------------------");
+            if (rs != null && rs.next()) {
+                System.out.println("Menu ID\tRestaurant ID\tMenu Name\tPrice");
+                System.out.println("------------------------------------------");
+                do {
+                    System.out.printf("%-8d %-13d %-20s %-10d%n",
+                            rs.getInt("menu_id"), rs.getInt("res_id"), rs.getString("menu_name"), rs.getInt("price"));
+                } while (rs.next());
+            } else {
+                System.out.println("No data found.");
             }
         } catch (SQLException se) {
             se.printStackTrace();
@@ -185,9 +196,9 @@ public class DB2024TEAM07_MenuManager {
         ResultSet resultSet = menuDAO.getAllMenuByRestaurant(res_id);
 
         // Print header
-        System.out.println("--------------------------------");
+        System.out.println("------------------------------------------");
         System.out.println("Menu ID\t\tMenu Name");
-        System.out.println("--------------------------------");
+        System.out.println("------------------------------------------");
 
         try {
             while (resultSet != null && resultSet.next()) {
@@ -198,6 +209,6 @@ public class DB2024TEAM07_MenuManager {
         }
 
         // Footer
-        System.out.println("--------------------------------");
+        System.out.println("------------------------------------------");
     }
 }
