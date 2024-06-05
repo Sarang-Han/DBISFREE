@@ -2,8 +2,6 @@ package com.app;
 
 import com.manager.DB2024TEAM07_RestaurantManager;
 import com.manager.DB2024TEAM07_UserManager;
-import java.util.List;
-import com.jdbc.model.DB2024TEAM07_Restaurant;
 
 import java.util.Scanner;
 

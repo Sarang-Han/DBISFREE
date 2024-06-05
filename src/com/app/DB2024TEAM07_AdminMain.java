@@ -14,26 +14,21 @@ public class DB2024TEAM07_AdminMain {
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        boolean running = true;
 
-        while (running) {
-            System.out.println("\n====== Restaurant ======");
-            System.out.println("1. Add Restaurant");
-            System.out.println("2. Update Restaurant");
-            System.out.println("3. Search Restaurant");
-            System.out.println("4. Delete Restaurant");
-            System.out.println("\n========= Menu =========");
-            System.out.println("5. Add Menu");
-            System.out.println("6. Update Menu");
-            System.out.println("7. Search Menu");
-            System.out.println("8. Delete Menu");
-            System.out.println("\n========= Review =========");
-            System.out.println("9. Add Review");
-            System.out.println("10. Update Review");
-            System.out.println("11. Search Review");
-            System.out.println("12. Delete Review");
-            System.out.println("\n13. Exit");
-            System.out.print("\nChoose an option: ");
+        while (true) {
+            System.out.println("\n======= Restaurant ======== =========== Menu ==========\n");
+            System.out.println("  1. Add Restaurant        |    5. Add Menu");
+            System.out.println("  2. Update Restaurant     |    6. Update Menu");
+            System.out.println("  3. Search Restaurant     |    7. Search Menu");
+            System.out.println("  4. Delete Restaurant     |    8. Delete Menu");
+            System.out.println("\n========= Review ========== =========== User ==========\n");
+            System.out.println("  9. Add Review            |    13. Add User");
+            System.out.println("  10. Update Review        |    14. Update User");
+            System.out.println("  11. Search Review        |    15. Search User");
+            System.out.println("  12. Delete Review        |    16. Delete User");
+            System.out.println("\n=========================== ===========================\n");
+            System.out.println("  17. Exit\n");
+            System.out.print("  Choose an option: ");
             int choice = scanner.nextInt();
             scanner.nextLine();
 
@@ -84,7 +79,6 @@ public class DB2024TEAM07_AdminMain {
                     System.out.println("Invalid choice. Please try again.");
             }
         }
-        scanner.close();
     }
 
 
