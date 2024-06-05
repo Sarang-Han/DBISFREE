@@ -13,7 +13,7 @@ public class DB2024TEAM07_UserMain {
 
         while (running) {
             System.out.println(" ");
-            System.out.println(STR."Welcome to E-MATEASY, \{loggedInUsername}!");
+            System.out.println("Welcome to E-MATEASY, " + loggedInUsername + "!");
             System.out.println("===================\n");
             System.out.println("1. Search for good restaurants");
             System.out.println("2. Get Random Restaurant");
