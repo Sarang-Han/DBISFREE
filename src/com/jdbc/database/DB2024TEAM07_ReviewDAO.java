@@ -41,21 +41,6 @@ public class DB2024TEAM07_ReviewDAO {
     만약에 구현하다가 잘 모르겠으면 저한테 연락 주세용.-김민서-
     */
 
-    /*public int add(DB2024TEAM07_Review review){
-        String Q = "INSERT INTO DB2024_Review VALUES (?, ?, ?, ?)";
-        try{
-            pStmt = conn.prepareStatement(Q);
-            pStmt.setInt(1, review.getReview_id());
-            pStmt.setString(2, review.getUser_id());
-            pStmt.setInt(3, review.getRating());
-            pStmt.setString(4, review.getReview_content());
-            return pStmt.executeUpdate();
-        }catch(SQLException se){
-            se.printStackTrace();
-        }
-        return -2;  //error
-    }*/
-
     public int add(DB2024TEAM07_Review review, int menuId, int resId) {
         String reviewQuery = "INSERT INTO DB2024_Review (user_id, rating, review_content) VALUES (?, ?, ?)";
         String mappingQuery = "INSERT INTO DB2024_Review_Menu_Res_Mapping (review_id, menu_id, res_id) VALUES (?, ?, ?)";
@@ -88,7 +73,6 @@ public class DB2024TEAM07_ReviewDAO {
         }
         return -2;
     }
-
 
     //리뷰수정 기능(DB2024_Review 테이블의 투플 수정)-----------------------------------------------------------------------
     //리뷰 수정은 로그인 한 회원만 할 수 있게 제한이 필요하다
