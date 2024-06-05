@@ -73,7 +73,7 @@ CREATE TABLE DB2024_Menu(
 
 -- 특정 식당의 특정 메뉴라는 점이 각각의 투플을 구별한다
     PRIMARY KEY(menu_id, res_id),
--- 참조하고 있던 식당이 사라지면 메뉴들도 전부 사라지는 정책 선택
+-- 참조하고 있던 식당이 사라지면 메뉴들도 전부 사라지는 정책 선택(경고문구 필수!)
     FOREIGN KEY(res_id) REFERENCES DB2024_Restaurant(res_id) ON DELETE CASCADE
 );
 
@@ -94,7 +94,8 @@ CREATE TABLE DB2024_Review (
    review_content VARCHAR(500),
 
    PRIMARY KEY (review_id),
-   FOREIGN KEY (user_id) REFERENCES DB2024_User(user_id)
+-- 참조하고 있던 유저가 사라지면 메뉴들도 전부 사라지는 정책 선택(경고문구 필수!)
+   FOREIGN KEY (user_id) REFERENCES DB2024_User(user_id) ON DELETE CASCADE
 );
 
 /*
