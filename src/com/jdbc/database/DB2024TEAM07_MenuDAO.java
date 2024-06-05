@@ -165,4 +165,17 @@ public class DB2024TEAM07_MenuDAO{
         }
         return 0;
     }
+
+    // 모든 메뉴 이름과 메뉴 아이디를 출력
+    public ResultSet getAllMenuByRestaurant(int res_id) {
+        String query = "SELECT menu_id, menu_name FROM DB2024_Menu WHERE res_id = ?";
+        try {
+            PreparedStatement statement = conn.prepareStatement(query);
+            statement.setInt(1, res_id);
+            return statement.executeQuery();
+        } catch (SQLException se) {
+            se.printStackTrace();
+        }
+        return null;
+    }
 }

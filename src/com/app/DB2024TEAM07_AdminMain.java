@@ -8,6 +8,8 @@ import com.manager.DB2024TEAM07_ReviewManager;
 
 import java.util.Scanner;
 
+import static com.manager.DB2024TEAM07_RestaurantManager.displayAllRestaurants;
+
 public class DB2024TEAM07_AdminMain {
 
     public static void main(String[] args) {
@@ -40,24 +42,28 @@ public class DB2024TEAM07_AdminMain {
                     DB2024TEAM07_RestaurantManager.addRestaurant(scanner);
                     break;
                 case 2:
+                    displayAllRestaurants();
                     DB2024TEAM07_RestaurantManager.updateRestaurant(scanner, new DB2024TEAM07_RestaurantDAO());
                     break;
                 case 3:
                     search_restaurant_options(scanner);
                     break;
                 case 4:
+                    displayAllRestaurants();
                     DB2024TEAM07_RestaurantManager.deleteRestaurant(scanner);
                     break;
                 case 5:
                     DB2024TEAM07_MenuManager.addMenu(scanner);
                     break;
                 case 6:
+                    displayAllRestaurants();
                     DB2024TEAM07_MenuManager.updateMenu(scanner, new DB2024TEAM07_MenuDAO());
                     break;
                 case 7:
                     search_menu_options(scanner);
                     break;
                 case 8:
+                    displayAllRestaurants();
                     DB2024TEAM07_MenuManager.deleteMenu(scanner);
                     break;
                 case 9:
@@ -107,6 +113,7 @@ public class DB2024TEAM07_AdminMain {
     }
 
     public static void search_menu_options(Scanner scanner) {
+        displayAllRestaurants();
         System.out.println("\n1. Search Menu by Restaurant Name, Menu Name, and Price Range (User)");
         System.out.println("2. Search Menu by Restaurant ID (User)");
         System.out.println("3. Search Menu by Restaurant ID (Manager)");

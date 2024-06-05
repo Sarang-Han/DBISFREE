@@ -262,4 +262,34 @@ public class DB2024TEAM07_RestaurantDAO {
         }
         return null;
     }
+
+    // 모든 레스토랑을 검색하여 레스토랑 이름, 아이디 반환
+    public List<DB2024TEAM07_Restaurant> getAllRestaurants() {
+        String query = "SELECT res_id, res_name FROM DB2024_Restaurant";
+        List<DB2024TEAM07_Restaurant> restaurants = new ArrayList<>();
+
+        try {
+            pStmt = conn.prepareStatement(query);
+            ResultSet rs = pStmt.executeQuery();
+
+            while (rs.next()) {
+                DB2024TEAM07_Restaurant restaurant = new DB2024TEAM07_Restaurant(
+                        rs.getString("res_name"),
+                        rs.getInt("res_id"),
+                        null, // phone_num
+                        null, // address
+                        null, // operating_hours
+                        null, // break_time
+                        -1, // rating
+                        null, // cuisine_type
+                        null // location
+                );
+                restaurants.add(restaurant);
+            }
+        } catch (SQLException se) {
+            se.printStackTrace();
+        }
+        return restaurants;
+    }
 }
+
