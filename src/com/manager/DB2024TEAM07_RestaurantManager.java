@@ -1,7 +1,3 @@
-/*
-DB2024TEAM07_RestaurantManager.java
-*/
-
 package com.manager;
 
 import java.sql.ResultSet;

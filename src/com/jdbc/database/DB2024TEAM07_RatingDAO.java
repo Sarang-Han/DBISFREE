@@ -1,6 +1,4 @@
 package com.jdbc.database;
-//Database 파일의 커넥션과의 연결 필요
-//error라고 적힌 부분은 조치 필요(고민)-롤백/무시/등
 
 /* 구현된 기능
     가게에 대한 리뷰 등록:   add(int review_id, int res_id)
@@ -9,12 +7,19 @@ package com.jdbc.database;
 
 import java.sql.*;
 
+/**
+ * This class provides data access object (DAO) methods for interacting with the DB2024_Rating and DB2024_Review tables in a database.
+ * It handles operations related to restaurant reviews and ratings.
+ */
 public class DB2024TEAM07_RatingDAO{
     private Connection conn;
     private PreparedStatement pStmt;
     private Statement stmt;
     private ResultSet rs;
 
+    /**
+     * Constructor that establishes a connection to the database using the DB2024TEAM07_Database class.
+     */
     public DB2024TEAM07_RatingDAO() {
         this.conn = DB2024TEAM07_Database.getInstance().getConnection();
     }
@@ -23,6 +28,13 @@ public class DB2024TEAM07_RatingDAO{
     //새 리뷰 작성 시 무조건 호출되어야 함
     //이걸 서비스 단에서 트랜잭션 구현할지 아님 DAO에서 해결볼지는 고민해봐야 할 것 같아요
     //개인적으로는 위에서 처리하는 게 더 깔끔할 것 같다고 생각은 합니다
+    /**
+     * Adds a new review to the DB2024_Rating table.
+     *
+     * @param review_id the ID of the review
+     * @param res_id the ID of the restaurant
+     * @return the number of rows affected (usually 1 for a successful insert)
+     */
     public int add(int review_id, int res_id){
         String Q = "INSERT INTO DB2024_Rating VALUES (?, ?)";
         try{
@@ -41,6 +53,12 @@ public class DB2024TEAM07_RatingDAO{
     //테이블 간 변화 적용이 필요한 부분이므로 트랜잭션 필수
     //인덱스 힌트(DB2024_idx_AvgRating)
     //중첩 쿼리 이용됨
+    /**
+     * Calculates and returns the average rating for a specific restaurant.
+     *
+     * @param res_id the ID of the restaurant
+     * @return the average rating as a float value
+     */
     public float getAvg(int res_id){
         /*
         SELECT AVG(rating)

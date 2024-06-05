@@ -3,25 +3,36 @@ package com.jdbc.database;
 import com.jdbc.model.DB2024TEAM07_Restaurant;
 
 import java.sql.*;
-import java.util.*;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 // 구현해야할 기능: 식당 등록(관리자), 식당 조회(유저), 식당 정보 업데이트(관리자), 식당 삭제(관리자)
 // 생각해볼것: location으로 검색할건지 cuisine_type으로 검색할건지 식당 이름으로 검색할건지 --> 복합적인 검색조건으로 식당 조회하는 기능
 
+/**
+ * This class provides data access object (DAO) methods for interacting with the DB2024_Restaurant table in a database.
+ * It manages various functionalities related to restaurant registration, retrieval, update, and deletion.
+ */
 public class DB2024TEAM07_RestaurantDAO {
     private static Connection conn;
     private PreparedStatement pStmt;
 
+    /**
+     * Constructor that establishes a connection to the database using the DB2024TEAM07_Database class.
+     */
     public DB2024TEAM07_RestaurantDAO() {
         this.conn = DB2024TEAM07_Database.getInstance().getConnection();
     }
 
     //식당 등록 (관리자 관점) ---- DB2024_Restaurant에 투플 삽입------
+    /**
+     * Adds a new restaurant to the database (Admin functionality).
+     *
+     * @param restaurant the restaurant object containing details like name, ID, phone number, address, etc.
+     * @return 1 on successful insertion, 0 if failed
+     */
     public int add(DB2024TEAM07_Restaurant restaurant) {
         String Q = "INSERT INTO DB2024_Restaurant (res_name, res_id, phone_num, address, operating_hours, break_time, rating, cuisine_type, location) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
         try {
@@ -96,6 +107,15 @@ public class DB2024TEAM07_RestaurantDAO {
     // 식당 검색 -복합적인 조건
     // res_name, rating(0.5 단위 별로 3.0을 입력하면 3.0점 이상인 식당), cuisine_type, location 4가지 조건을 복합적으로 검색
     // rating의 경우 사용자가 입력한 평점 이상인 식당들 검색
+    /**
+     * Searches for restaurants based on a combination of criteria (Admin functionality).
+     *
+     * @param res_name  Name of the restaurant (optional)
+     * @param cuisine_type  Type of cuisine (optional)
+     * @param location  Location of the restaurant (optional)
+     * @param rating  Minimum rating (optional)
+     * @return A list of {@link DB2024TEAM07_Restaurant} that satisfy the given criteria.
+     */
     public List<DB2024TEAM07_Restaurant> search(String res_name, String cuisine_type, String location, Float rating) {
 
         StringBuilder Q = new StringBuilder("SELECT * FROM DB2024_Restaurant WHERE 1=1");
@@ -148,6 +168,12 @@ public class DB2024TEAM07_RestaurantDAO {
     }
 
     // 식당 검색 - cuisine_type 별로
+    /**
+     * Retrieves a list of restaurants based on the specified cuisine type.
+     *
+     * @param cuisine_type The type of cuisine to search for.
+     * @return A {@link ResultSet} containing restaurant information.
+     */
     public ResultSet searchRestaurantByCategory(String cuisine_type) {
         String Q = "SELECT res_name, phone_num, address, operating_hours, break_time, rating, location " +
                 "FROM DB2024_Restaurant USE INDEX(DB2024_idx_Restaurant) WHERE cuisine_type = ?";
@@ -162,6 +188,13 @@ public class DB2024TEAM07_RestaurantDAO {
     }
 
     //식당 수정 (관리자 관점)
+    /**
+     * Updates the information of an existing restaurant in the database (Admin functionality).
+     *
+     * @param restaurant The {@link DB2024TEAM07_Restaurant} object containing the updated information.
+     * @param pRes_id   The ID of the restaurant to be updated.
+     * @return The number of rows affected by the update statement.
+     */
     public int update(DB2024TEAM07_Restaurant restaurant, int pRes_id) {
         StringBuilder queryBuilder = new StringBuilder("UPDATE DB2024_Restaurant SET ");
         List<Object> parameters = new ArrayList<>();
@@ -226,6 +259,14 @@ public class DB2024TEAM07_RestaurantDAO {
     }
 
     //식당 삭제 (관리자 관점)
+    /**
+     * Deletes a restaurant from the database based on the provided restaurant ID.
+     * This method is intended for administrators to remove restaurants.
+     *
+     * @param res_id The ID of the restaurant to be deleted.
+     * @return The number of rows affected by the DELETE operation. This should be 1 if the deletion was successful.
+     *         Returns 0 if no rows were affected (i.e., the restaurant with the provided ID was not found).
+     */
     public int delete(int res_id) {
         String Q = "DELETE FROM DB2024_Restaurant WHERE res_id=?";
         try {
@@ -240,6 +281,11 @@ public class DB2024TEAM07_RestaurantDAO {
         return 0;
     }
 
+    /**
+     * Retrieves a random restaurant from the database.
+     *
+     * @return A DB2024TEAM07_Restaurant object representing the retrieved random restaurant, or null if no restaurants are found.
+     */
     public static DB2024TEAM07_Restaurant getRandomRestaurant() {
         String query = "SELECT * FROM DB2024_Restaurant ORDER BY RAND() LIMIT 1";
         try {
@@ -264,6 +310,12 @@ public class DB2024TEAM07_RestaurantDAO {
     }
 
     // 모든 레스토랑을 검색하여 레스토랑 이름, 아이디 반환
+    /**
+     * Retrieves all restaurants from the database and returns a list containing basic information for each restaurant.
+     * This method includes only the restaurant ID and name.
+     *
+     * @return A List of DB2024TEAM07_Restaurant objects containing only ID and name for each restaurant.
+     */
     public List<DB2024TEAM07_Restaurant> getAllRestaurants() {
         String query = "SELECT res_id, res_name FROM DB2024_Restaurant";
         List<DB2024TEAM07_Restaurant> restaurants = new ArrayList<>();

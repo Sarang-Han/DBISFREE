@@ -3,7 +3,6 @@ package com.app;
 import com.jdbc.database.DB2024TEAM07_MenuDAO;
 import com.jdbc.database.DB2024TEAM07_RestaurantDAO;
 import com.jdbc.database.DB2024TEAM07_UserDAO;
-import com.jdbc.model.DB2024TEAM07_User;
 import com.manager.DB2024TEAM07_MenuManager;
 import com.manager.DB2024TEAM07_RestaurantManager;
 import com.manager.DB2024TEAM07_ReviewManager;
