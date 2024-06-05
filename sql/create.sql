@@ -65,28 +65,14 @@ CREATE TABLE DB2024_Restaurant(
 -- *: Menu는 약한 개체 타입으로, Restaurant에 의존한다. (DB2024_Menu PK: menu_id, res_id)
 -- 레스토랑 -> 메뉴 -> 리뷰가 제3정규형으로 변환된 것
 CREATE TABLE DB2024_Menu(
--- 메뉴 id, 메뉴 이름, 식당 이름, 메뉴 가격, 메뉴 설명 속성
-    menu_id INT,
-    menu_name VARCHAR(50),
-    res_id INT,
-    price INT,
+    menu_id INT NOT NULL,
+    menu_name VARCHAR(50) NOT NULL,
+    res_id INT NOT NULL,
+    price INT NOT NULL,
 
--- 특정 식당의 특정 메뉴라는 점이 각각의 투플을 구별한다
     PRIMARY KEY(menu_id, res_id),
--- 참조하고 있던 식당이 사라지면 메뉴들도 전부 사라지는 정책 선택(경고문구 필수!)
     FOREIGN KEY(res_id) REFERENCES DB2024_Restaurant(res_id) ON DELETE CASCADE
 );
-
-/*
- 4. DB2024_Review: DB2024_User 테이블의 유저가* DB2024_Menu 테이블의 메뉴**에 대해 작성한 리뷰 테이블
-    review_id: 각각의 리뷰 투플을 구별하는 PK
-    user_id: 해당 리뷰를 작성한 유저 정보를 가지는 FK (DB2024_User의 PK)
-    menu_id: 해당 리뷰가 대상으로 하는 메뉴 정보를 가지는 FK (DB2024_Menu의 PK)
-    rating: 리뷰 점수. INT type으로, 0, 1, 2, 3, 4, 5값만을 작성할 수 있다.
-    review_content: 리뷰 텍스트. 500자까지 작성이 가능하다.
- */
--- *, **: 이진 1:N 관계
--- 레스토랑 -> 메뉴 -> 리뷰가 제3정규형으로 변환된 것
 CREATE TABLE DB2024_Review (
    review_id INT AUTO_INCREMENT,
    user_id VARCHAR(50) NOT NULL,
@@ -94,26 +80,14 @@ CREATE TABLE DB2024_Review (
    review_content VARCHAR(500),
 
    PRIMARY KEY (review_id),
--- 참조하고 있던 유저가 사라지면 메뉴들도 전부 사라지는 정책 선택(경고문구 필수!)
    FOREIGN KEY (user_id) REFERENCES DB2024_User(user_id) ON DELETE CASCADE
 );
 
-/*
- 5. DB2024_Rating: DB2024_Restaurant과 DB2024_Review간의 관계*를 mapping한 테이블
-    review_id: DB2024_Review 테이블의 PK를 FK로 받아옴
-    res_id: DB2024_Restaurant 테이블의 PK를 FK로 받아옴
- */
--- *: 이진 N:M 관계, DB2024_Review 테이블에서의 GROUP BY(resid) AVG(rating) 값 -> DB2024_Restaurant의 rating 값
--- DB2024_Review 테이블에 투플이 삽입될 때마다 DB2024_Rating 테이블에도 투플을 삽입하는 연산 필수
 CREATE TABLE DB2024_Rating (
    review_id INT,
    res_id INT NOT NULL,
-   -- rating INT,
-
    PRIMARY KEY (review_id, res_id),
--- 이 테이블의 투플은 이 테이블이 참조하는 '리뷰', '식당'이 사라질 때 같이 삭제된다.
    FOREIGN KEY(review_id) REFERENCES DB2024_Review(review_id) ON DELETE CASCADE,
-   -- FOREIGN KEY(rating) REFERENCES DB2024_Review(review_id),
    FOREIGN KEY(res_id) REFERENCES DB2024_Restaurant(res_id) ON DELETE CASCADE
 );
 
