@@ -145,17 +145,13 @@ public class DB2024TEAM07_RestaurantManager {
             System.out.println("No restaurants found matching the criteria.");
         } else {
             System.out.println("Restaurants found:");
+            System.out.printf("%-20s \t%-10s \t%-15s \t%-30s \t%-20s \t%-20s \t%-10s \t%-20s \t%-20s%n", "Name", "ID", "Phone Number", "Address", "Operating Hours", "Break Time", "Rating", "Cuisine Type", "Location");
+            System.out.println("--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
             for (DB2024TEAM07_Restaurant restaurant : restaurants) {
-                System.out.println("Name: " + restaurant.getRes_name());
-                System.out.println("ID: " + restaurant.getRes_id());
-                System.out.println("Phone Number: " + restaurant.getPhone_num());
-                System.out.println("Address: " + restaurant.getAddress());
-                System.out.println("Operating Hours: " + restaurant.getOperating_hours());
-                System.out.println("Break Time: " + restaurant.getBreak_time());
-                System.out.println("Rating: " + restaurant.getRating());
-                System.out.println("Cuisine Type: " + restaurant.getCuisine_type());
-                System.out.println("Location: " + restaurant.getLocation());
-                System.out.println("----------------------------");
+                System.out.printf("%-20s \t%-10d \t%-15s \t%-30s \t%-20s \t%-20s \t%-10.1f \t%-20s \t%-20s%n",
+                        restaurant.getRes_name(), restaurant.getRes_id(), restaurant.getPhone_num(), restaurant.getAddress(),
+                        restaurant.getOperating_hours(), restaurant.getBreak_time(), restaurant.getRating(),
+                        restaurant.getCuisine_type(), restaurant.getLocation());
             }
         }
     }
@@ -167,15 +163,14 @@ public class DB2024TEAM07_RestaurantManager {
 
         try (ResultSet rs = restaurantDAO.searchRestaurantByCategory(cuisineType)) {
             if (rs != null && rs.next()) {
+                System.out.printf("%-25s %-20s %-40s %-20s %-15s %-10s %-20s%n",
+                        "Restaurant Name", "Phone Number", "Address", "Operating Hours", "Break Time", "Rating", "Location");
+                System.out.println("--------------------------------------------------------------------------------------------------------------------------------------------------------");
                 do {
-                    System.out.println("Restaurant Name: " + rs.getString("res_name"));
-                    System.out.println("Phone Number: " + rs.getString("phone_num"));
-                    System.out.println("Address: " + rs.getString("address"));
-                    System.out.println("Operating Hours: " + rs.getString("operating_hours"));
-                    System.out.println("Break Time: " + rs.getString("break_time"));
-                    System.out.println("Rating: " + rs.getFloat("rating"));
-                    System.out.println("Location: " + rs.getString("location"));
-                    System.out.println();
+                    System.out.printf("%-25s %-20s %-40s %-20s %-15s %-10.1f %-20s%n",
+                            rs.getString("res_name"), rs.getString("phone_num"), rs.getString("address"),
+                            rs.getString("operating_hours"), rs.getString("break_time"), rs.getFloat("rating"),
+                            rs.getString("location"));
                 } while (rs.next());
             } else {
                 System.out.println("No restaurants found for the given cuisine type.");
