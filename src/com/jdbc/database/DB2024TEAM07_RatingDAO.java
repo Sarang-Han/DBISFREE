@@ -66,4 +66,3 @@ public class DB2024TEAM07_RatingDAO{
         return -2;  //error
     }
 }
-
