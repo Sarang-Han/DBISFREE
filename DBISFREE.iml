@@ -8,5 +8,6 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="mysql-connector-j-8.3" level="project" />
+    <orderEntry type="library" name="mysql-connector-j-8.41" level="project" />
   </component>
 </module>

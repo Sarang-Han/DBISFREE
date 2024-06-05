@@ -145,15 +145,25 @@ public class DB2024TEAM07_RestaurantManager {
             System.out.println("No restaurants found matching the criteria.");
         } else {
             System.out.println("Restaurants found:");
-            System.out.printf("%-20s \t%-10s \t%-15s \t%-30s \t%-20s \t%-20s \t%-10s \t%-20s \t%-20s%n", "Name", "ID", "Phone Number", "Address", "Operating Hours", "Break Time", "Rating", "Cuisine Type", "Location");
+            System.out.printf("%-20s \t%-10s \t%-15s \t%-30s \t%-20s \t%-20s \t%-10s \t%-20s \t%-20s%n",
+                    "Name", "ID", "Phone Number", "Address", "Operating Hours", "Break Time", "Rating", "Cuisine Type", "Location");
             System.out.println("--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
             for (DB2024TEAM07_Restaurant restaurant : restaurants) {
+                String resName = restaurant.getRes_name() != null ? restaurant.getRes_name() : "정보 없음";
+                int resId = restaurant.getRes_id(); // ID는 null이 아니라고 가정
+                String phoneNum = restaurant.getPhone_num() != null ? restaurant.getPhone_num() : "정보 없음";
+                String address = restaurant.getAddress() != null ? restaurant.getAddress() : "정보 없음";
+                String operatingHours = restaurant.getOperating_hours() != null ? restaurant.getOperating_hours() : "정보 없음";
+                String breakTime = restaurant.getBreak_time() != null ? restaurant.getBreak_time() : "정보 없음";
+                float _rating = restaurant.getRating(); // Rating은 기본값으로 가정
+                String _cuisineType = restaurant.getCuisine_type() != null ? restaurant.getCuisine_type() : "정보 없음";
+                String _location = restaurant.getLocation() != null ? restaurant.getLocation() : "정보 없음";
+
                 System.out.printf("%-20s \t%-10d \t%-15s \t%-30s \t%-20s \t%-20s \t%-10.1f \t%-20s \t%-20s%n",
-                        restaurant.getRes_name(), restaurant.getRes_id(), restaurant.getPhone_num(), restaurant.getAddress(),
-                        restaurant.getOperating_hours(), restaurant.getBreak_time(), restaurant.getRating(),
-                        restaurant.getCuisine_type(), restaurant.getLocation());
+                        resName, resId, phoneNum, address, operatingHours, breakTime, _rating, _cuisineType, _location);
             }
         }
+
     }
 
     /* Search by Cuisine Type */
@@ -167,10 +177,16 @@ public class DB2024TEAM07_RestaurantManager {
                         "Restaurant Name", "Phone Number", "Address", "Operating Hours", "Break Time", "Rating", "Location");
                 System.out.println("--------------------------------------------------------------------------------------------------------------------------------------------------------");
                 do {
-                    System.out.printf("%-25s %-20s %-40s %-20s %-15s %-10.1f %-20s%n",
-                            rs.getString("res_name"), rs.getString("phone_num"), rs.getString("address"),
-                            rs.getString("operating_hours"), rs.getString("break_time"), rs.getFloat("rating"),
-                            rs.getString("location"));
+                    String resName = rs.getString("res_name") != null ? rs.getString("res_name") : "정보 없음";
+                    String phoneNum = rs.getString("phone_num") != null ? rs.getString("phone_num") : "정보 없음";
+                    String address = rs.getString("address") != null ? rs.getString("address") : "정보 없음";
+                    String operatingHours = rs.getString("operating_hours") != null ? rs.getString("operating_hours") : "정보 없음";
+                    String breakTime = rs.getString("break_time") != null ? rs.getString("break_time") : "정보 없음";
+                    String rating = rs.getString("rating") != null ? String.valueOf(rs.getFloat("rating")) : "정보 없음";
+                    String location = rs.getString("location") != null ? rs.getString("location") : "정보 없음";
+
+                    System.out.printf("%-25s %-20s %-40s %-20s %-15s %-10s %-20s%n",
+                            resName, phoneNum, address, operatingHours, breakTime, rating, location);
                 } while (rs.next());
             } else {
                 System.out.println("No restaurants found for the given cuisine type.");

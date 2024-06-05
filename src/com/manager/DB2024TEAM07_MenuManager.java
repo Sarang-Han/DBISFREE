@@ -113,11 +113,14 @@ public class DB2024TEAM07_MenuManager {
         ResultSet rs = menuDAO.searchByUsers(restaurantName, menuName, minPrice, maxPrice);
         try {
             if (rs != null && rs.next()) {
-                System.out.println("Restaurant Name\tMenu Name\tPrice");
-                System.out.println("------------------------------------------");
+                System.out.println("Restaurant Name\t\tMenu Name\t\tPrice");
+                System.out.println("---------------------------------------------");
                 do {
-                    System.out.printf("%-20s %-20s %-10d%n",
-                            rs.getString("res_name"), rs.getString("menu_name"), rs.getInt("price"));
+                    String res_name = rs.getString("res_name") != null ? rs.getString("res_name") : "정보 없음";
+                    String menu_name = rs.getString("menu_name") != null ? rs.getString("menu_name") : "정보 없음";
+                    String price = rs.getString("price") != null ? String.valueOf(rs.getInt("price")) : "정보 없음";
+
+                    System.out.printf("%-20s %-20s %-10s%n", res_name, menu_name, price);
                 } while (rs.next());
             } else {
                 System.out.println("No data found.");
@@ -125,6 +128,7 @@ public class DB2024TEAM07_MenuManager {
         } catch (SQLException se) {
             se.printStackTrace();
         }
+
     }
 
     public static void searchMenuByRestaurant(Scanner scanner) {
@@ -135,11 +139,14 @@ public class DB2024TEAM07_MenuManager {
         ResultSet rs = menuDAO.searchMenuByRestaurant(restaurantId);
         try {
             if (rs != null && rs.next()) {
-                System.out.println("Menu ID\tMenu Name\tPrice");
-                System.out.println("------------------------------------------");
+                System.out.println("Menu ID\tMenu Name\t\tPrice");
+                System.out.println("---------------------------------------------");
                 do {
-                    System.out.printf("%-10d %-20s %-10d%n",
-                            rs.getInt("menu_id"), rs.getString("menu_name"), rs.getInt("price"));
+                    int menuId = rs.getInt("menu_id");
+                    String menuName = rs.getString("menu_name") != null ? rs.getString("menu_name") : "정보 없음";
+                    String price = rs.getString("price") != null ? String.valueOf(rs.getInt("price")) : "정보 없음";
+
+                    System.out.printf("%-10d %-20s %-10s%n", menuId, menuName, price);
                 } while (rs.next());
             } else {
                 System.out.println("No data found.");
@@ -147,6 +154,7 @@ public class DB2024TEAM07_MenuManager {
         } catch (SQLException se) {
             se.printStackTrace();
         }
+
     }
 
     public static void searchByManager(Scanner scanner) {
@@ -156,11 +164,15 @@ public class DB2024TEAM07_MenuManager {
         ResultSet rs = menuDAO.searchByManager(resId);
         try {
             if (rs != null && rs.next()) {
-                System.out.println("Menu ID\tRestaurant ID\tMenu Name\tPrice");
-                System.out.println("------------------------------------------");
+                System.out.println("Menu ID\tRestaurant ID\tMenu Name\t\tPrice");
+                System.out.println("--------------------------------------------------------------");
                 do {
-                    System.out.printf("%-8d %-13d %-20s %-10d%n",
-                            rs.getInt("menu_id"), rs.getInt("res_id"), rs.getString("menu_name"), rs.getInt("price"));
+                    int menuId = rs.getInt("menu_id");
+                    int restaurantId = rs.getInt("res_id");
+                    String menuName = rs.getString("menu_name") != null ? rs.getString("menu_name") : "정보 없음";
+                    String price = rs.getString("price") != null ? String.valueOf(rs.getInt("price")) : "정보 없음";
+
+                    System.out.printf("%-8d %-13d %-20s %-10s%n", menuId, restaurantId, menuName, price);
                 } while (rs.next());
             } else {
                 System.out.println("No data found.");
@@ -168,6 +180,7 @@ public class DB2024TEAM07_MenuManager {
         } catch (SQLException se) {
             se.printStackTrace();
         }
+
     }
 
     /* Delete Function */
