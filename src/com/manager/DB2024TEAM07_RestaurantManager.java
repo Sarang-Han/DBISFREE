@@ -238,13 +238,13 @@ public class DB2024TEAM07_RestaurantManager {
             System.out.printf("%-25s%-10d%-20s%-30s%-25s%-25s%-10.1f%-20s%-10s%n",
                     randomRestaurant.getRes_name(),
                     randomRestaurant.getRes_id(),
-                    randomRestaurant.getPhone_num(),
-                    randomRestaurant.getAddress(),
-                    randomRestaurant.getOperating_hours(),
-                    randomRestaurant.getBreak_time(),
+                    randomRestaurant.getPhone_num() != null ? randomRestaurant.getPhone_num() : "정보 없음",
+                    randomRestaurant.getAddress() != null ? randomRestaurant.getAddress() : "정보 없음",
+                    randomRestaurant.getOperating_hours() != null ? randomRestaurant.getOperating_hours() : "정보 없음",
+                    randomRestaurant.getBreak_time() != null ? randomRestaurant.getBreak_time() : "정보 없음",
                     randomRestaurant.getRating(),
-                    randomRestaurant.getCuisine_type(),
-                    randomRestaurant.getLocation());
+                    randomRestaurant.getCuisine_type() != null ? randomRestaurant.getCuisine_type() : "정보 없음",
+                    randomRestaurant.getLocation() != null ? randomRestaurant.getLocation() : "정보 없음");
             System.out.println("--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
         } else {
             System.out.println("Failed to get restaurant information.");
