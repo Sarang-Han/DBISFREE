@@ -160,7 +160,7 @@ public class DB2024TEAM07_UserMain {
 
         switch (choice) {
             case 1:
-                DB2024TEAM07_MenuManager.searchByUsers(scanner);
+                DB2024TEAM07_MenuManager.searchMenuByRestaurant(scanner);
                 break;
             case 2:
                 DB2024TEAM07_ReviewManager.getResReview(scanner);
