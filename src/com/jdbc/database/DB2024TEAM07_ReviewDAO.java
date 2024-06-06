@@ -55,6 +55,7 @@ public class DB2024TEAM07_ReviewDAO {
             try (ResultSet generatedKeys = pStmt.getGeneratedKeys()) {
                 if (generatedKeys.next()) {
                     int reviewId = generatedKeys.getInt(1);
+                    review.setReview_id(reviewId);
 
                     // Add data to the mapping table
                     try (PreparedStatement pStmtMapping = conn.prepareStatement(mappingQuery)) {
@@ -73,6 +74,7 @@ public class DB2024TEAM07_ReviewDAO {
         }
         return -2;
     }
+
 
     //리뷰수정 기능(DB2024_Review 테이블의 투플 수정)-----------------------------------------------------------------------
     //리뷰 수정은 로그인 한 회원만 할 수 있게 제한이 필요하다
