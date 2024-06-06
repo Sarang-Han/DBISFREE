@@ -131,9 +131,9 @@ public class DB2024TEAM07_UserManager {
      */
     public static void update(Scanner scanner) {
         System.out.println("\n===== Update My information =====\n");
-        System.out.print("New ID (Press enter to skip): ");
-        String newUserId = scanner.nextLine();
-        String userId = newUserId.isEmpty() ? loggedInUser.getUser_id() : newUserId;
+
+        // 유저 아이디는 변경 불가, 현재 로그인된 유저의 아이디 사용
+        String userId = loggedInUser.getUser_id();
 
         System.out.print("New Password (Press enter to skip): ");
         String newUserPw = scanner.nextLine();
