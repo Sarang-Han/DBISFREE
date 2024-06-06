@@ -32,8 +32,9 @@ public class DB2024TEAM07_UserMain {
             System.out.println("1. Search for restaurants");
             System.out.println("2. Get Random Restaurant");
             System.out.println("3. Posting a new review");
-            System.out.println("4. My Page");
-            System.out.println("5. Logout");
+            System.out.println("4. View a review");
+            System.out.println("5. My Page");
+            System.out.println("6. Logout");
             System.out.println("\n===================");
 
             boolean validChoice = false;
@@ -45,7 +46,7 @@ public class DB2024TEAM07_UserMain {
                     choice = scanner.nextInt();
                     scanner.nextLine();
 
-                    if (choice >= 1 && choice <= 5) {
+                    if (choice >= 1 && choice <= 6) {
                         validChoice = true;
                     } else {
                         System.out.println("Invalid choice. Please enter a number between 1 and 4.");
@@ -70,6 +71,9 @@ public class DB2024TEAM07_UserMain {
                     showUserPage();
                     break;
                 case 5:
+                    DB2024TEAM07_ReviewManager.getReview(scanner);
+                    break;
+                case 6:
                     userManager.logout();
                     System.out.println("Logout successful!");
                     running = false;
@@ -116,17 +120,58 @@ public class DB2024TEAM07_UserMain {
         switch (choice) {
             case 1:
                 DB2024TEAM07_RestaurantManager.searchRestaurant(scanner);
-                System.out.println("\n==== Menu Search =====");
-                DB2024TEAM07_MenuManager.searchByUsers(scanner);
+                showResDetail();
                 break;
             case 2:
                 DB2024TEAM07_RestaurantManager.searchRestaurantByCategory(scanner);
-                System.out.println("\n==== Menu Search =====");
-                DB2024TEAM07_MenuManager.searchByUsers(scanner);
+
                 break;
             case 3:
                 break;
         }
+    }
+
+    private static void showResDetail() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("\n==== Search Detail ====\n");
+        System.out.println("1. Search Restaurant Menu");
+        System.out.println("2. Search Restaurant Reviews");
+        System.out.println("3. Exit");
+        System.out.println("\n======================");
+        System.out.print("Choose an option: ");
+
+        int choice = 0;
+        boolean validChoice = false;
+
+        while (!validChoice) {
+            if (scanner.hasNextInt()) {
+                choice = scanner.nextInt();
+                scanner.nextLine();
+
+                if (choice >= 1 && choice <= 3) {
+                    validChoice = true;
+                } else {
+                    System.out.println("Invalid choice. Please enter a number between 1 and 4.");
+                    System.out.print("Choose an option: ");
+                }
+            } else {
+                System.out.println("Invalid input. Please enter a number.");
+                System.out.print("Choose an option: ");
+                scanner.nextLine();
+            }
+
+        switch (choice) {
+            case 1:
+                DB2024TEAM07_MenuManager.searchByUsers(scanner);
+                break;
+            case 2:
+                DB2024TEAM07_ReviewManager.getResReview(scanner);
+                break;
+            case 3:
+                break;
+        }
+        }
+
     }
 
     /**

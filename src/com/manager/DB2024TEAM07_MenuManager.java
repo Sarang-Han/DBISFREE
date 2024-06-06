@@ -107,7 +107,7 @@ public class DB2024TEAM07_MenuManager {
         String menuName = scanner.nextLine();
         if (menuName.trim().isEmpty()) menuName = null;
 
-        System.out.print("Enter Minimum Price (or press Enter to skip): ");
+        System.out.print("\nEnter Minimum Price (or press Enter to skip): ");
         String minPriceInput = scanner.nextLine();
         Integer minPrice = null;
         if (!minPriceInput.trim().isEmpty()) {
