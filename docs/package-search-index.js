@@ -1,0 +1,1 @@
+packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"com.app"},{"l":"com.jdbc.database"},{"l":"com.jdbc.model"},{"l":"com.jdbc.view"},{"l":"com.manager"}];updateSearchResults();
