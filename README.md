@@ -48,8 +48,15 @@
 
 
 ## 📋 Requirements
+<img width="600" alt="요구명세서 수정" src="https://github.com/Sarang-Han/DBISFREE/assets/144914664/d61c6fed-ace6-48f8-8209-fb6435938069">
 
 ## 🖼️ Diagrams
+
+### ER Diagram
+<img width="600" alt="ER" src="https://github.com/Sarang-Han/DBISFREE/assets/144914664/e5f14eca-ec25-45f4-8e1a-4d1a04e856a7">
+
+### Schema Diagram
+<img width="600" alt="ER" src="https://github.com/Sarang-Han/DBISFREE/assets/144914664/e0d260d2-5fa9-469c-9e95-8ac978517666">
 
 ## 🧩 Contributors
 
