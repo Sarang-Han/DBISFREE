@@ -182,7 +182,7 @@ public class DB2024TEAM07_ReviewDAO {
      * @return the total count of reviews for that user as an integer
      */
     public int getUserCount(String user_id) {
-        String Q = "SELECT COUNT(*) FROM DB2024_Review WHERE user_id = ?";
+        String Q = "SELECT COUNT(*) FROM DB2024_Review USE INDEX (DB2024_idx_Review) WHERE user_id = ?";
         try{
             pStmt = conn.prepareStatement(Q);
             pStmt.setString(1, user_id);
