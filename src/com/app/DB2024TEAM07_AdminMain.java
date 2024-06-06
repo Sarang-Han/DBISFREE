@@ -149,10 +149,9 @@ public class DB2024TEAM07_AdminMain {
     public static void search_menu_options(Scanner scanner) {
         displayAllRestaurants();
         System.out.println("\n======================\n");
-        System.out.println("1. Search Menu by Restaurant Name, Menu Name, and Price Range (User)");
-        System.out.println("2. Search Menu by Restaurant ID (User)");
-        System.out.println("3. Search Menu by Restaurant ID (Manager)");
-        System.out.println("4. Exit");
+        System.out.println("1. Search Menu by Restaurant Name, Menu Name, and Price Range");
+        System.out.println("2. Search Menu by Restaurant ID");
+        System.out.println("3. Exit");
         System.out.println("\n======================");
         System.out.print("Choose an option:");
         int choice = scanner.nextInt();
@@ -163,12 +162,9 @@ public class DB2024TEAM07_AdminMain {
                 DB2024TEAM07_MenuManager.searchByUsers(scanner);
                 break;
             case 2:
-                DB2024TEAM07_MenuManager.searchMenuByRestaurant(scanner);
-                break;
-            case 3:
                 DB2024TEAM07_MenuManager.searchByManager(scanner);
                 break;
-            case 4:
+            case 3:
                 return; // Exit the menu
             default:
                 System.out.println("Invalid choice. Please try again.");
