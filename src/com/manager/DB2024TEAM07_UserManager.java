@@ -100,7 +100,7 @@ public class DB2024TEAM07_UserManager {
      */
     public static void deleteAccount(Scanner scanner) {
         System.out.print("\nAre you sure you want to delete your account?\n");
-        System.out.print("All data related to your will be deleted.\n\n");
+        System.out.print("All data related to you will be deleted.\n\n");
         System.out.print("Enter 'y' if you want to delete, or 'n': ");
         String confirm = scanner.nextLine().toLowerCase();
 
