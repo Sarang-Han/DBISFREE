@@ -1,6 +1,4 @@
 package com.jdbc.database;
-//Database 파일의 커넥션과의 연결 필요
-//error라고 적힌 부분은 조치 필요(고민)-롤백/무시/등
 
 /* 구현된 기능:
     회원가입:   add(DB2024TEAM07_User user)
@@ -17,16 +15,30 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * This class provides a Data Access Object (DAO) for managing users in a database.
+ * It offers methods for user registration, login, information modification, retrieval, and deletion.
+ */
 public class DB2024TEAM07_UserDAO {
     private Connection conn;
     private PreparedStatement pStmt;
     private ResultSet rs;
 
+    /**
+     * Constructor that initializes the database connection.
+     */
     public DB2024TEAM07_UserDAO() {
         this.conn = DB2024TEAM07_Database.getInstance().getConnection();
     }
 
     //회원가입 기능(DB2024_User 테이블에 투플 삽입)-----------------------------------------------------------------------
+    /**
+     * Registers a new user by inserting a tuple into the DB2024_User table.
+     *
+     * @param user The DB2024TEAM07_User object representing the new user to be registered.
+     * @return The number of rows affected by the INSERT operation. This should be 1 if the registration was successful.
+     *         Returns -2 if an error occurs during registration.
+     */
     public int add(DB2024TEAM07_User user) {
         String Q = "INSERT INTO DB2024_User VALUES (?, ?, ?, ?, ?, ?)";
         try {
@@ -45,6 +57,16 @@ public class DB2024TEAM07_UserDAO {
     }
 
     //로그인 기능(DB2024_User 테이블 검색)-----------------------------------------------------------------------
+    /**
+     * Attempts to log in a user by verifying their credentials against the DB2024_User table.
+     *
+     * @param user_id The user's ID.
+     * @param user_pw The user's password.
+     * @return 1 if the login is successful (user ID exists and password matches).
+     *         0 if the login fails due to an incorrect password (user ID exists but password doesn't match).
+     *        -1 if the login fails due to a non-existent user ID.
+     *        -2 if an error occurs during the login process.
+     */
     public int signIn(String user_id, String user_pw) {
         String Q = "SELECT user_pw FROM DB2024_User WHERE user_id = ?";
         try {
@@ -67,6 +89,14 @@ public class DB2024TEAM07_UserDAO {
     //회원정보 수정(DB2024_User 테이블 검색, 투플값 수정)-----------------------------------------------------------------------
     //수정하고자 하는 유저의 기존 아이디 전달 필요(두 번째 인자)
     //수정할 내용을 담은 User 객체와, 수정하기 이전의 user id를 전달받아 수정하는 방식
+    /**
+     * Updates a user's information in the DB2024_User table.
+     *
+     * @param user The DB2024TEAM07_User object containing the updated information.
+     * @param pUser_id The previous user ID of the user whose information is being updated.
+     * @return The number of rows affected by the UPDATE operation. This should be 1 if the update was successful.
+     *         Returns -2 if an error occurs during the update process.
+     */
     public int update(DB2024TEAM07_User user, String pUser_id) {
         String Q = "UPDATE DB2024_User SET user_id=?, user_pw=?, name=?, student_id=?, email=?, location=? WHERE user_id=?";
         try {
@@ -87,6 +117,12 @@ public class DB2024TEAM07_UserDAO {
 
     //회원정보 확인 기능-----------------------------------------------------------------------
     //로그인한 유저가 본인의 정보를 확인하는 용도
+    /**
+     * Retrieves the information of the logged-in user.
+     *
+     * @param user_id The ID of the logged-in user.
+     * @return A DB2024TEAM07_User object containing the user's information, or null if the user is not found.
+     */
     public DB2024TEAM07_User getUser(String user_id) {
         String Q = "SELECT * FROM DB2024_User WHERE user_id = ?";
         try {
@@ -114,6 +150,12 @@ public class DB2024TEAM07_UserDAO {
 
     //회원정보 확인 기능(2)-----------------------------------------------------------------------
     //다른 유저의 정보를 확인하는 용도
+    /**
+     * Retrieves the information of another user.
+     *
+     * @param user_id The ID of the user whose information is being retrieved.
+     * @return A DB2024TEAM07_UserVO object containing the user's basic information (ID, name, location), or null if the user is not found.
+     */
     public DB2024TEAM07_UserVO getOtherUser(String user_id) {
         String Q = "SELECT * FROM DB2024_OtherUser WHERE user_id = ?";
         try {
@@ -143,7 +185,17 @@ public class DB2024TEAM07_UserDAO {
         윗단에서 signin을 진행한 다음(유저에게 pw를 받아오기) 그 리턴값을 받아서
         이 함수 안의 signInRes if문이 작성된 형태로, 조건부로 이 함수가 불리는 편이 더 깔끔할 것 같긴 한데
         일단은 제가 내부적으로 구현해 두었습니다
-        위쪽 작업하시는 분 이 주석 보시면 그런 방법도 고려해보세용 (현재 방식 그대로 갈 거면 이 주석은 지워주세요~~)
+     */
+    /**
+     * Deletes a user from the DB2024_User table.
+     * The user must enter their password to confirm the deletion.
+     *
+     * @param user_id The ID of the user to be deleted.
+     * @param user_pw The password of the user to be deleted.
+     * @return 1 if the deletion is successful.
+     *         0 if the deletion fails due to an incorrect password.
+     *        -1 if the deletion fails due to a non-existent user ID.
+     *        -2 if an error occurs during the deletion process.
      */
     public int delete(String user_id, String user_pw) {
         String Q = "DELETE FROM DB2024_User WHERE user_id = ?";

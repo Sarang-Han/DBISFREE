@@ -6,6 +6,12 @@ import com.jdbc.model.DB2024TEAM07_User;
 
 import java.util.Scanner;
 
+/**
+ * This class represents the main entry point of the application.
+ *
+ * It provides a menu-driven interface for users to interact with the system.
+ *
+ */
 public class DB2024TEAM07_Main {
     private static final String ADMIN_PASSWORD = "admin123";
 

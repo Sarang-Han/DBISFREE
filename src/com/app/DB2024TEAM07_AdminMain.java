@@ -3,7 +3,6 @@ package com.app;
 import com.jdbc.database.DB2024TEAM07_MenuDAO;
 import com.jdbc.database.DB2024TEAM07_RestaurantDAO;
 import com.jdbc.database.DB2024TEAM07_UserDAO;
-import com.jdbc.model.DB2024TEAM07_User;
 import com.manager.DB2024TEAM07_MenuManager;
 import com.manager.DB2024TEAM07_RestaurantManager;
 import com.manager.DB2024TEAM07_ReviewManager;
@@ -13,8 +12,19 @@ import java.util.Scanner;
 
 import static com.manager.DB2024TEAM07_RestaurantManager.displayAllRestaurants;
 
+/**
+ * Main class for administrator functionalities in the E-MATEASY application.
+ *
+ * This class provides a menu-driven interface for managing restaurants, menus, reviews,
+ * and users.
+ */
 public class DB2024TEAM07_AdminMain {
 
+    /**
+     * The main entry point of the application.
+     *
+     * @param args command line arguments (unused in this program)
+     */
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         DB2024TEAM07_UserDAO userDAO = new DB2024TEAM07_UserDAO();
@@ -22,18 +32,18 @@ public class DB2024TEAM07_AdminMain {
 
         while (true) {
             System.out.println("\n======= Restaurant ======== =========== Menu ==========\n");
-            System.out.println("  1. Add Restaurant        |    5. Add Menu");
-            System.out.println("  2. Update Restaurant     |    6. Update Menu");
-            System.out.println("  3. Search Restaurant     |    7. Search Menu");
-            System.out.println("  4. Delete Restaurant     |    8. Delete Menu");
+            System.out.println(" 1. Add Restaurant         |    5. Add Menu");
+            System.out.println(" 2. Update Restaurant      |    6. Update Menu");
+            System.out.println(" 3. Search Restaurant      |    7. Search Menu");
+            System.out.println(" 4. Delete Restaurant      |    8. Delete Menu");
             System.out.println("\n========= Review ========== =========== User ==========\n");
-            System.out.println("  9. Add Review            |    13. Add User");
-            System.out.println("  10. Update Review        |    14. Update User");
-            System.out.println("  11. Search Review        |    15. Search User");
-            System.out.println("  12. Delete Review        |    16. Delete User");
+            System.out.println(" 9. Add Review             |    13. Add User");
+            System.out.println(" 10. Update Review         |    14. Update User");
+            System.out.println(" 11. Search Review         |    15. Search User");
+            System.out.println(" 12. Delete Review         |    16. Delete User");
             System.out.println("\n=========================== ===========================\n");
-            System.out.println("  17. Exit\n");
-            System.out.print("  Choose an option: ");
+            System.out.println("17. Exit\n");
+            System.out.print("Choose an option: ");
             int choice = scanner.nextInt();
             scanner.nextLine();
 
@@ -100,12 +110,19 @@ public class DB2024TEAM07_AdminMain {
         }
     }
 
+    /**
+     * Presents sub-menu options for searching restaurants.
+     *
+     * @param scanner the input scanner
+     */
     public static void search_restaurant_options(Scanner scanner){
         while (true) {
-            System.out.println("\n1. Search by Restaurant Name, Cuisine Type, Location, Minimum Rating");
+            System.out.println("\n======================\n");
+            System.out.println("1. Search by Restaurant Name, Cuisine Type, Location, Minimum Rating");
             System.out.println("2. Search by Cuisine Type");
             System.out.println("3. Exit");
-            System.out.println("\nChoose an option:");
+            System.out.println("\n======================");
+            System.out.print("Choose an option:");
             int sub_choice = scanner.nextInt();
             scanner.nextLine();
 
@@ -124,13 +141,19 @@ public class DB2024TEAM07_AdminMain {
         }
     }
 
+    /**
+     * Presents sub-menu options for searching menus.
+     *
+     * @param scanner the input scanner
+     */
     public static void search_menu_options(Scanner scanner) {
         displayAllRestaurants();
-        System.out.println("\n1. Search Menu by Restaurant Name, Menu Name, and Price Range (User)");
-        System.out.println("2. Search Menu by Restaurant ID (User)");
-        System.out.println("3. Search Menu by Restaurant ID (Manager)");
-        System.out.println("4. Exit");
-        System.out.println("\nChoose an option:");
+        System.out.println("\n======================\n");
+        System.out.println("1. Search Menu by Restaurant Name, Menu Name, and Price Range");
+        System.out.println("2. Search Menu by Restaurant ID");
+        System.out.println("3. Exit");
+        System.out.println("\n======================");
+        System.out.print("Choose an option:");
         int choice = scanner.nextInt();
         scanner.nextLine();
 
@@ -139,28 +162,32 @@ public class DB2024TEAM07_AdminMain {
                 DB2024TEAM07_MenuManager.searchByUsers(scanner);
                 break;
             case 2:
-                DB2024TEAM07_MenuManager.searchMenuByRestaurant(scanner);
-                break;
-            case 3:
                 DB2024TEAM07_MenuManager.searchByManager(scanner);
                 break;
-            case 4:
+            case 3:
                 return; // Exit the menu
             default:
                 System.out.println("Invalid choice. Please try again.");
         }
     }
 
+    /**
+     * Presents sub-menu options for review management.
+     *
+     * @param scanner the input scanner
+     */
     private static void search_review_options(Scanner scanner) {
         while (true) {
-            System.out.println("\n1. Get Review Count");
+            System.out.println("\n======================\n");
+            System.out.println("1. Get Review Count");
             System.out.println("2. Get Reviews");
             System.out.println("3. Get User Review Count");
             System.out.println("4. Get User Reviews");
             System.out.println("5. Get Restaurant Review Count");
             System.out.println("6. Get Restaurant Reviews");
             System.out.println("7. Exit");
-            System.out.print("\nChoose an option: ");
+            System.out.println("\n======================");
+            System.out.print("Choose an option: ");
             int sub_choice = scanner.nextInt();
             scanner.nextLine();
 

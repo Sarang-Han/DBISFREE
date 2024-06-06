@@ -8,15 +8,31 @@ import com.jdbc.model.DB2024TEAM07_User;
 import java.util.List;
 import java.util.Scanner;
 
+/**
+ * This class manages user functionalities in the E-MATEASY application.
+ * It provides methods for user login, logout, registration, information update,
+ * and retrieval of user information for both general users and managers.
+ */
 public class DB2024TEAM07_UserManager {
     private static DB2024TEAM07_UserDAO userDAO;
     private static DB2024TEAM07_User loggedInUser;
 
+    /**
+     * Constructor that takes a DB2024TEAM07_UserDAO object as input.
+     *
+     * @param userDAO a DB2024TEAM07_UserDAO object for interacting with the user data access layer
+     */
     public DB2024TEAM07_UserManager(DB2024TEAM07_UserDAO userDAO) {
         DB2024TEAM07_UserManager.userDAO = userDAO;
     }
 
-    // 사용자 로그인
+    /**
+     * Attempts to log in a user with the provided username and password.
+     *
+     * @param username the username of the user trying to log in
+     * @param password the password of the user trying to log in
+     * @return true if the login is successful, false otherwise
+     */
     public boolean login(String username, String password) {
         int loginResult = userDAO.signIn(username, password);
         if (loginResult == 1) {
@@ -26,17 +42,26 @@ public class DB2024TEAM07_UserManager {
         return false;
     }
 
-    // 사용자 로그아웃
+    /**
+     * Logs out the currently logged in user by setting loggedInUser to null.
+     */
     public void logout() {
         loggedInUser = null;
     }
 
-    // 사용자 추가 (회원 가입)
+    /**
+     * Adds a new user to the database.
+     *
+     * @param user a DB2024TEAM07_User object representing the new user
+     * @return true if the user is added successfully, false otherwise
+     */
     public boolean addUser(DB2024TEAM07_User user) {
         return userDAO.add(user) > 0;
     }
 
-
+    /**
+     * Displays the information of the currently logged in user.
+     */
     public static void showMyInfo() {
         DB2024TEAM07_User user = userDAO.getUser(loggedInUser.getUser_id());
         System.out.println("\n=== My Information ===\n");
@@ -48,6 +73,11 @@ public class DB2024TEAM07_UserManager {
         System.out.println("\n======================");
     }
 
+    /**
+     * Allows users to search for another user by ID.
+     *
+     * @param scanner a Scanner object to read user input
+     */
     public static void searchOtherUser(Scanner scanner) {
         System.out.print("Enter the user ID: ");
         String userId = scanner.nextLine();
@@ -63,6 +93,11 @@ public class DB2024TEAM07_UserManager {
         }
     }
 
+    /**
+     * Allows users to delete their account after confirmation.
+     *
+     * @param scanner a Scanner object to read user input
+     */
     public static void deleteAccount(Scanner scanner) {
         System.out.print("\nAre you sure you want to delete your account?\n");
         System.out.print("All data related to your will be deleted.\n\n");
@@ -89,6 +124,11 @@ public class DB2024TEAM07_UserManager {
 
     }
 
+    /**
+     * Allows users to update their information.
+     *
+     * @param scanner a Scanner object to read user input
+     */
     public static void update(Scanner scanner) {
         System.out.println("\n===== Update My information =====\n");
         System.out.print("New ID (Press enter to skip): ");
@@ -127,6 +167,9 @@ public class DB2024TEAM07_UserManager {
 
     }
 
+    /**
+     * Displays a list of all users in the system.
+     */
     public static void displayAllUsers() {
         List<DB2024TEAM07_User> allUsers = userDAO.getAllUsers();
 
@@ -140,6 +183,11 @@ public class DB2024TEAM07_UserManager {
         }
     }
 
+    /**
+     * Allows managers to add new users.
+     *
+     * @param scanner a Scanner object to read user input
+     */
     public void addAccountByManager(Scanner scanner) {
         System.out.print("\nEnter the new user information:\n");
         System.out.print("ID: ");
@@ -172,6 +220,11 @@ public class DB2024TEAM07_UserManager {
         }
     }
 
+    /**
+     * Allows managers to update existing user information.
+     *
+     * @param scanner a Scanner object to read user input
+     */
     public void updateAccountByManager(Scanner scanner) {
         System.out.print("\nEnter the ID of the user to update: ");
         String userId = scanner.nextLine();
@@ -214,6 +267,11 @@ public class DB2024TEAM07_UserManager {
         }
     }
 
+    /**
+     * Allows managers to search for users by ID.
+     *
+     * @param scanner a Scanner object to read user input
+     */
     public void searchAccountByManager(Scanner scanner) {
         System.out.print("\nEnter the ID of the user to search: ");
         String userId = scanner.nextLine();
@@ -232,22 +290,37 @@ public class DB2024TEAM07_UserManager {
         }
     }
 
-
+    /**
+     * Allows managers to delete users.
+     *
+     * @param scanner a Scanner object to read user input
+     */
     public void deleteAccountByManager(Scanner scanner) {
         System.out.print("\nEnter the user ID you want to delete: ");
         String userId = scanner.nextLine();
 
-        System.out.print("Enter the password: ");
-        String password = scanner.nextLine();
+        System.out.println("\nYou are about to delete a user account.");
+        System.out.println("All data related to this user will be permanently deleted.");
+        System.out.print("Are you sure you want to delete the account with ID '" + userId + "'? (y/n): ");
+        String confirm = scanner.nextLine().toLowerCase();
 
-        int result = userDAO.delete(userId, password);
+        if (confirm.equals("y")) {
+            System.out.print("Enter password to confirm: ");
+            String password = scanner.nextLine();
 
-        if (result > 0) {
-            System.out.println("The user account has been successfully deleted.");
-        } else if (result == 0) {
-            System.out.println("The password does not match.");
+            int result = userDAO.delete(userId, password);
+
+            if (result > 0) {
+                System.out.println("The user account has been successfully deleted.");
+            } else if (result == 0) {
+                System.out.println("The password does not match. User account deletion canceled.");
+            } else {
+                System.out.println("An error occurred while deleting the user account.");
+            }
+        } else if (confirm.equals("n")) {
+            System.out.println("User account deletion canceled.");
         } else {
-            System.out.println("An error occurred while deleting the user account.");
+            System.out.println("Invalid input. User account deletion canceled.");
         }
     }
 }

@@ -1,6 +1,4 @@
 package com.jdbc.database;
-//Database 파일의 커넥션과의 연결 필요
-//error라고 적힌 부분은 조치 필요(고민)-롤백/무시/등
 
 /* 구현된 기능
     리뷰 작성:  add(DB2024TEAM07_Review review)
@@ -14,7 +12,6 @@ package com.jdbc.database;
     리뷰 삭제:  delete(int review_id)
  */
 
-
 import com.jdbc.view.DB2024TEAM07_ResReviewVO;
 import com.jdbc.model.DB2024TEAM07_Review;
 import com.jdbc.model.DB2024TEAM07_UserReview;
@@ -22,11 +19,18 @@ import com.jdbc.model.DB2024TEAM07_UserReview;
 import java.util.ArrayList;
 import java.sql.*;
 
+/**
+ * This class provides data access object (DAO) methods for interacting with the DB2024_Review and related tables in a database.
+ * It manages various functionalities related to user reviews, restaurant reviews, and review management.
+ */
 public class DB2024TEAM07_ReviewDAO {
     private Connection conn;
     private PreparedStatement pStmt;
     private ResultSet rs;
 
+    /**
+     * Constructor that establishes a connection to the database using the DB2024TEAM07_Database class.
+     */
     public DB2024TEAM07_ReviewDAO() {
         this.conn = DB2024TEAM07_Database.getInstance().getConnection();
     }
@@ -41,6 +45,14 @@ public class DB2024TEAM07_ReviewDAO {
     만약에 구현하다가 잘 모르겠으면 저한테 연락 주세용.-김민서-
     */
 
+    /**
+     * Adds a new review to the database.
+     *
+     * @param review the review object containing user ID, rating, and review content
+     * @param menuId the ID of the menu associated with the review
+     * @param resId the ID of the restaurant associated with the review
+     * @return 1 on successful insertion, -1 if the review ID cannot be generated, or -2 on an error
+     */
     public int add(DB2024TEAM07_Review review, int menuId, int resId) {
         String reviewQuery = "INSERT INTO DB2024_Review (user_id, rating, review_content) VALUES (?, ?, ?)";
         String mappingQuery = "INSERT INTO DB2024_Review_Menu_Res_Mapping (review_id, menu_id, res_id) VALUES (?, ?, ?)";
@@ -79,6 +91,12 @@ public class DB2024TEAM07_ReviewDAO {
     //리뷰수정 기능(DB2024_Review 테이블의 투플 수정)-----------------------------------------------------------------------
     //리뷰 수정은 로그인 한 회원만 할 수 있게 제한이 필요하다
     //review_id는 절대로 바뀌지 않는 값이므로 유저 업데이트 함수와 달리 기존 아이디 전달이 불필요하다
+    /**
+     * Updates an existing review in the database.
+     *
+     * @param review the review object containing updated rating and review content
+     * @return the number of rows affected (1 for a successful update) or -2 on an error
+     */
     public int update(DB2024TEAM07_Review review){
         String Q = "UPDATE DB2024_Review SET rating=?, review_content=? WHERE review_id=?";
         try{
@@ -96,6 +114,11 @@ public class DB2024TEAM07_ReviewDAO {
 
     //리뷰 개수 반환(DB2024_Review 테이블의 투플 반환)----------------------------------------------------------------------
     // 이 함수 반환값을 통해 페이지 값 계산하기
+    /**
+     * Retrieves the total number of reviews in the database.
+     *
+     * @return the total count of reviews as an integer
+     */
     public int getCount() {
         String Q = "SELECT COUNT(*) FROM DB2024_Review";
         try{
@@ -116,6 +139,12 @@ public class DB2024TEAM07_ReviewDAO {
     //일단은 최신순, 10개 단위로 반환하는 형태 선택
     //ArrayList<Review>형식으로 반환
     //page는 가장 최신 값이 보이는 페이지가 1이라는 가정 하에 작성됨
+    /**
+     * Retrieves a paginated list of reviews from the database, ordered by review ID in descending order.
+     *
+     * @param page the page number (starting from 1) to retrieve
+     * @return a list of `DB2024TEAM07_Review` objects representing the reviews for that page
+     */
     public ArrayList<DB2024TEAM07_Review> getReview(int page){
         String Q = "SELECT * FROM DB2024_Review ORDER BY review_id DESC";
         ArrayList<DB2024TEAM07_Review> list = new ArrayList<>();
@@ -146,6 +175,12 @@ public class DB2024TEAM07_ReviewDAO {
 
     //특정 유저의 리뷰 개수 반환(DB2024_Rating 테이블의 투플 반환)----------------------------------------------------------------------
     // 이 함수 반환값을 통해 페이지 값 계산하기
+    /**
+     * Retrieves the total number of reviews for a specific user.
+     *
+     * @param user_id the ID of the user
+     * @return the total count of reviews for that user as an integer
+     */
     public int getUserCount(String user_id) {
         String Q = "SELECT COUNT(*) FROM DB2024_Review WHERE user_id = ?";
         try{
@@ -165,6 +200,13 @@ public class DB2024TEAM07_ReviewDAO {
 
     //특정 유저의 리뷰 몰아보기 기능(DB2024_Review 테이블의 투플 반환)-----------------------------------------------------------------------
     //일단은 최신순, 10개 단위로 반환하는 형태 선택
+    /**
+     * Retrieves a paginated list of reviews for a specific user, ordered by review ID in descending order.
+     *
+     * @param page the page number (starting from 1) to retrieve
+     * @param user_id the ID of the user
+     * @return a list of `DB2024TEAM07_ResReviewVO` objects representing the reviews for that user and page
+     */
     public ArrayList<DB2024TEAM07_ResReviewVO> getUserReview(int page, String user_id){
         /*
             SELECT *
@@ -201,6 +243,12 @@ public class DB2024TEAM07_ReviewDAO {
 
     //특정 가게의 리뷰 개수 반환(DB2024_Rating 테이블의 투플 반환)----------------------------------------------------------------------
     // 이 함수 반환값을 통해 페이지 값 계산하기
+    /**
+     * Retrieves the total number of reviews for a specific restaurant.
+     *
+     * @param res_id the ID of the restaurant
+     * @return the total count of reviews for that restaurant as an integer
+     */
     public int getResCount(int res_id) {
         String Q = "SELECT COUNT(*) FROM DB2024_Rating WHERE res_id = ?";
         try{
@@ -221,6 +269,13 @@ public class DB2024TEAM07_ReviewDAO {
     //특정 가게의 리뷰 몰아보기 기능(DB2024_Review 테이블의 투플 반환)-----------------------------------------------------------------------
     //일단은 최신순, 10개 단위로 반환하는 형태 선택
     //프로젝트 요구사항-조인 쿼리, 중첩된 쿼리 사용됨
+    /**
+     * Retrieves a paginated list of reviews for a specific restaurant, ordered by review ID in descending order.
+     *
+     * @param page the page number (starting from 1) to retrieve
+     * @param res_id the ID of the restaurant
+     * @return a list of `DB2024TEAM07_UserReview` objects representing the reviews for that restaurant and page
+     */
     public ArrayList<DB2024TEAM07_UserReview> getResReview(int page, int res_id){
         /*  SELECT *
             FROM DB2024_Review r NATURAL JOIN DB2024_OtherUser u
@@ -265,6 +320,12 @@ public class DB2024TEAM07_ReviewDAO {
     윗단에서 해당 함수를 수행 시 꼭!! 트랜잭션 처리를 하는 것이 요구된다
     만약에 구현하다가 잘 모르겠으면 저한테 연락 주세용.-김민서-
     */
+    /**
+     * Deletes a review from the database.
+     *
+     * @param review_id the ID of the review to delete
+     * @return the number of rows affected (1 for a successful deletion) or -2 on an error
+     */
     public int delete(int review_id){
         String Q = "DELETE FROM DB2024_Review WHERE review_id = ?";
         try{

@@ -6,7 +6,20 @@ import com.manager.DB2024TEAM07_UserManager;
 
 import java.util.Scanner;
 
+/**
+ * User interface for logged-in users.
+ *
+ * This class provides functionalities such as searching for restaurants,
+ * getting random restaurant recommendations, writing reviews, managing user information,
+ * and logging out.
+ */
 public class DB2024TEAM07_UserMain {
+    /**
+     * Displays the user menu after successful login.
+     *
+     * @param userManager  a reference to the UserManager object for user-related operations
+     * @param loggedInUsername the username of the currently logged-in user
+     */
     public static void showMenu(DB2024TEAM07_UserManager userManager, String loggedInUsername) {
         Scanner scanner = new Scanner(System.in);
         boolean running = true;
@@ -65,12 +78,15 @@ public class DB2024TEAM07_UserMain {
         }
     }
 
+    /**
+     * Displays the search menu for finding restaurants.
+     */
     private static void showSearchMenu(){
         Scanner scanner = new Scanner(System.in);
 
         System.out.println("\n======================\n");
-        System.out.println("1. Search By Category");
-        System.out.println("2. Search By Other Information");
+        System.out.println("1. Search by Restaurant Name, Cuisine Type, Location, Minimum Rating");
+        System.out.println("2. Search by Cuisine Type");
         System.out.println("3. Exit");
         System.out.println("\n======================");
         System.out.print("Choose an option: ");
@@ -98,16 +114,19 @@ public class DB2024TEAM07_UserMain {
 
         switch (choice) {
             case 1:
-                DB2024TEAM07_RestaurantManager.searchRestaurantByCategory(scanner);
+                DB2024TEAM07_RestaurantManager.searchRestaurant(scanner);
                 break;
             case 2:
-                DB2024TEAM07_RestaurantManager.searchRestaurant(scanner);
+                DB2024TEAM07_RestaurantManager.searchRestaurantByCategory(scanner);
                 break;
             case 3:
                 break;
         }
     }
 
+    /**
+     * Displays the user page menu for managing user information.
+     */
     private static void showUserPage() {
         Scanner scanner = new Scanner(System.in);
         boolean running = true;
@@ -164,6 +183,5 @@ public class DB2024TEAM07_UserMain {
             }
         }
     }
-
 
 }
