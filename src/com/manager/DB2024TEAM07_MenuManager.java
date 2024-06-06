@@ -93,64 +93,6 @@ public class DB2024TEAM07_MenuManager {
         }
     }
 
-    /**
-     * Searches for menus based on various criteria.
-     *
-     * @param scanner a Scanner object to read user input
-     */
-    public static void searchByUsers(Scanner scanner) {
-        System.out.print("Enter Restaurant Name (or press Enter to skip): ");
-        String restaurantName = scanner.nextLine();
-        if (restaurantName.trim().isEmpty()) restaurantName = null;
-
-        System.out.print("Enter Menu Name (or press Enter to skip): ");
-        String menuName = scanner.nextLine();
-        if (menuName.trim().isEmpty()) menuName = null;
-
-        System.out.print("\nEnter Minimum Price (or press Enter to skip): ");
-        String minPriceInput = scanner.nextLine();
-        Integer minPrice = null;
-        if (!minPriceInput.trim().isEmpty()) {
-            try {
-                minPrice = Integer.parseInt(minPriceInput);
-            } catch (NumberFormatException e) {
-                System.out.println("Invalid minimum price input. Please enter a valid number or press Enter to skip.");
-                return;
-            }
-        }
-
-        System.out.print("Enter Maximum Price (or press Enter to skip): ");
-        String maxPriceInput = scanner.nextLine();
-        Integer maxPrice = null;
-        if (!maxPriceInput.trim().isEmpty()) {
-            try {
-                maxPrice = Integer.parseInt(maxPriceInput);
-            } catch (NumberFormatException e) {
-                System.out.println("Invalid maximum price input. Please enter a valid number or press Enter to skip.");
-                return;
-            }
-        }
-
-        ResultSet rs = menuDAO.searchByUsers(restaurantName, menuName, minPrice, maxPrice);
-        try {
-            if (rs != null && rs.next()) {
-                System.out.println("Restaurant Name\t\tMenu Name\t\tPrice");
-                System.out.println("---------------------------------------------");
-                do {
-                    String res_name = rs.getString("res_name") != null ? rs.getString("res_name") : "정보 없음";
-                    String menu_name = rs.getString("menu_name") != null ? rs.getString("menu_name") : "정보 없음";
-                    String price = rs.getString("price") != null ? String.valueOf(rs.getInt("price")) : "정보 없음";
-
-                    System.out.printf("%-20s %-20s %-10s%n", res_name, menu_name, price);
-                } while (rs.next());
-            } else {
-                System.out.println("No data found.");
-            }
-        } catch (SQLException se) {
-            se.printStackTrace();
-        }
-
-    }
 
     /**
      * Searches for menus by a specific restaurant ID.
