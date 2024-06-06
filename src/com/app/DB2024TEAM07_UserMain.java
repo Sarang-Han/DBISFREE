@@ -1,5 +1,6 @@
 package com.app;
 
+import com.manager.DB2024TEAM07_MenuManager;
 import com.manager.DB2024TEAM07_RestaurantManager;
 import com.manager.DB2024TEAM07_ReviewManager;
 import com.manager.DB2024TEAM07_UserManager;
@@ -115,9 +116,13 @@ public class DB2024TEAM07_UserMain {
         switch (choice) {
             case 1:
                 DB2024TEAM07_RestaurantManager.searchRestaurant(scanner);
+                System.out.println("\n==== Menu Search =====");
+                DB2024TEAM07_MenuManager.searchByUsers(scanner);
                 break;
             case 2:
                 DB2024TEAM07_RestaurantManager.searchRestaurantByCategory(scanner);
+                System.out.println("\n==== Menu Search =====");
+                DB2024TEAM07_MenuManager.searchByUsers(scanner);
                 break;
             case 3:
                 break;
