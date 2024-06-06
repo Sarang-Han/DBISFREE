@@ -299,17 +299,28 @@ public class DB2024TEAM07_UserManager {
         System.out.print("\nEnter the user ID you want to delete: ");
         String userId = scanner.nextLine();
 
-        System.out.print("Enter the password: ");
-        String password = scanner.nextLine();
+        System.out.println("\nYou are about to delete a user account.");
+        System.out.println("All data related to this user will be permanently deleted.");
+        System.out.print("Are you sure you want to delete the account with ID '" + userId + "'? (y/n): ");
+        String confirm = scanner.nextLine().toLowerCase();
 
-        int result = userDAO.delete(userId, password);
+        if (confirm.equals("y")) {
+            System.out.print("Enter password to confirm: ");
+            String password = scanner.nextLine();
 
-        if (result > 0) {
-            System.out.println("The user account has been successfully deleted.");
-        } else if (result == 0) {
-            System.out.println("The password does not match.");
+            int result = userDAO.delete(userId, password);
+
+            if (result > 0) {
+                System.out.println("The user account has been successfully deleted.");
+            } else if (result == 0) {
+                System.out.println("The password does not match. User account deletion canceled.");
+            } else {
+                System.out.println("An error occurred while deleting the user account.");
+            }
+        } else if (confirm.equals("n")) {
+            System.out.println("User account deletion canceled.");
         } else {
-            System.out.println("An error occurred while deleting the user account.");
+            System.out.println("Invalid input. User account deletion canceled.");
         }
     }
 }

@@ -85,8 +85,8 @@ public class DB2024TEAM07_UserMain {
         Scanner scanner = new Scanner(System.in);
 
         System.out.println("\n======================\n");
-        System.out.println("1. Search By Category");
-        System.out.println("2. Search By Other Information");
+        System.out.println("1. Search by Restaurant Name, Cuisine Type, Location, Minimum Rating");
+        System.out.println("2. Search by Cuisine Type");
         System.out.println("3. Exit");
         System.out.println("\n======================");
         System.out.print("Choose an option: ");
@@ -114,10 +114,10 @@ public class DB2024TEAM07_UserMain {
 
         switch (choice) {
             case 1:
-                DB2024TEAM07_RestaurantManager.searchRestaurantByCategory(scanner);
+                DB2024TEAM07_RestaurantManager.searchRestaurant(scanner);
                 break;
             case 2:
-                DB2024TEAM07_RestaurantManager.searchRestaurant(scanner);
+                DB2024TEAM07_RestaurantManager.searchRestaurantByCategory(scanner);
                 break;
             case 3:
                 break;

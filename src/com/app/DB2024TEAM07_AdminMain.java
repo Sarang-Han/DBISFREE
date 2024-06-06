@@ -32,18 +32,18 @@ public class DB2024TEAM07_AdminMain {
 
         while (true) {
             System.out.println("\n======= Restaurant ======== =========== Menu ==========\n");
-            System.out.println("  1. Add Restaurant        |    5. Add Menu");
-            System.out.println("  2. Update Restaurant     |    6. Update Menu");
-            System.out.println("  3. Search Restaurant     |    7. Search Menu");
-            System.out.println("  4. Delete Restaurant     |    8. Delete Menu");
+            System.out.println(" 1. Add Restaurant         |    5. Add Menu");
+            System.out.println(" 2. Update Restaurant      |    6. Update Menu");
+            System.out.println(" 3. Search Restaurant      |    7. Search Menu");
+            System.out.println(" 4. Delete Restaurant      |    8. Delete Menu");
             System.out.println("\n========= Review ========== =========== User ==========\n");
-            System.out.println("  9. Add Review            |    13. Add User");
-            System.out.println("  10. Update Review        |    14. Update User");
-            System.out.println("  11. Search Review        |    15. Search User");
-            System.out.println("  12. Delete Review        |    16. Delete User");
+            System.out.println(" 9. Add Review             |    13. Add User");
+            System.out.println(" 10. Update Review         |    14. Update User");
+            System.out.println(" 11. Search Review         |    15. Search User");
+            System.out.println(" 12. Delete Review         |    16. Delete User");
             System.out.println("\n=========================== ===========================\n");
-            System.out.println("  17. Exit\n");
-            System.out.print("  Choose an option: ");
+            System.out.println("17. Exit\n");
+            System.out.print("Choose an option: ");
             int choice = scanner.nextInt();
             scanner.nextLine();
 
@@ -117,10 +117,12 @@ public class DB2024TEAM07_AdminMain {
      */
     public static void search_restaurant_options(Scanner scanner){
         while (true) {
-            System.out.println("\n1. Search by Restaurant Name, Cuisine Type, Location, Minimum Rating");
+            System.out.println("\n======================\n");
+            System.out.println("1. Search by Restaurant Name, Cuisine Type, Location, Minimum Rating");
             System.out.println("2. Search by Cuisine Type");
             System.out.println("3. Exit");
-            System.out.println("\nChoose an option:");
+            System.out.println("\n======================");
+            System.out.print("Choose an option:");
             int sub_choice = scanner.nextInt();
             scanner.nextLine();
 
@@ -146,11 +148,13 @@ public class DB2024TEAM07_AdminMain {
      */
     public static void search_menu_options(Scanner scanner) {
         displayAllRestaurants();
-        System.out.println("\n1. Search Menu by Restaurant Name, Menu Name, and Price Range (User)");
+        System.out.println("\n======================\n");
+        System.out.println("1. Search Menu by Restaurant Name, Menu Name, and Price Range (User)");
         System.out.println("2. Search Menu by Restaurant ID (User)");
         System.out.println("3. Search Menu by Restaurant ID (Manager)");
         System.out.println("4. Exit");
-        System.out.println("\nChoose an option:");
+        System.out.println("\n======================");
+        System.out.print("Choose an option:");
         int choice = scanner.nextInt();
         scanner.nextLine();
 
@@ -178,14 +182,16 @@ public class DB2024TEAM07_AdminMain {
      */
     private static void search_review_options(Scanner scanner) {
         while (true) {
-            System.out.println("\n1. Get Review Count");
+            System.out.println("\n======================\n");
+            System.out.println("1. Get Review Count");
             System.out.println("2. Get Reviews");
             System.out.println("3. Get User Review Count");
             System.out.println("4. Get User Reviews");
             System.out.println("5. Get Restaurant Review Count");
             System.out.println("6. Get Restaurant Reviews");
             System.out.println("7. Exit");
-            System.out.print("\nChoose an option: ");
+            System.out.println("\n======================");
+            System.out.print("Choose an option: ");
             int sub_choice = scanner.nextInt();
             scanner.nextLine();
 
