@@ -43,16 +43,29 @@ public class DB2024TEAM07_ReviewManager {
             if (result > 0) {
                 System.out.println("Review added successfully.");
 
-                double newAvgRating = ratingDAO.getAvg(resId);
-                String updateRatingQuery = "UPDATE DB2024_Restaurant SET rating = ? WHERE res_id = ?";
+                int reviewId = review.getReview_id();
+                int ratingResult = ratingDAO.add(reviewId, resId);
 
-                try (PreparedStatement pStmt = conn.prepareStatement(updateRatingQuery)) {
-                    pStmt.setDouble(1, newAvgRating);
-                    pStmt.setInt(2, resId);
-                    pStmt.executeUpdate();
+                if (ratingResult > 0) {
+                    double newAvgRating = ratingDAO.getAvg(resId);
+                    if (newAvgRating >= 0) { // Ensure newAvgRating is valid
+                        String updateRatingQuery = "UPDATE DB2024_Restaurant SET rating = ? WHERE res_id = ?";
+
+                        try (PreparedStatement pStmt = conn.prepareStatement(updateRatingQuery)) {
+                            pStmt.setDouble(1, newAvgRating);
+                            pStmt.setInt(2, resId);
+                            pStmt.executeUpdate();
+                            conn.commit();
+                            System.out.println("Restaurant rating updated successfully.");
+                        }
+                    } else {
+                        System.out.println("Failed to retrieve new average rating.");
+                        conn.rollback();
+                    }
+                } else {
+                    System.out.println("Failed to add rating.");
+                    conn.rollback();
                 }
-                conn.commit();
-
             } else {
                 System.out.println("Failed to add review.");
                 conn.rollback();
@@ -118,7 +131,7 @@ public class DB2024TEAM07_ReviewManager {
                 conn.commit();
 
             } else {
-                System.out.println("Failed to add review.");
+                System.out.println("Failed to update review.");
             }
         } catch (SQLException e) {
             if (conn != null) {
