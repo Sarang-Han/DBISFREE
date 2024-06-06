@@ -7,37 +7,41 @@
   ███████╗    ██║ ╚═╝ ██║██║  ██║   ██║   ███████╗██║  ██║███████║   ██║
   ╚══════╝    ╚═╝     ╚═╝╚═╝  ╚═╝   ╚═╝   ╚══════╝╚═╝  ╚═╝╚══════╝   ╚═╝
 
-  2024-1 Database
+  2024-1 Database TEAM07
                                            
 ```
 
-# E-MatEASY
+## E-MATEASY 🍽️
+
+Easy Way to Find Yummy Places for Ewha Students!
 
 ## 🎵 How to Run
 
 ### Prerequisites
-1. Java Development Kit (JDK): Make sure you have JDK installed on your system.
-2. JDBC Driver: Download the Mysql JDBC driver for your database.
-3. Database Management System (DBMS): Ensure you have a running instance of the DBMS that your project uses.
+
+1. **Java Development Kit (JDK):** Make sure you have JDK installed on your system.
+   
+2. **JDBC Driver:** Download the JDBC driver for your database (e.g., MySQL JDBC driver).
+   
+3. **Database Management System (DBMS):** Ensure you have a running instance of your DBMS (e.g., MySQL).
 
 ### Steps to Run the Project
-1. Create the Database:
-   - Navigate to the sql folder in the project directory. 
-   - Use the provided SQL scripts to create and populate the database. 
-   - You can execute these scripts using your database management tool (e.g., MySQL Workbench, pgAdmin, etc.).
+1. **Create the Database:**
+   - Navigate to the `sql` folder.
+   - Use the provided SQL scripts to create and populate the database.
 
-2. Set Up Your Development Environment:
+2. **Set Up Your Development Environment:**
    - Open your Java IDE (e.g., IntelliJ IDEA, Eclipse).
-   - Import the project into your IDE.
+   - Import the project.
 
-3. Configure JDBC Connection:
+3. **Configure JDBC Connection:**
    - Add the JDBC driver to your project dependencies.
-   - Configure the JDBC connection in your project. This typically involves setting up the database URL, username, and password in a configuration file or directly in the code.
+   - Configure the JDBC connection (database URL, username, password).
 
-4. Run the Main Class:
-   - Locate the main class in your project, usually named something like DB2024TEAM07_UserMain. 
+4. **Run the Main Class:**
+   - Locate `DB2024TEAM07_Main` in your project.
    - Run the main method of this class to start the application.
-
+   
 ## 📂 Project Structure
 
 ```
