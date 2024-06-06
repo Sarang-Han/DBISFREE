@@ -48,7 +48,7 @@ public class DB2024TEAM07_UserMain {
                     if (choice >= 1 && choice <= 5) {
                         validChoice = true;
                     } else {
-                        System.out.println("Invalid choice. Please enter a number between 1 and 4.");
+                        System.out.println("Invalid choice. Please enter a number between 1 and 5.");
                     }
                 } catch (Exception e) {
                     System.out.println("Invalid input. Please enter a number.");
@@ -74,9 +74,7 @@ public class DB2024TEAM07_UserMain {
                     System.out.println("Logout successful!");
                     running = false;
                     break;
-
             }
-
         }
     }
 
@@ -104,7 +102,7 @@ public class DB2024TEAM07_UserMain {
                 if (choice >= 1 && choice <= 3) {
                     validChoice = true;
                 } else {
-                    System.out.println("Invalid choice. Please enter a number between 1 and 4.");
+                    System.out.println("Invalid choice. Please enter a number between 1 and 3.");
                     System.out.print("Choose an option: ");
                 }
             } else {
@@ -121,13 +119,15 @@ public class DB2024TEAM07_UserMain {
                 break;
             case 2:
                 DB2024TEAM07_RestaurantManager.searchRestaurantByCategory(scanner);
-
                 break;
             case 3:
                 break;
         }
     }
 
+    /**
+     * Displays detailed options after a restaurant search.
+     */
     private static void showResDetail() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("\n==== Search Detail ====\n");
@@ -148,7 +148,7 @@ public class DB2024TEAM07_UserMain {
                 if (choice >= 1 && choice <= 3) {
                     validChoice = true;
                 } else {
-                    System.out.println("Invalid choice. Please enter a number between 1 and 4.");
+                    System.out.println("Invalid choice. Please enter a number between 1 and 3.");
                     System.out.print("Choose an option: ");
                 }
             } else {
@@ -156,6 +156,7 @@ public class DB2024TEAM07_UserMain {
                 System.out.print("Choose an option: ");
                 scanner.nextLine();
             }
+        }
 
         switch (choice) {
             case 1:
@@ -167,8 +168,6 @@ public class DB2024TEAM07_UserMain {
             case 3:
                 break;
         }
-        }
-
     }
 
     /**
@@ -199,7 +198,7 @@ public class DB2024TEAM07_UserMain {
                     if (choice >= 1 && choice <= 5) {
                         validChoice = true;
                     } else {
-                        System.out.println("Invalid choice. Please enter a number between 1 and 4.");
+                        System.out.println("Invalid choice. Please enter a number between 1 and 5.");
                         System.out.print("Choose an option: ");
                     }
                 } else {
@@ -226,9 +225,7 @@ public class DB2024TEAM07_UserMain {
                 case 5:
                     running = false;
                     break;
-
             }
         }
     }
-
 }
