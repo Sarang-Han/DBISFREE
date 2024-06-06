@@ -75,18 +75,18 @@ Easy Way to Find Yummy Places for Ewha Students!
 
 
 ## 📋 Requirements
-<img width="750" alt="요구명세서 수정" src="https://github.com/Sarang-Han/DBISFREE/assets/144914664/d61c6fed-ace6-48f8-8209-fb6435938069">
+<img width="1122" alt="요구명세수정" src="https://github.com/Sarang-Han/DBISFREE/assets/144914664/21c76478-b712-4e65-9f66-dd4c9fe3fd70">
 
 ## 🖼️ Diagrams
 
 ### ER Diagram
-<img width="600" alt="ERD" src="https://github.com/Sarang-Han/DBISFREE/assets/144914664/6f097d95-ce81-41fa-bc8a-2859e483870a">
+<img width="570" alt="ERD" src="https://github.com/Sarang-Han/DBISFREE/assets/144914664/6f097d95-ce81-41fa-bc8a-2859e483870a">
 
 ### Database schema Diagram
-<img width="600" alt=db src="https://github.com/Sarang-Han/DBISFREE/assets/144914664/23397de0-6136-47c3-9993-d4a26abf508a">
+<img width="570" alt=db src="https://github.com/Sarang-Han/DBISFREE/assets/144914664/23397de0-6136-47c3-9993-d4a26abf508a">
 
 ## 🧩 Contributors
-<img width="1000" alt=db src="https://github.com/Sarang-Han/DBISFREE/assets/144914664/99ecd4f3-f8af-46db-9496-6f7b142ebd41">
+<img width="1121" alt="역할분담" src="https://github.com/Sarang-Han/DBISFREE/assets/144914664/bac5b3bd-0daa-418c-867b-40e64f51c3d3">
 
 <br>
 <br>
