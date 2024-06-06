@@ -93,7 +93,6 @@ public class DB2024TEAM07_ReviewManager {
             if (conn != null) {
                 try {
                     conn.setAutoCommit(true);
-                    //conn.close();
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
@@ -137,6 +136,7 @@ public class DB2024TEAM07_ReviewManager {
                     pStmt.setDouble(1, newAvgRating);
                     pStmt.setInt(2, resId);
                     pStmt.executeUpdate();
+                    System.out.println("Restaurant rating updated successfully.");
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
@@ -159,7 +159,6 @@ public class DB2024TEAM07_ReviewManager {
             if (conn != null) {
                 try {
                     conn.setAutoCommit(true);
-                    //conn.close();
                 } catch (SQLException e) {
                     e.printStackTrace();
                 }
@@ -290,35 +289,42 @@ public class DB2024TEAM07_ReviewManager {
             int result = reviewDAO.delete(reviewId);
             if (result > 0) {
                 System.out.println("Review deleted successfully.");
+
+                String ratingDeleteQuery = "DELETE FROM DB2024_Rating WHERE review_id = ?";
+                try {
+                    PreparedStatement pStmt = conn.prepareStatement(ratingDeleteQuery);
+                    pStmt.setInt(1, reviewId);
+                    pStmt.executeUpdate();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+
+                int resId = getResIdForReview(conn, reviewId);
+
+                double newAvgRating = ratingDAO.getAvg(resId);
+                String updateRatingQuery = "UPDATE DB2024_Restaurant SET rating = ? WHERE res_id = ?";
+                try {
+                    PreparedStatement pStmt = conn.prepareStatement(updateRatingQuery);
+                    pStmt.setDouble(1, newAvgRating);
+                    pStmt.setInt(2, resId);
+                    pStmt.executeUpdate();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+
+                conn.commit();
+
             } else {
                 System.out.println("Failed to delete review.");
             }
-
-            String ratingDeleteQuery = "DELETE FROM DB2024_Rating WHERE review_id = ?";
-            try {
-                PreparedStatement pStmt = conn.prepareStatement(ratingDeleteQuery);
-                pStmt.setInt(1, reviewId);
-                pStmt.executeUpdate();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-
-            int resId = getResIdForReview(conn, reviewId);
-
-            double newAvgRating = ratingDAO.getAvg(resId);
-            String updateRatingQuery = "UPDATE DB2024_Restaurant SET rating = ? WHERE res_id = ?";
-            try {
-                PreparedStatement pStmt = conn.prepareStatement(updateRatingQuery);
-                pStmt.setDouble(1, newAvgRating);
-                pStmt.setInt(2, resId);
-                pStmt.executeUpdate();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-
-            conn.commit();
-
         } catch (SQLException e) {
+            if (conn != null) {
+                try {
+                    conn.rollback();
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
+                }
+            }
             e.printStackTrace();
         } finally {
             if (conn != null) {
