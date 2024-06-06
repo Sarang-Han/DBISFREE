@@ -70,7 +70,7 @@ public class DB2024TEAM07_AdminMain {
                     DB2024TEAM07_MenuManager.updateMenu(scanner, new DB2024TEAM07_MenuDAO());
                     break;
                 case 7:
-                    search_menu_options(scanner);
+                    DB2024TEAM07_MenuManager.searchByManager(scanner);
                     break;
                 case 8:
                     displayAllRestaurants();
@@ -138,36 +138,6 @@ public class DB2024TEAM07_AdminMain {
                 default:
                     System.out.println("Invalid choice. Please try again.");
             }
-        }
-    }
-
-    /**
-     * Presents sub-menu options for searching menus.
-     *
-     * @param scanner the input scanner
-     */
-    public static void search_menu_options(Scanner scanner) {
-        displayAllRestaurants();
-        System.out.println("\n======================\n");
-        System.out.println("1. Search Menu by Restaurant Name, Menu Name, and Price Range");
-        System.out.println("2. Search Menu by Restaurant ID");
-        System.out.println("3. Exit");
-        System.out.println("\n======================");
-        System.out.print("Choose an option:");
-        int choice = scanner.nextInt();
-        scanner.nextLine();
-
-        switch (choice) {
-            case 1:
-                DB2024TEAM07_MenuManager.searchByUsers(scanner);
-                break;
-            case 2:
-                DB2024TEAM07_MenuManager.searchByManager(scanner);
-                break;
-            case 3:
-                return; // Exit the menu
-            default:
-                System.out.println("Invalid choice. Please try again.");
         }
     }
 
