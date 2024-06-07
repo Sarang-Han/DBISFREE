@@ -86,7 +86,7 @@ public class DB2024TEAM07_UserManager {
         if (otherUser != null) {
             System.out.println("\n== User Information ==\n");
             System.out.println("ID: " + otherUser.getUser_id());
-            System.out.println("Name: " + otherUser.getName());
+            System.out.println("Email: " + otherUser.getEmail());
             System.out.println("\n======================");
         } else {
             System.out.println("The user could not be found..");
