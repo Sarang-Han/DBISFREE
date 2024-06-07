@@ -99,6 +99,9 @@
 ## 🧩 Contributors
 <img width="1121" alt="역할분담" src="https://github.com/Sarang-Han/DBISFREE/assets/144914664/d3166e10-722b-4911-869f-b072e3dc5460">
 
-| 고은서          | 김민서         | 조서정            | 차현주            | 한사랑             |
+<br>
+<br>
+
+| 고은서 | 김민서 | 조서정 | 차현주 | 한사랑 |
 |--------------|-------------|----------------|----------------|-----------------|
 | [@cannes7](https://github.com/cannes7) | [@Min354](https://github.com/Min354) | [@s2eojeong](https://github.com/s2eojeong) | [@chacha091](https://github.com/chacha091) | [@Sarang-Han](https://github.com/Sarang-Han) |
