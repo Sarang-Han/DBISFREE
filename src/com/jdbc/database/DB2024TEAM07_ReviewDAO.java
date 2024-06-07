@@ -54,12 +54,24 @@ public class DB2024TEAM07_ReviewDAO {
      * @return 1 on successful insertion, -1 if the review ID cannot be generated, or -2 on an error
      */
     public int add(DB2024TEAM07_Review review, int menuId, int resId) {
+        String checkUserQuery = "SELECT COUNT(*) FROM DB2024_User WHERE user_id = ?";
         String checkMenuQuery = "SELECT COUNT(*) FROM DB2024_Menu WHERE menu_id = ? AND res_id = ?";
         String reviewQuery = "INSERT INTO DB2024_Review (user_id, rating, review_content) VALUES (?, ?, ?)";
         String mappingQuery = "INSERT INTO DB2024_Review_Menu_Res_Mapping (review_id, menu_id, res_id) VALUES (?, ?, ?)";
 
         try {
-            // 먼저 menuId가 resId에 해당하는 레스토랑에 존재하는지 확인
+            // 먼저 user_id가 존재하는지 확인
+            try (PreparedStatement pStmtUser = conn.prepareStatement(checkUserQuery)) {
+                pStmtUser.setString(1, review.getUser_id());
+                try (ResultSet rs = pStmtUser.executeQuery()) {
+                    if (rs.next() && rs.getInt(1) == 0) {
+                        // user_id가 존재하지 않음
+                        return -4;
+                    }
+                }
+            }
+
+            // 다음으로 menuId가 resId에 해당하는 레스토랑에 존재하는지 확인
             try (PreparedStatement pStmtCheck = conn.prepareStatement(checkMenuQuery)) {
                 pStmtCheck.setInt(1, menuId);
                 pStmtCheck.setInt(2, resId);
@@ -71,7 +83,7 @@ public class DB2024TEAM07_ReviewDAO {
                 }
             }
 
-            // menuId가 존재하면 리뷰 추가 진행
+            // 모든 검증이 통과되면 리뷰 추가 진행
             try (PreparedStatement pStmt = conn.prepareStatement(reviewQuery, Statement.RETURN_GENERATED_KEYS)) {
                 pStmt.setString(1, review.getUser_id());
                 pStmt.setInt(2, review.getRating());

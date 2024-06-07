@@ -79,7 +79,11 @@ public class DB2024TEAM07_ReviewManager {
                     }
                     break;
                 case -3:
-                    System.out.println("Failed to add review.");
+                    System.out.println("Review not added: Menu ID does not exist for the given restaurant.");
+                    conn.rollback();
+                    break;
+                case -4:
+                    System.out.println("Review not added: User ID does not exist.");
                     conn.rollback();
                     break;
                 default:
