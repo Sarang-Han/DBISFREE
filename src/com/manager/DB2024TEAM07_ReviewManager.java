@@ -218,7 +218,13 @@ public class DB2024TEAM07_ReviewManager {
         String userId = scanner.nextLine();
 
         int count = reviewDAO.getUserCount(userId);
-        System.out.println("Total number of reviews for user " + userId + ": " + count);
+        if (count == -1) {
+            System.out.println("User ID not found.");
+        } else if (count == -2) {
+            System.out.println("An error occurred while retrieving data.");
+        } else {
+            System.out.println("Total number of reviews for user " + userId + ": " + count);
+        }
     }
 
     /**
@@ -234,17 +240,22 @@ public class DB2024TEAM07_ReviewManager {
         scanner.nextLine();
 
         ArrayList<DB2024TEAM07_ResReviewVO> userReviews = reviewDAO.getUserReview(page, userId);
-        System.out.printf("%-10s%-15s%-20s%-15s%-100s%n", "Review ID", "User ID", "Restaurant", "Rating", "Review Comment");
-        System.out.println("-------------------------------------------------------------------------------------------------------------------------------");
-        for (DB2024TEAM07_ResReviewVO review : userReviews) {
-            System.out.printf("%-10d%-15s%-20s%-10d%-60s%n",
-                    review.getReview_id(),
-                    review.getUser_id(),
-                    review.getRes_name(),
-                    review.getRating(),
-                    review.getReview_content());
+        if (userReviews == null) {
+            System.out.println("User ID not found.");
+        } else if (userReviews.isEmpty()) {
+            System.out.println("No reviews found for user " + userId);
+        } else {
+            System.out.printf("%-10s%-15s%-20s%-15s%-100s%n", "Review ID", "User ID", "Restaurant", "Rating", "Review Comment");
+            System.out.println("-------------------------------------------------------------------------------------------------------------------------------");
+            for (DB2024TEAM07_ResReviewVO review : userReviews) {
+                System.out.printf("%-10d%-15s%-20s%-10d%-60s%n",
+                        review.getReview_id(),
+                        review.getUser_id(),
+                        review.getRes_name(),
+                        review.getRating(),
+                        review.getReview_content());
+            }
         }
-
     }
 
     /**
@@ -257,7 +268,13 @@ public class DB2024TEAM07_ReviewManager {
         int resId = scanner.nextInt();
 
         int count = reviewDAO.getResCount(resId);
-        System.out.println("Total number of reviews for restaurant " + resId + ": " + count);
+        if (count == -1) {
+            System.out.println("Restaurant ID not found.");
+        } else if (count == -2) {
+            System.out.println("An error occurred while retrieving data.");
+        } else {
+            System.out.println("Total number of reviews for restaurant " + resId + ": " + count);
+        }
     }
 
     /**
@@ -270,15 +287,21 @@ public class DB2024TEAM07_ReviewManager {
         int resId = scanner.nextInt();
 
         ArrayList<DB2024TEAM07_UserReview> restaurantReviews = reviewDAO.getResReview(page, resId);
-        System.out.printf("%-10s%-15s%-15s%-10s%-100s%n", "Review ID", "User ID", "User Name", "Rating", "Review Content");
-        System.out.println("-------------------------------------------------------------------------------------------------------------------------------");
-        for (DB2024TEAM07_UserReview review : restaurantReviews) {
-            System.out.printf("%-10d%-15s%-13s%-10d%-60s%n",
-                    review.getReview_id(),
-                    review.getUser_id(),
-                    review.getName(),
-                    review.getRating(),
-                    review.getReview_content());
+        if (restaurantReviews == null) {
+            System.out.println("Restaurant ID not found.");
+        } else if (restaurantReviews.isEmpty()) {
+            System.out.println("No reviews found for restaurant " + resId);
+        } else {
+            System.out.printf("%-10s%-15s%-15s%-10s%-100s%n", "Review ID", "User ID", "User Name", "Rating", "Review Content");
+            System.out.println("-------------------------------------------------------------------------------------------------------------------------------");
+            for (DB2024TEAM07_UserReview review : restaurantReviews) {
+                System.out.printf("%-10d%-15s%-13s%-10d%-60s%n",
+                        review.getReview_id(),
+                        review.getUser_id(),
+                        review.getName(),
+                        review.getRating(),
+                        review.getReview_content());
+            }
         }
 
     }
