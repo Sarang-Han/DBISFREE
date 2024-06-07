@@ -8,7 +8,6 @@ import java.util.Scanner;
 
 /**
  * This class represents the main entry point of the application.
- *
  * It provides a menu-driven interface for users to interact with the system.
  *
  */
@@ -67,8 +66,7 @@ public class DB2024TEAM07_Main {
 
                     if (userManager.login(username, password)) {
                         System.out.println("Login successful!");
-                        String loggedInUsername = username;
-                        DB2024TEAM07_UserMain.showMenu(userManager, loggedInUsername);
+                        DB2024TEAM07_UserMain.showMenu(userManager, username);
                     } else {
                         System.out.println("Invalid username or password.");
                     }
@@ -116,13 +114,15 @@ public class DB2024TEAM07_Main {
                         System.out.print("Email (format: example@domain.com): ");
                         email = scanner.nextLine();
 
-                        if (!email.matches("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,}$")) {
+                        // Check if email follows the pattern of containing '@' and at least one '.'
+                        // after '@' with characters on both sides of '@'
+                        if (!email.matches("^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$")) {
                             System.out.println("Please enter a valid email address (ex: example@domain.com).");
                         } else if (email.length() > 50) {
                             System.out.println("Email cannot exceed 50 characters.");
                             break;
                         }
-                    } while (!email.matches("^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,}$"));
+                    } while (!email.matches("^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$"));
 
                     System.out.println("1. 정문");
                     System.out.println("2. 후문");
