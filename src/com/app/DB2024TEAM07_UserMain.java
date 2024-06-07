@@ -65,6 +65,7 @@ public class DB2024TEAM07_UserMain {
                     break;
                 case 3:
                     DB2024TEAM07_RestaurantManager.displayAllRestaurants();
+                    System.out.println("\n===== Search menu =====");
                     DB2024TEAM07_MenuManager.searchMenuByRestaurant(scanner);
                     System.out.println("\n===== Add review =====");
                     DB2024TEAM07_ReviewManager.addReview(scanner);

@@ -54,37 +54,53 @@ public class DB2024TEAM07_ReviewDAO {
      * @return 1 on successful insertion, -1 if the review ID cannot be generated, or -2 on an error
      */
     public int add(DB2024TEAM07_Review review, int menuId, int resId) {
+        String checkMenuQuery = "SELECT COUNT(*) FROM DB2024_Menu WHERE menu_id = ? AND res_id = ?";
         String reviewQuery = "INSERT INTO DB2024_Review (user_id, rating, review_content) VALUES (?, ?, ?)";
         String mappingQuery = "INSERT INTO DB2024_Review_Menu_Res_Mapping (review_id, menu_id, res_id) VALUES (?, ?, ?)";
 
-        try (PreparedStatement pStmt = conn.prepareStatement(reviewQuery, Statement.RETURN_GENERATED_KEYS)) {
-            pStmt.setString(1, review.getUser_id());
-            pStmt.setInt(2, review.getRating());
-            pStmt.setString(3, review.getReview_content());
-            pStmt.executeUpdate();
-
-            // Get the generated review ID
-            try (ResultSet generatedKeys = pStmt.getGeneratedKeys()) {
-                if (generatedKeys.next()) {
-                    int reviewId = generatedKeys.getInt(1);
-                    review.setReview_id(reviewId);
-
-                    // Add data to the mapping table
-                    try (PreparedStatement pStmtMapping = conn.prepareStatement(mappingQuery)) {
-                        pStmtMapping.setInt(1, reviewId);
-                        pStmtMapping.setInt(2, menuId);
-                        pStmtMapping.setInt(3, resId);
-                        pStmtMapping.executeUpdate();
+        try {
+            // 먼저 menuId가 resId에 해당하는 레스토랑에 존재하는지 확인
+            try (PreparedStatement pStmtCheck = conn.prepareStatement(checkMenuQuery)) {
+                pStmtCheck.setInt(1, menuId);
+                pStmtCheck.setInt(2, resId);
+                try (ResultSet rs = pStmtCheck.executeQuery()) {
+                    if (rs.next() && rs.getInt(1) == 0) {
+                        // menuId가 resId에 해당하는 레스토랑에 없음
+                        return -3;
                     }
-                } else {
-                    return -1;
                 }
             }
-            return 1;
+
+            // menuId가 존재하면 리뷰 추가 진행
+            try (PreparedStatement pStmt = conn.prepareStatement(reviewQuery, Statement.RETURN_GENERATED_KEYS)) {
+                pStmt.setString(1, review.getUser_id());
+                pStmt.setInt(2, review.getRating());
+                pStmt.setString(3, review.getReview_content());
+                pStmt.executeUpdate();
+
+                // 생성된 리뷰 ID 가져오기
+                try (ResultSet generatedKeys = pStmt.getGeneratedKeys()) {
+                    if (generatedKeys.next()) {
+                        int reviewId = generatedKeys.getInt(1);
+                        review.setReview_id(reviewId);
+
+                        // 매핑 테이블에 데이터 추가
+                        try (PreparedStatement pStmtMapping = conn.prepareStatement(mappingQuery)) {
+                            pStmtMapping.setInt(1, reviewId);
+                            pStmtMapping.setInt(2, menuId);
+                            pStmtMapping.setInt(3, resId);
+                            pStmtMapping.executeUpdate();
+                        }
+                    } else {
+                        return -1; // 리뷰 ID 생성 실패
+                    }
+                }
+                return 1; // 성공
+            }
         } catch (SQLException se) {
             se.printStackTrace();
+            return -2; // SQL 예외 발생
         }
-        return -2;
     }
 
 

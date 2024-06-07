@@ -39,7 +39,7 @@ public class DB2024TEAM07_ReviewManager {
         int rating = scanner.nextInt();
 
         System.out.print("Enter review comment: ");
-        scanner.nextLine();
+        scanner.nextLine(); // 버퍼 비우기
         String reviewContent = scanner.nextLine();
 
         Connection conn = null;
@@ -50,35 +50,42 @@ public class DB2024TEAM07_ReviewManager {
             DB2024TEAM07_Review review = new DB2024TEAM07_Review(0, userId, rating, reviewContent);
             int result = reviewDAO.add(review, menuId, resId);
 
-            if (result > 0) {
-                System.out.println("Review added successfully.");
+            switch (result) {
+                case 1:
+                    System.out.println("Review added successfully.");
 
-                int reviewId = review.getReview_id();
-                int ratingResult = ratingDAO.add(reviewId, resId);
+                    int reviewId = review.getReview_id();
+                    int ratingResult = ratingDAO.add(reviewId, resId);
 
-                if (ratingResult > 0) {
-                    double newAvgRating = ratingDAO.getAvg(resId);
-                    if (newAvgRating >= 0) { // Ensure newAvgRating is valid
-                        String updateRatingQuery = "UPDATE DB2024_Restaurant SET rating = ? WHERE res_id = ?";
+                    if (ratingResult > 0) {
+                        double newAvgRating = ratingDAO.getAvg(resId);
+                        if (newAvgRating >= 0) {
+                            String updateRatingQuery = "UPDATE DB2024_Restaurant SET rating = ? WHERE res_id = ?";
 
-                        try (PreparedStatement pStmt = conn.prepareStatement(updateRatingQuery)) {
-                            pStmt.setDouble(1, newAvgRating);
-                            pStmt.setInt(2, resId);
-                            pStmt.executeUpdate();
-                            conn.commit();
-                            System.out.println("Restaurant rating updated successfully.");
+                            try (PreparedStatement pStmt = conn.prepareStatement(updateRatingQuery)) {
+                                pStmt.setDouble(1, newAvgRating);
+                                pStmt.setInt(2, resId);
+                                pStmt.executeUpdate();
+                                conn.commit();
+                                System.out.println("Restaurant rating updated successfully.");
+                            }
+                        } else {
+                            System.out.println("Failed to retrieve new average rating.");
+                            conn.rollback();
                         }
                     } else {
-                        System.out.println("Failed to retrieve new average rating.");
+                        System.out.println("Failed to add rating.");
                         conn.rollback();
                     }
-                } else {
-                    System.out.println("Failed to add rating.");
+                    break;
+                case -3:
+                    System.out.println("Failed to add review.");
                     conn.rollback();
-                }
-            } else {
-                System.out.println("Failed to add review.");
-                conn.rollback();
+                    break;
+                default:
+                    System.out.println("Failed to add review due to an unknown error.");
+                    conn.rollback();
+                    break;
             }
         } catch (SQLException e) {
             e.printStackTrace();
