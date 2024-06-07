@@ -64,6 +64,9 @@ public class DB2024TEAM07_UserMain {
                     DB2024TEAM07_RestaurantManager.displayRandomRestaurant();
                     break;
                 case 3:
+                    DB2024TEAM07_RestaurantManager.displayAllRestaurants();
+                    DB2024TEAM07_MenuManager.searchMenuByRestaurant(scanner);
+                    System.out.println("\n===== Add review =====");
                     DB2024TEAM07_ReviewManager.addReview(scanner);
                     break;
                 case 4:
@@ -118,7 +121,9 @@ public class DB2024TEAM07_UserMain {
                 showResDetail();
                 break;
             case 2:
+                DB2024TEAM07_RestaurantManager.displayAllRestaurants();
                 DB2024TEAM07_RestaurantManager.searchRestaurantByCategory(scanner);
+                showResDetail();
                 break;
             case 3:
                 break;
