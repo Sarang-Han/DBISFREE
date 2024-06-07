@@ -288,7 +288,7 @@ public class DB2024TEAM07_ReviewManager {
 
         ArrayList<DB2024TEAM07_UserReview> restaurantReviews = reviewDAO.getResReview(page, resId);
         if (restaurantReviews == null) {
-            System.out.println("Restaurant ID not found.");
+            System.out.println("No reviews found for restaurant");
         } else if (restaurantReviews.isEmpty()) {
             System.out.println("No reviews found for restaurant " + resId);
         } else {
