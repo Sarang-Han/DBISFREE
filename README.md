@@ -11,8 +11,82 @@
 ```
 
 ## 🍽️ E-MATEASY 🍽️
+<br>
 
-이대생을 위한 **맛집** EASY하게 찾기!
+**이**대생을 위한 **맛**집 **EASY**하게 찾기!
+
+콘솔로 구현한 이대 맛집 데이터베이스 응용 프로그램입니다.
+
+<br>
+
+### Project Outline
+
+<table>
+  <tr>
+    <th>프로젝트 명</th>
+    <th>개발기간</th>
+    <th>프로젝트 성격</th>
+    <th>개발인원</th>
+  </tr>
+  <tr>
+    <td>E-MATEASY</td>
+    <td>04.30 ~ 06.07</td>
+    <td>JAVA 콘솔 프로젝트</td>
+    <td>5명</td>
+  </tr>
+</table>
+
+
+
+### 🔑 Key Feature
+
+<table>
+  <tr>
+    <th>역할</th>
+    <th>기능</th>
+  </tr>
+  <tr>
+    <td rowspan="3"><strong>User</strong></td>
+    <td>유저 로그인, 회원가입</td>
+  </tr>
+  <tr>
+    <td>맛집, 메뉴 데이터 검색/조회</td>
+  </tr>
+  <tr>
+    <td>리뷰 추가 및 조회</td>
+  </tr>
+  <tr>
+    <td rowspan="4"><strong>Admin</strong></td>
+    <td>어드민 로그인</td>
+  </tr>
+  <tr>
+    <td>맛집, 메뉴, 리뷰, 유저 데이터 조회</td>
+  </tr>
+  <tr>
+    <td>맛집, 메뉴, 리뷰, 유저 데이터 추가</td>
+  </tr>
+  <tr>
+    <td>맛집, 메뉴, 리뷰, 유저 데이터 수정, 삭제</td>
+  </tr>
+</table>
+
+
+### Tools
+
+<table>
+  <tr>
+    <th>개발언어</th>
+    <th>버전관리</th>
+    <th>개발도구</th>
+  </tr>
+  <tr>
+    <td>Java</td>
+    <td>Github, Git</td>
+    <td>IntelliJ IDE</td>
+  </tr>
+</table>
+
+<br>
 
 ## 🎵 How to Run
 
@@ -34,7 +108,7 @@
 
 
 2. **개발 환경 설정:**
-   - 원하는 Java IDE를 열어주세요 (예: IntelliJ IDEA, Eclipse). 
+   - 원하는 Java IDE를 열어주세요 (예: IntelliJ IDE, Eclipse). 
    - 프로젝트를 가져오세요.
 
 
@@ -87,6 +161,7 @@
 
 ## 📋 Requirements
 <img width="1122" alt="요구명세수정" src="https://github.com/Sarang-Han/DBISFREE/assets/144914664/21c76478-b712-4e65-9f66-dd4c9fe3fd70">
+
 
 ## 🖼️ Diagrams
 
