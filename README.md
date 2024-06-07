@@ -36,8 +36,6 @@
   </tr>
 </table>
 
-
-
 ### 🔑  Key Feature
 
 <table>
@@ -69,7 +67,6 @@
     <td>맛집, 메뉴, 리뷰, 유저 데이터 수정, 삭제</td>
   </tr>
 </table>
-
 
 ### 🛠️  Tools
 
@@ -160,7 +157,7 @@
 
 
 ## 📋 Requirements
-<img width="1122" alt="요구명세수정" src="https://github.com/Sarang-Han/DBISFREE/assets/144914664/21c76478-b712-4e65-9f66-dd4c9fe3fd70">
+<img width="900" alt="요구명세수정" src="https://github.com/Sarang-Han/DBISFREE/assets/144914664/21c76478-b712-4e65-9f66-dd4c9fe3fd70">
 
 
 ## 🖼️ Diagrams
@@ -172,11 +169,25 @@
 <img width="570" alt=db src="https://github.com/Sarang-Han/DBISFREE/assets/144914664/23397de0-6136-47c3-9993-d4a26abf508a">
 
 ## 🧩 Contributors
-<img width="1121" alt="역할분담" src="https://github.com/Sarang-Han/DBISFREE/assets/144914664/d3166e10-722b-4911-869f-b072e3dc5460">
+<img width="900" alt="역할분담" src="https://github.com/Sarang-Han/DBISFREE/assets/144914664/d3166e10-722b-4911-869f-b072e3dc5460">
 
 <br>
 <br>
 
-| 고은서 | 김민서 | 조서정 | 차현주 | 한사랑 |
-|--------------|-------------|----------------|----------------|-----------------|
-| [@cannes7](https://github.com/cannes7) | [@Min354](https://github.com/Min354) | [@s2eojeong](https://github.com/s2eojeong) | [@chacha091](https://github.com/chacha091) | [@Sarang-Han](https://github.com/Sarang-Han) |
+<table>
+  <tr>
+    <th>고은서</th>
+    <th>김민서</th>
+    <th>조서정</th>
+    <th>차현주</th>
+    <th>한사랑</th>
+  </tr>
+  <tr>
+    <td><a href="https://github.com/cannes7">@cannes7</a></td>
+    <td><a href="https://github.com/Min354">@Min354</a></td>
+    <td><a href="https://github.com/s2eojeong">@s2eojeong</a></td>
+    <td><a href="https://github.com/chacha091">@chacha091</a></td>
+    <td><a href="https://github.com/Sarang-Han">@Sarang-Han</a></td>
+  </tr>
+</table>
+
