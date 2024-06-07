@@ -19,7 +19,7 @@
 
 <br>
 
-### Project Outline
+### ✏️  Project Outline
 
 <table>
   <tr>
@@ -38,7 +38,7 @@
 
 
 
-### 🔑 Key Feature
+### 🔑  Key Feature
 
 <table>
   <tr>
@@ -71,7 +71,7 @@
 </table>
 
 
-### Tools
+### 🛠️  Tools
 
 <table>
   <tr>
