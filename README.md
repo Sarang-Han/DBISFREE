@@ -170,8 +170,38 @@
 ### ER Diagram
 <img width="570" alt="ERD" src="https://github.com/Sarang-Han/DBISFREE/assets/144914664/6f097d95-ce81-41fa-bc8a-2859e483870a">
 
+
+- 총 4개의 Entity로 구성됨.
+
+  - **User**: E-MATEASY를 사용하는 유저들의 정보
+
+  - **Menu**: E-MATEASY에 등록되어있는 메뉴들의 정보
+
+  - **Restaurant**: E-MATEASY에 등록되어 있는 식당들의 정보
+
+  - **Review**: E-MATEASY에 등록되어 있는 리뷰들의 정보
+
+<br>
+
 ### Database schema Diagram
 <img width="570" alt=db src="https://github.com/Sarang-Han/DBISFREE/assets/144914664/23397de0-6136-47c3-9993-d4a26abf508a">
+
+- **User_Review**
+  :각 리뷰는 한 사용자가 작성하고 한 명의 사용자는 여러개의 리뷰를 등록할 수 있으므로 일대다(One-to-Many) 관계이다.
+
+- **Restaurant_Menu**
+  :하나의 메뉴는 한개의 식당에 존재하고 하나의 식당은 여러 개의 메뉴를 가질 수 있으므로 일대다(One-to-Many) 관계이다.
+
+- **Restaurant_Review**
+  :하나의 리뷰는 한 식당에 대한 리뷰이고 하나의 식당은 여러 개의 리뷰를 가질 수 있으므로 일대다(One-to-Many) 관계이다.
+
+- **Menu_Review**
+  :하나의 메뉴에 여러개의 리뷰가 존재하고 또 하나의 리뷰는 한 메뉴에 대한 리뷰이므로, 일대다(One-to-Many) 관계이다.
+
+- **Review_Menu_Res_Mapping**
+  :여러 식당에 여러 메뉴에 대한 여러 리뷰가 존재할 수 있으므로 3진 다대다(Many-to-Many) 관계를 가진다.
+
+<br>
 
 ## 🧩 Contributors
 <img width="900" alt="역할분담" src="https://github.com/Sarang-Han/DBISFREE/assets/144914664/d3166e10-722b-4911-869f-b072e3dc5460">
