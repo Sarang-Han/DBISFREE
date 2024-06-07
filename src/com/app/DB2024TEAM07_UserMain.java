@@ -122,7 +122,6 @@ public class DB2024TEAM07_UserMain {
                 showResDetail();
                 break;
             case 2:
-                DB2024TEAM07_RestaurantManager.displayAllRestaurants();
                 DB2024TEAM07_RestaurantManager.searchRestaurantByCategory(scanner);
                 showResDetail();
                 break;

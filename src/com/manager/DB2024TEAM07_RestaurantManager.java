@@ -192,11 +192,12 @@ public class DB2024TEAM07_RestaurantManager {
 
         try (ResultSet rs = restaurantDAO.searchRestaurantByCategory(cuisineType)) {
             if (rs != null && rs.next()) {
-                System.out.printf("%-25s %-20s %-40s %-20s %-15s %-10s %-20s%n",
-                        "Restaurant Name", "Phone Number", "Address", "Operating Hours", "Break Time", "Rating", "Location");
-                System.out.println("--------------------------------------------------------------------------------------------------------------------------------------------------------");
+                System.out.printf("%-20s \t%-10s \t%-15s \t%-30s \t%-20s \t%-20s \t%-10s \t%-20s \t%-20s%n",
+                        "Name", "ID", "Phone Number", "Address", "Operating Hours", "Break Time", "Rating", "Cuisine Type", "Location");
+                System.out.println("--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------");
                 do {
                     String resName = rs.getString("res_name") != null ? rs.getString("res_name") : "정보 없음";
+                    int resId = rs.getInt("res_id"); // ID는 null이 아니라고 가정
                     String phoneNum = rs.getString("phone_num") != null ? rs.getString("phone_num") : "정보 없음";
                     String address = rs.getString("address") != null ? rs.getString("address") : "정보 없음";
                     String operatingHours = rs.getString("operating_hours") != null ? rs.getString("operating_hours") : "정보 없음";
@@ -204,8 +205,8 @@ public class DB2024TEAM07_RestaurantManager {
                     String rating = rs.getString("rating") != null ? String.valueOf(rs.getFloat("rating")) : "정보 없음";
                     String location = rs.getString("location") != null ? rs.getString("location") : "정보 없음";
 
-                    System.out.printf("%-25s %-20s %-40s %-20s %-15s %-10s %-20s%n",
-                            resName, phoneNum, address, operatingHours, breakTime, rating, location);
+                    System.out.printf("%-20s \t%-10d \t%-15s \t%-30s \t%-20s \t%-20s \t%-10s \t%-20s \t%-20s%n",
+                            resName, resId, phoneNum, address, operatingHours, breakTime, rating, cuisineType, location);
                 } while (rs.next());
             } else {
                 System.out.println("No restaurants found for the given cuisine type.");
@@ -214,6 +215,7 @@ public class DB2024TEAM07_RestaurantManager {
             e.printStackTrace();
         }
     }
+
 
     /**
      * Deletes a restaurant from the database.

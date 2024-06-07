@@ -175,7 +175,7 @@ public class DB2024TEAM07_RestaurantDAO {
      * @return A {@link ResultSet} containing restaurant information.
      */
     public ResultSet searchRestaurantByCategory(String cuisine_type) {
-        String Q = "SELECT res_name, phone_num, address, operating_hours, break_time, rating, location " +
+        String Q = "SELECT res_id, res_name, phone_num, address, operating_hours, break_time, rating, location " +
                 "FROM DB2024_Restaurant USE INDEX(DB2024_idx_Restaurant) WHERE cuisine_type = ?";
         try {
             pStmt = conn.prepareStatement(Q);
