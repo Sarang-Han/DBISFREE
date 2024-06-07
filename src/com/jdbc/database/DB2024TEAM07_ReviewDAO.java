@@ -210,21 +210,33 @@ public class DB2024TEAM07_ReviewDAO {
      * @return the total count of reviews for that user as an integer
      */
     public int getUserCount(String user_id) {
-        String Q = "SELECT COUNT(*) FROM DB2024_Review USE INDEX (DB2024_idx_Review) WHERE user_id = ?";
-        try{
-            pStmt = conn.prepareStatement(Q);
-            pStmt.setString(1, user_id);
-            rs = pStmt.executeQuery();
-            if(rs.next()) {
-                return rs.getInt(1);
+        String checkUserQuery = "SELECT COUNT(*) FROM DB2024_User WHERE user_id = ?";
+        String countReviewQuery = "SELECT COUNT(*) FROM DB2024_Review WHERE user_id = ?";
+        try {
+            // 유저 존재 여부 확인
+            try (PreparedStatement pStmtUser = conn.prepareStatement(checkUserQuery)) {
+                pStmtUser.setString(1, user_id);
+                try (ResultSet rs = pStmtUser.executeQuery()) {
+                    if (rs.next() && rs.getInt(1) == 0) {
+                        return -1; // 유저 ID가 존재하지 않음
+                    }
+                }
             }
-            return 0;   //아무 리뷰도 없는 상태
-        }
-        catch(SQLException se) {
+            // 리뷰 개수 확인
+            try (PreparedStatement pStmtReview = conn.prepareStatement(countReviewQuery)) {
+                pStmtReview.setString(1, user_id);
+                try (ResultSet rs = pStmtReview.executeQuery()) {
+                    if (rs.next()) {
+                        return rs.getInt(1);
+                    }
+                }
+            }
+        } catch (SQLException se) {
             se.printStackTrace();
         }
-        return -2;      //error
+        return -2; // SQL 예외 발생
     }
+
 
     //특정 유저의 리뷰 몰아보기 기능(DB2024_Review 테이블의 투플 반환)-----------------------------------------------------------------------
     //일단은 최신순, 10개 단위로 반환하는 형태 선택
@@ -250,6 +262,9 @@ public class DB2024TEAM07_ReviewDAO {
                     ResultSet.CONCUR_READ_ONLY);
             pStmt.setString(1, user_id);
             rs = pStmt.executeQuery();
+            if(!rs.next()){
+                return null; //user ID not found
+            }
             rs.absolute((page-1)*10);
             int i=0;
             while(rs.next() && i<10) {
@@ -278,21 +293,33 @@ public class DB2024TEAM07_ReviewDAO {
      * @return the total count of reviews for that restaurant as an integer
      */
     public int getResCount(int res_id) {
-        String Q = "SELECT COUNT(*) FROM DB2024_Rating WHERE res_id = ?";
-        try{
-            pStmt = conn.prepareStatement(Q);
-            pStmt.setInt(1, res_id);
-            rs = pStmt.executeQuery();
-            if(rs.next()) {
-                return rs.getInt(1);
+        String checkResQuery = "SELECT COUNT(*) FROM DB2024_Restaurant WHERE res_id = ?";
+        String countReviewQuery = "SELECT COUNT(*) FROM DB2024_Rating WHERE res_id = ?";
+        try {
+            // 레스토랑 존재 여부 확인
+            try (PreparedStatement pStmtRes = conn.prepareStatement(checkResQuery)) {
+                pStmtRes.setInt(1, res_id);
+                try (ResultSet rs = pStmtRes.executeQuery()) {
+                    if (rs.next() && rs.getInt(1) == 0) {
+                        return -1; // 레스토랑 ID가 존재하지 않음
+                    }
+                }
             }
-            return 0;   //아무 리뷰도 없는 상태
-        }
-        catch(SQLException se) {
+            // 리뷰 개수 확인
+            try (PreparedStatement pStmtReview = conn.prepareStatement(countReviewQuery)) {
+                pStmtReview.setInt(1, res_id);
+                try (ResultSet rs = pStmtReview.executeQuery()) {
+                    if (rs.next()) {
+                        return rs.getInt(1);
+                    }
+                }
+            }
+        } catch (SQLException se) {
             se.printStackTrace();
         }
-        return -2;      //error
+        return -2; // SQL 예외 발생
     }
+
 
     //특정 가게의 리뷰 몰아보기 기능(DB2024_Review 테이블의 투플 반환)-----------------------------------------------------------------------
     //일단은 최신순, 10개 단위로 반환하는 형태 선택
@@ -318,6 +345,9 @@ public class DB2024TEAM07_ReviewDAO {
                     ResultSet.CONCUR_READ_ONLY);
             pStmt.setInt(1, res_id);
             rs = pStmt.executeQuery();
+            if (!rs.next()) {
+                return null; // restaurant ID not found
+            }
             rs.absolute((page-1)*10);
             int i=0;
             while(rs.next() && i<10) {
