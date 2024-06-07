@@ -73,7 +73,7 @@ public class DB2024TEAM07_Main {
                     break;
                 case 2:
                     // User Register
-                    System.out.print("New username: ");
+                    System.out.print("New userID: ");
                     String newUsername = scanner.nextLine();
 
                     // Validate username format (maximum length of 50 characters)
@@ -146,7 +146,7 @@ public class DB2024TEAM07_Main {
                     if (userManager.addUser(newUser)) {
                         System.out.println("Registration successful!");
                     } else {
-                        System.out.println("Registration failed.");
+                        System.out.println("Registration failed. Duplicated userID. Please choose a different one.");
                     }
                     break;
                 case 3:

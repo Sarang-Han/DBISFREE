@@ -117,7 +117,7 @@ public class DB2024TEAM07_MenuManager {
                     System.out.printf("%-10d %-20s %-10s%n", menuId, menuName, price);
                 } while (rs.next());
             } else {
-                System.out.println("No data found.");
+                System.out.println("Not existing restaurant.");
             }
         } catch (SQLException se) {
             se.printStackTrace();
@@ -148,7 +148,7 @@ public class DB2024TEAM07_MenuManager {
                     System.out.printf("%-8d %-13d %-20s %-10s%n", menuId, restaurantId, menuName, price);
                 } while (rs.next());
             } else {
-                System.out.println("No data found.");
+                System.out.println("Not existing restaurant");
             }
         } catch (SQLException se) {
             se.printStackTrace();
