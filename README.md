@@ -12,35 +12,47 @@
 
 ## 🍽️ E-MATEASY 🍽️
 
-Easy Way to Find "Mat-jip" for Ewha Students!
+이대생을 위한 **맛집** EASY하게 찾기!
 
 ## 🎵 How to Run
 
 ### Prerequisites
 
-1. **Java Development Kit (JDK):** Make sure you have JDK installed on your system.
-   
-2. **JDBC Driver:** Download the JDBC driver for your database (e.g., MySQL JDBC driver).
-   
-3. **Database Management System (DBMS):** Ensure you have a running instance of your DBMS (e.g., MySQL).
+1. **Java 개발 키트 (JDK)**: 시스템에 JDK가 설치되어 있는지 확인하세요.
+2. **JDBC 드라이버**: Mysql JDBC 드라이버를 다운로드하세요. (MySQL JDBC 드라이버)
+3. **데이터베이스 관리 시스템 (DBMS)**: 사용 중인 DBMS가 실행 중인지 확인하세요. (MySQL DBMS)
 
 ### Steps to Run the Project
-1. **Create the Database:**
-   - Navigate to the `sql` folder.
-   - Use the provided SQL scripts to create and populate the database.
 
-2. **Set Up Your Development Environment:**
-   - Open your Java IDE (e.g., IntelliJ IDEA, Eclipse).
-   - Import the project.
+1. **데이터베이스 생성:**
+   - sql 폴더로 이동하세요.
+   - Mysql DBMS를 실행하고 `create.sql`을 사용하여 데이터베이스를 생성하세요.
+   - DBMS에서 사용자(DB2024TEAM07) 생성 쿼리를 실행하세요.
+   ```
+      CREATE USER DB2024TEAM07 IDENTIFIED BY 'DB2024TEAM07';
+   ```
 
-3. **Configure JDBC Connection:**
-   - Add the JDBC driver to your project dependencies.
-   - Configure the JDBC connection (database URL, username, password).
 
-4. **Run the Main Class:**
-   - Locate `DB2024TEAM07_Main` in your project.
-   - Run the main method of this class to start the application.
-   
+2. **개발 환경 설정:**
+   - 원하는 Java IDE를 열어주세요 (예: IntelliJ IDEA, Eclipse). 
+   - 프로젝트를 가져오세요.
+
+
+3. **JDBC 연결 설정:**
+   - 프로젝트 의존성에 JDBC 드라이버를 추가하세요.
+   - JDBC 연결을 설정하세요 (데이터베이스 URL, 사용자명, 비밀번호).
+   ```
+      static final String DB_URL = "jdbc:mysql://localhost:3306/DB2024TEAM07";
+      static final String USER = "DB2024TEAM07";
+      static final String PASS = "DB2024TEAM07";
+   ```
+
+
+4. **Main 클래스 실행:**
+   - 프로젝트의 src 폴더에서 `DB2024TEAM07_Main`을 찾으세요.
+   - 이 클래스의 main 메서드를 실행하여 애플리케이션을 시작하세요.
+
+
 ## 📂 Project Structure
 
 ```
@@ -85,7 +97,8 @@ Easy Way to Find "Mat-jip" for Ewha Students!
 <img width="570" alt=db src="https://github.com/Sarang-Han/DBISFREE/assets/144914664/23397de0-6136-47c3-9993-d4a26abf508a">
 
 ## 🧩 Contributors
-<img width="1121" alt="역할분담" src="https://github.com/Sarang-Han/DBISFREE/assets/144914664/bac5b3bd-0daa-418c-867b-40e64f51c3d3">
+<img width="1121" alt="역할분담" src="https://github.com/Sarang-Han/DBISFREE/assets/144914664/d3166e10-722b-4911-869f-b072e3dc5460">
 
-<br>
-<br>
+| 고은서          | 김민서         | 조서정            | 차현주            | 한사랑             |
+|--------------|-------------|----------------|----------------|-----------------|
+| [@cannes7](https://github.com/cannes7) | [@Min354](https://github.com/Min354) | [@s2eojeong](https://github.com/s2eojeong) | [@chacha091](https://github.com/chacha091) | [@Sarang-Han](https://github.com/Sarang-Han) |
